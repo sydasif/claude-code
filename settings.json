@@ -3,7 +3,7 @@
     "ANTHROPIC_BASE_URL": "http://localhost:8080/anthropic",
     "ANTHROPIC_AUTH_TOKEN": "sk-xxx",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "gemini/gemma-4-31b-it",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "mistral/mistral-medium-3-5",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "gemini/gemini-3.1-flash-lite-preview",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemini/gemma-4-26b-a4b-it"
   },
   "permissions": {
@@ -33,5 +33,6 @@
     }
   },
   "effortLevel": "high",
-  "autoUpdatesChannel": "latest"
+  "autoUpdatesChannel": "latest",
+  "model": "opus"
 }
