@@ -1,11 +1,11 @@
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "http://localhost:8080/anthropic",
+    "ANTHROPIC_BASE_URL": "http://localhost:4001/",
     "ANTHROPIC_AUTH_TOKEN": "sk-xxx",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "gemini/gemma-4-26b-a4b-it",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "gemini/gemma-4-31b-it",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "mistral/mistral-small-2603",
-    "ANTHROPIC_CUSTOM_MODEL_OPTION": "gemini/gemini-3.1-flash-lite-preview"
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "gemini/gemma-4-31b-it",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "gemini/gemini-3.1-flash-lite-preview",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemini/gemma-4-26b-a4b-it",
+    "ANTHROPIC_CUSTOM_MODEL_OPTION": "mistral/mistral-small-2603"
   },
   "permissions": {
     "allow": [],
@@ -34,6 +34,5 @@
     }
   },
   "effortLevel": "high",
-  "autoUpdatesChannel": "latest",
-  "model": "opus"
+  "autoUpdatesChannel": "latest"
 }
