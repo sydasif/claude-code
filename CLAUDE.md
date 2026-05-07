@@ -61,12 +61,15 @@ Before delegating to a subagent:
 
 Always consult the relevant skill guideline **before** starting a task.
 
-- `python-expert` for Python development
-- `mcp-builder` for MCP (Managed Control Plane) automation
-- `devops-iac-engineer` for devops infrastructure as code
-- `docker-expert` for Docker container management
-- `github-workflow-automation` for github workflow automation
-- `pdf-processing` for PDF processing
+### Specific Skills
+
+- `python-expert` — Enhanced Python development guidance
+- `devops-iac-engineer` — DevOps infrastructure as code
+- `docker-expert` — Docker container management
+- `github-workflow-automation` — GitHub workflow automation
+- `pdf-processing` — PDF processing
+
+> **Note:** When working in OpenCode, use the core skills from `~/.config/opencode/skills/`. Claude-specific skills are only available in the Claude Code environment.
 
 ---
 

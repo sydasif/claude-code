@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ASCII mode: set CLAUDE_STATUSLINE_ASCII=1 for ASCII-only output (no emojis)
+# Example: export CLAUDE_STATUSLINE_ASCII=1 in your shellrc
+
 # Define ANSI color codes as variables
 RED=$'\033[0;31m'
 GREEN=$'\033[0;32m'
@@ -9,6 +12,23 @@ PURPLE=$'\033[0;35m'
 CYAN=$'\033[0;36m'
 WHITE=$'\033[1;37m'
 NC=$'\033[0m' # No Color
+
+# Emoji or ASCII fallback
+if [ "${CLAUDE_STATUSLINE_ASCII:-0}" = "1" ]; then
+    DIR_ICON="[D]"
+    BRAIN_ICON="[M]"
+    BRANCH_ICON="[*]"
+    STAGED_PLUS="+"
+    UNSTAGED_TILDE="~"
+    UNTRACKED_Q="?"
+else
+    DIR_ICON="📁"
+    BRAIN_ICON="🧠"
+    BRANCH_ICON="🌿"
+    STAGED_PLUS="+"
+    UNSTAGED_TILDE="~"
+    UNTRACKED_Q="?"
+fi
 
 # Read the input JSON from stdin
 input=$(cat)
@@ -55,25 +75,24 @@ if command -v git >/dev/null 2>&1; then
             untracked_count=0
         fi
 
-        # Format git info with colors and emojis
-        # Only show branch name if it's not empty (already verified above)
-        git_info="${GREEN}🌿 ${CYAN}$git_branch"
+        # Format git info with colors
+        git_info="${GREEN}${BRANCH_ICON} ${CYAN}$git_branch"
         if [ "$staged_count" -gt 0 ]; then
-            git_info="$git_info ${GREEN}+$staged_count"
+            git_info="$git_info ${GREEN}${STAGED_PLUS}$staged_count"
         fi
         if [ "$unstaged_count" -gt 0 ]; then
-            git_info="$git_info ${YELLOW}~$unstaged_count"
+            git_info="$git_info ${YELLOW}${UNSTAGED_TILDE}$unstaged_count"
         fi
         if [ "$untracked_count" -gt 0 ]; then
-            git_info="$git_info ${RED}?$untracked_count"
+            git_info="$git_info ${RED}${UNTRACKED_Q}$untracked_count"
         fi
         git_info="$git_info"
     fi
 fi
 
-# Output the formatted status line with colors and emojis
+# Output the formatted status line
 if [ -n "$git_info" ]; then
-    printf "${CYAN}📁 ${WHITE}%s${NC} | ${PURPLE}🧠 ${YELLOW}%s${NC} | %s${NC}\\n" "$display_path" "$model" "$git_info"
+    printf "${CYAN}${DIR_ICON} ${WHITE}%s${NC} | ${PURPLE}${BRAIN_ICON} ${YELLOW}%s${NC} | %s${NC}\n" "$display_path" "$model" "$git_info"
 else
-    printf "${CYAN}📁 ${WHITE}%s${NC} | ${PURPLE}🧠 ${YELLOW}%s${NC}\\n" "$display_path" "$model"
+    printf "${CYAN}${DIR_ICON} ${WHITE}%s${NC} | ${PURPLE}${BRAIN_ICON} ${YELLOW}%s${NC}\n" "$display_path" "$model"
 fi
