@@ -1,6 +1,6 @@
 # Database Best Practices
 
-This document contains centralized database best practices to be referenced by various skills and agents.
+Database guidance for Python applications. Use `python.md` for async and framework selection, and `api-design.md` when database behavior shapes API contracts.
 
 ## Database Connection Best Practices
 
@@ -370,6 +370,6 @@ def get_user(user_id):
 
 **Related Guidelines:**
 
-- [Security Guidelines](~/.claude/rules/security.md)
-- [Python Guidelines](~/.claude/guidelines/python.md)
-- [Testing Guidelines](~/.claude/rules/testing.md)
+- [Python Guidelines](python.md)
+- [API Design Guidelines](api-design.md)
+- [Documentation Guidelines](documentation.md)

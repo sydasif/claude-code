@@ -1,6 +1,6 @@
 # Documentation Guidelines
 
-This document contains centralized documentation best practices to be referenced by various skills and agents.
+Documentation guidance for Python projects. Use `api-design.md` for API behavior and `database.md` for database-specific decisions.
 
 ## README Standards
 
@@ -8,60 +8,13 @@ This document contains centralized documentation best practices to be referenced
 
 Every project should have a README.md with at minimum:
 
-````markdown
-# Project Name
-
-Brief description of what the project does (1-2 sentences).
-
-## Features
-
-- Core feature 1
-- Core feature 2
-- Core feature 3
-
-## Installation
-
-```bash
-# Installation steps
-pip install project-name
-```
-````
-
-## Usage
-
-```python
-# Basic usage example
-from project import main
-main.run()
-```
-
-## API Documentation
-
-Link to API docs or include key endpoints.
-
-## Development
-
-### Setup
-
-```bash
-git clone https://github.com/user/project.git
-cd project
-pip install -e ".[dev]"
-```
-
-### Running Tests
-
-```bash
-pytest
-```
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## License
-
-[MIT](LICENSE)
+- Project name and 1-2 sentence description
+- Core features
+- Installation
+- Usage or quickstart
+- API documentation link or key endpoints
+- Development setup and test commands
+- Contributing and license links
 
 ### README Best Practices
 
@@ -160,60 +113,51 @@ Attributes:
 
 ### ADR Template
 
-````markdown
-# ADR-001: Use PostgreSQL as Primary Database
+```markdown
+# ADR-001: Decision Title
 
 ## Status
 
-Accepted
+Proposed | Accepted | Deprecated | Superseded
 
 ## Context
 
-We need a relational database for our application. Requirements:
-
-- ACID compliance
-- JSON support for flexible schemas
-- Full-text search capabilities
-- Good Python async support
+What problem, constraint, or requirement forces a decision?
 
 ## Decision
 
-We will use PostgreSQL as our primary database.
+What option did the team choose?
 
 ## Consequences
 
 ### Positive
 
-- Mature, well-supported database
-- Excellent Python ecosystem (asyncpg, SQLAlchemy)
-- Rich feature set (JSONB, full-text search)
-- Strong data integrity guarantees
+- Expected benefits
 
 ### Negative
 
-- Requires database administration expertise
-- More complex than SQLite for simple use cases
+- Known costs and risks
 
 ## Alternatives Considered
 
-- **MySQL**: Good option but JSON support is less mature
-- **SQLite**: Too limited for concurrent access needs
-- **MongoDB**: Would require significant refactoring of relational data model
+- Alternative: why it was not chosen
 
 ## References
 
-- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
-- [Asyncpg GitHub](https://github.com/MagicStack/asyncpg)
+- Links to source material
+```
 
 ### ADR Storage
 
 Store ADRs in `docs/adr/` directory:
 
+```text
 docs/
-adr/
-001-use-postgresql.md
-002-migrate-to-fastapi.md
-003-adopt-ruff-for-linting.md
+└── adr/
+    ├── 001-use-postgresql.md
+    ├── 002-migrate-to-fastapi.md
+    └── 003-adopt-ruff-for-linting.md
+```
 
 ## API Documentation
 
@@ -263,7 +207,6 @@ async def get_user(user_id: int):
     """
     pass
 ```
-````
 
 ### API Documentation Best Practices
 
@@ -387,6 +330,6 @@ markdown_extensions:
 
 **Related Guidelines:**
 
-- [Python Guidelines](~/.claude/guidelines/python.md) - Code style and docstrings
-- [API Design Guidelines](~/.claude/guidelines/api-design.md) - API documentation
-- [Testing Guidelines](~/.claude/rules/testing.md) - Testing documentation
+- [Python Guidelines](python.md) - Code style and docstrings
+- [API Design Guidelines](api-design.md) - API documentation
+- [Database Guidelines](database.md) - Database decisions and operations

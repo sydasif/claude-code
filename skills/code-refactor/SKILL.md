@@ -13,7 +13,7 @@ This skill transforms legacy Python code into modern, maintainable, and efficien
 
 > If `guidelines`, are missing, treat those as informational placeholders and apply your team's conventions directly.
 
-- For comprehensive best practices, see [Guidelines](../../guidelines)
+- For comprehensive Python best practices, see [Python Guidelines](../python-pro/reference/python.md)
 
 ---
 

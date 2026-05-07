@@ -1,6 +1,6 @@
 # API Design Best Practices
 
-This document contains centralized API design best practices to be referenced by various skills and agents.
+API design guidance for Python services. Use `python.md` for framework selection and `documentation.md` for documenting OpenAPI/Swagger output.
 
 ## RESTful Principles
 

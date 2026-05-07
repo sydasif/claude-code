@@ -1,6 +1,6 @@
 # Python Development Best Practices
 
-Python-specific patterns and standards. For security and testing requirements, see rules/ folder.
+Python-specific patterns and standards. For API, database, and documentation details, use the other files in this `reference/` directory.
 
 ## Modern Python Standards (3.12+)
 
@@ -47,7 +47,7 @@ def transform_records(
 ```
 
 - **Documentation**: Use Google-style docstrings
-- **Security**: No hardcoded secrets (see rules/security.md)
+- **Security**: No hardcoded secrets
 - **Performance**: Avoid unnecessary memory usage
 
 ## Package Management Guidelines

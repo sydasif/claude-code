@@ -6,16 +6,15 @@ This repository defines the core architecture for personalizing Claude Code acro
 
 The configuration follows a **Progressive Disclosure Strategy**, separating critical constraints from domain-specific reference material to maximize token efficiency.
 
-### Tier 1: Always-On Constraints (Rules)
+### Tier 1: Always-On Constraints
 
-- **Path:** `~/.claude/rules/`
+- **Path:** `~/.claude/CLAUDE.md`
 - **Behavior:** Automatically injected into every session.
 - **Purpose:** Critical security, testing, and tool-chain requirements.
-- **Key Files:** `security.md`, `testing.md`, `tools.md`.
 
-### Tier 2: Domain-Specific Reference (Guidelines)
+### Tier 2: Domain-Specific Reference
 
-- **Path:** `~/.claude/guidelines/`
+- **Path:** `~/.claude/skills/*/reference/`
 - **Behavior:** Manual loading via the `Read` tool as needed.
 - **Purpose:** Best practices for specific technologies or patterns (e.g., Python, REST APIs).
 - **Efficiency:** Reduces baseline context by 60-80% by avoiding unnecessary data loading.
@@ -40,18 +39,10 @@ The configuration follows a **Progressive Disclosure Strategy**, separating crit
 ```text
 ~/.claude/
 ├── CLAUDE.md                # Core engineering mandates (auto-loaded)
-├── rules/                   # TIER 1: Always-on critical constraints
-│   ├── security.md          # Input validation, secret management
-│   ├── testing.md           # Coverage thresholds & verification strategies
-│   └── tools.md             # Standardized CLI command references
-├── guidelines/              # TIER 2: On-demand domain knowledge
-│   ├── python.md            # Idiomatic Python & async patterns
-│   ├── api-design.md        # RESTful principles & schema standards
-│   ├── database.md          # ORM optimization & migration workflows
-│   └── documentation.md     # Documentation standards
-├── skills/                  # TIER 3: Intent-based workflows
+├── skills/                  # Intent-based workflows and references
 │   ├── code-refactor/       # Modernization & cleanup sequences
-│   └── research/            # Structured discovery & analysis
+│   └── python-pro/          # Python guidance
+│       └── reference/       # Python, API, database, and docs references
 └── agents/                  # TIER 4: Specialized subagents
     └── code-reviewer.md     # Read-only semantic analysis configuration
 ```
@@ -79,10 +70,10 @@ To maintain a lean context window, only load guidelines relevant to the current 
 
 ```bash
 # For Python-centric feature development
-Read ~/.claude/guidelines/python.md
+Read ~/.claude/skills/python-pro/reference/python.md
 
 # For API architectural planning
-Read ~/.claude/guidelines/api-design.md
+Read ~/.claude/skills/python-pro/reference/api-design.md
 ```
 
 ### Executing Specialized Reviews
