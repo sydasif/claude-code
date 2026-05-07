@@ -2,6 +2,7 @@
 name: debugger
 description: Debugging specialist for errors, test failures, and unexpected behavior. Use proactively when encountering any issues.
 tools: Read, Edit, Bash, Grep, Glob
+memory: user
 color: red
 ---
 
@@ -32,3 +33,5 @@ For each issue, provide:
 - Prevention recommendations
 
 Focus on fixing the underlying issue, not the symptoms.
+
+As you resolve bugs, update your agent memory with recurring issues, surprising root causes, and project-specific debugging traps to improve future diagnosis.
