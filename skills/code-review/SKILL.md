@@ -41,34 +41,40 @@ Inspect the file system to confirm expected outputs:
 Work through this checklist against the actual diff, not from memory.
 
 **Correctness**
+
 - [ ] Logic changes preserve the original behavior (or the deviation is intentional and documented)
 - [ ] Edge cases are handled: empty inputs, None, zero, out-of-range values
 - [ ] Error handling is specific — no new bare `except:` blocks introduced
 - [ ] No silent failures: errors surface rather than being swallowed
 
 **Public contracts**
+
 - [ ] No public function signatures changed without explicit user approval
 - [ ] No exported names renamed or removed
 - [ ] No config key names or environment variable names changed
 - [ ] API response shapes preserved
 
 **Tests**
+
 - [ ] All tests pass at the same rate as the pre-change baseline
 - [ ] No tests were deleted, weakened, or skipped to make the diff pass
 - [ ] New helpers or changed shared utilities have test coverage
 - [ ] Coverage did not meaningfully drop from baseline
 
 **Dead code and hygiene**
+
 - [ ] No new unused imports were introduced
 - [ ] No debug `print` statements or commented-out code left in
 - [ ] No TODO/FIXME comments introduced without a tracking reference
 
 **Documentation and references**
+
 - [ ] Inline comments reflect current behavior, not prior behavior
 - [ ] Any updated public APIs are reflected in docstrings
 - [ ] Cross-skill references (`code-cleanup`, `code-refactor` notes) are resolved or explicitly deferred
 
 **Security and safety (flag, do not fix)**
+
 - [ ] No secrets, tokens, or credentials appear in the diff
 - [ ] No new shell injection vectors (unescaped user input in subprocess calls, etc.)
 - [ ] No new file path traversal risks

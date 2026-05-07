@@ -38,12 +38,15 @@ Use these tie-breakers:
 Run these checks before any analysis or editing. Stop and confirm with the user if any gate fails.
 
 ### Gate 1 — Git cleanliness
+
 Run `git status`. If there are uncommitted user changes, confirm the cleanup scope explicitly before proceeding. Do not mistake in-progress work for cleanup targets.
 
 ### Gate 2 — Test coverage baseline
+
 Assess whether the codebase has meaningful automated test coverage before ranking anything as "safe cleanup." If test coverage is thin or absent, escalate all findings to "needs care" and warn the user. YAGNI and KISS cleanup without tests can break behavior silently.
 
 ### Gate 3 — Project-level overrides
+
 Read `AGENTS.md`, `README.md`, contribution docs, and any style/convention files. If project-level guidance conflicts with the principles in this skill, **project guidance takes precedence**. Note any overrides in the findings report.
 
 ---
@@ -68,16 +71,19 @@ Read `AGENTS.md`, `README.md`, contribution docs, and any style/convention files
 ### 3. Rank findings before editing
 
 **Safe cleanup** — low risk, act directly:
+
 - Unused imports, dead helpers with zero call sites, stale comments describing removed behavior.
 - Duplicated branches with byte-for-byte identical behavior.
 - Docs that describe code structure that no longer exists.
 
 **Needs care** — confirm or flag before acting:
+
 - Public tools, exported names, documented behavior, config formats.
 - Test fixtures that may be used by consumers outside the repo.
 - Anything where test coverage is thin.
 
 **Usually skip** — document as skipped with reason:
+
 - Tiny duplication that is clearer inline than abstracted.
 - Abstractions that encode a real domain boundary.
 - Compatibility shims with known external users.
@@ -101,6 +107,7 @@ Resolve conflicts using the priority order: KISS, then YAGNI, then DRY.
 ### 6. Update docs
 
 Update docs when:
+
 - Files move or are deleted.
 - Helper ownership or location changes.
 - Test coverage materially changes.
@@ -130,7 +137,7 @@ Look for code that exists only for hypothetical future use:
 
 If any answer is "yes" or "unclear," report it as a compatibility risk — do not delete.
 
-> **YAGNI misapplication guard**: YAGNI is not a license for sloppy deletion. The goal is to remove speculative complexity, not to paint the codebase into a corner. Prefer removing *implementations* of unused features over removing *seams* that make future change possible.
+> **YAGNI misapplication guard**: YAGNI is not a license for sloppy deletion. The goal is to remove speculative complexity, not to paint the codebase into a corner. Prefer removing _implementations_ of unused features over removing _seams_ that make future change possible.
 
 ---
 
@@ -139,6 +146,7 @@ If any answer is "yes" or "unclear," report it as a compatibility risk — do no
 Reduce duplication only when the duplication has maintenance cost.
 
 **Good DRY targets:**
+
 - Repeated error mapping, task setup, serialization, validation, or result shaping across modules.
 - Multiple tests reimplementing the same nontrivial fixture or async fake.
 - Docs repeating stale architecture in several places.
@@ -146,6 +154,7 @@ Reduce duplication only when the duplication has maintenance cost.
 **Rule of Three**: Duplicate code once if necessary. On the third occurrence across distinct call sites, treat it as a DRY candidate and extract a shared helper.
 
 **Skip DRY when:**
+
 - Two call sites are similar but likely to evolve differently (shared name, different policy).
 - A helper would obscure a simple one-liner.
 - The abstraction name would be vaguer than the code it replaces.

@@ -6,14 +6,14 @@ description: Modernize legacy Python code with best practices, type hints, and e
 # Python Refactoring Specialist
 
 > **Prerequisite**: Run the `code-cleanup` skill before this one if the codebase hasn't been pruned recently.
-> This skill modernizes code that *should exist* — not code that should be deleted.
+> This skill modernizes code that _should exist_ — not code that should be deleted.
 > Cleanup first, refactor second.
 
 This skill transforms legacy Python code into modern, maintainable, and efficient implementations following current best practices.
 
 > If `guidelines`, are missing, treat those as informational placeholders and apply your team's conventions directly.
 
-- For comprehensive  best practices, see [Guidelines](../../guidelines)
+- For comprehensive best practices, see [Guidelines](../../guidelines)
 
 ---
 
@@ -35,35 +35,42 @@ This skill transforms legacy Python code into modern, maintainable, and efficien
 ### 3. Modernization Checklist
 
 **String and data handling**
+
 - [ ] All string formatting uses f-strings (replace `%` and `.format()`)
 - [ ] Path operations use `pathlib` (replace `os.path.*`)
 - [ ] Config parsing uses `tomllib` (3.11+) or `tomli` where `configparser` is overkill
 
 **Type system**
+
 - [ ] Function signatures have type hints on inputs and return values
 - [ ] Keyword-only arguments used where callers should not rely on positional order
 - [ ] `TypedDict` or dataclasses used for structured dicts passed between functions
 
 **Classes and data structures**
+
 - [ ] Simple attribute-only classes replaced with `@dataclass`
 - [ ] Boilerplate methods (`__init__`, `__repr__`, `__eq__`) removed where dataclass covers them
 - [ ] `__slots__` added to hot-path dataclasses where memory efficiency matters
 
 **Control flow**
+
 - [ ] Long `if/elif` chains over a single variable replaced with `match` statements (Python 3.10+)
 - [ ] Complex lambda functions moved to named functions
 - [ ] Iterations use appropriate patterns: `enumerate`, list/dict/set comprehensions, `zip`
 
 **Resource and error handling**
+
 - [ ] Context managers handle all file, socket, and connection resources
 - [ ] Exception handling is specific — no bare `except:` or `except Exception:` without re-raise
 - [ ] `print` statements for diagnostics replaced with `logging` calls at appropriate levels
 
 **Async (if applicable)**
+
 - [ ] `asyncio` patterns are consistent — no mixing of sync blocking calls inside async functions
 - [ ] `async with` and `async for` used where available on async-capable resources
 
 **Imports**
+
 - [ ] Imports organized in standard groups: stdlib → third-party → local
 - [ ] No unused imports (should already be clear after `code-cleanup` pass)
 
