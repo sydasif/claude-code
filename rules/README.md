@@ -1,26 +1,17 @@
 # Rules Index
 
-This folder contains detailed rules extracted from `CLAUDE.md`. Each file covers a specific domain:
+This folder contains domain-specific rules that are referenced from `CLAUDE.md`.
 
-## Core Rules
+## Language & Framework Rules
 
-- **[authority.md](authority.md)** — Decision boundaries and authority levels
-- **[engineering_lifecycle.md](engineering_lifecycle.md)** — Discovery, planning, and execution phases
-- **[core_principles.md](core_principles.md)** — Core engineering principles
-- **[escalation.md](escalation.md)** — Situations requiring immediate halt and escalation
+- **[python.md](python.md)** — Python toolchain (uv, ruff, pyright, mypy, pytest), type checker selection, workflows, security scans
+- **[git.md](git.md)** — Git branching conventions and commit message standards
 
-## Specialized Rules
+## Security & Quality Rules
 
-- **[security.md](security.md)** — Security rules (input, auth, execution, transport, files)
-- **[python.md](python.md)** — Python toolchain (uv, ruff, pyright, mypy, pytest)
-- **[testing.md](testing.md)** — Testing standards and coverage thresholds
-- **[git.md](git.md)** — Git branching and commit message conventions
-
-## Output & Reporting
-
-- **[output_structure.md](output_structure.md)** — Mandatory output format for completed tasks
-- **[failure_handling.md](failure_handling.md)** — How to handle incomplete tasks
+- **[security.md](security.md)** — Security enforcement (input validation, secrets, execution safety, transport, file handling)
+- **[testing.md](testing.md)** — Testing standards, coverage thresholds, test authoring rules
 
 ---
 
-**Note:** `CLAUDE.md` remains the executive summary. Refer to these files for detailed guidance on specific domains.
+**Note:** Core instructions (Authority & Decision Boundaries, Engineering Lifecycle, Core Principles, Output Structure, Escalation Triggers, Failure Handling) remain in `CLAUDE.md` as foundational guidance. This folder holds supplementary domain-specific rules.
