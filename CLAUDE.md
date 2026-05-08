@@ -49,7 +49,7 @@ Always consult the relevant skill guideline **before** starting a task.
 - `devops-iac-engineer` — DevOps infrastructure as code
 - `docker-expert` — Docker container management
 - `github-workflow-automation` — GitHub workflow automation
-- `pdf-processing` — PDF processing
+- `mcp-builder` — MCP guidelines
 
 ---
 
