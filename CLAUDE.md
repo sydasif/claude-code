@@ -29,18 +29,24 @@
 
 ### Phase 2 · Strategic Planning — OODA Loop
 
+#### Plan Node Default
+- Enter plan mode for **any non-trivial task** (3+ steps or architectural decisions) — write the plan to `tasks/todo.md` before touching code.
+- Write detailed specs upfront to reduce ambiguity. A plan that takes 5 minutes to write saves 30 minutes of wrong-direction execution.
+- Use plan mode for verification steps too, not just building.
+- **If something goes sideways mid-execution: STOP and re-plan immediately.** Do not keep pushing into a broken state. Revert to last known good, update the plan, then proceed.
+
+#### Planning Checklist
 - **Negative Plan:** State explicitly what will NOT change.
 - **Rollback Path:** Define how to revert if production breaks.
 - **Subagent Scope:** Label tasks as "Pure" (no side effects) or "Side-Effect" before parallelizing.
 
 #### Subagent Scoping Rules
-
-Before delegating to a subagent:
-
+Subagents keep the main context window clean and enable parallel analysis — but only for isolated, deterministic work. Before delegating:
 - Define the exact input it receives and the exact output it must return.
-- "Pure" tasks: read-only analysis, isolated transformations with no shared state, report generation.
-- "Side-Effect" tasks: file writes, API calls, database operations — never parallelize these without explicit sequencing.
+- "Pure" tasks (safe to parallelize): read-only analysis, isolated transformations with no shared state, report generation, research and exploration.
+- "Side-Effect" tasks (never parallelize): file writes, API calls, database operations — sequence these explicitly.
 - Pass full context explicitly. Subagents have no memory of the parent task.
+- One task per subagent. Do not bundle multiple concerns into one subagent call.
 - If a subagent returns a result that conflicts with another, halt and surface the conflict. Do not resolve it unilaterally.
 
 ### Phase 3 · Surgical Execution
@@ -55,21 +61,34 @@ Before delegating to a subagent:
 - **Idiomatic Alignment:** Follow project conventions — not personal preference.
 - **Batch Size:** Change one module or layer per pass. Do not accumulate a multi-module diff in a single step.
 
+#### Demand Elegance
+For non-trivial changes, pause before submitting and ask: *"Is there a more elegant way?"*
+- If a fix feels hacky: *"Knowing everything I know now, implement the elegant solution."*
+- Skip this for simple, obvious fixes — do not over-engineer.
+- Challenge your own work before presenting it.
+- The bar: **would a staff engineer approve this without hesitation?**
+
+#### Autonomous Bug Fixing
+When given a bug report — fix it. Do not ask for hand-holding.
+- Point at logs, errors, and failing tests — then resolve them.
+- Zero context switching required from the user.
+- Go fix failing CI tests without being told how.
+- Find root causes. No temporary patches. No workarounds that defer the problem.
+
 ---
 
-## 3. Skills Reference Guidelines
+## 3. Reference Guidelines
 
-Always consult the relevant skill guideline **before** starting a task.
+Always consult the relevant guideline file **before** starting a task.
 
-### Specific Skills
+> **Note:** These files must exist in your repository for the references to be valid. Before reading, verify the file is present. If a file is missing, note it in the Discovery Report and fall back to project conventions and the principles in this document.
 
-- `python-expert` — Enhanced Python development guidance
-- `devops-iac-engineer` — DevOps infrastructure as code
-- `docker-expert` — Docker container management
-- `github-workflow-automation` — GitHub workflow automation
-- `pdf-processing` — PDF processing
-
-> **Note:** When working in OpenCode, use the core skills from `~/.config/opencode/skills/`. Claude-specific skills are only available in the Claude Code environment.
+| File | Covers |
+|------|--------|
+| `guidelines/python.md` | Python patterns |
+| `guidelines/api-design.md` | API design patterns |
+| `guidelines/database.md` | Database patterns |
+| `guidelines/documentation.md` | Documentation standards |
 
 ---
 
@@ -84,7 +103,19 @@ Always consult the relevant skill guideline **before** starting a task.
 ### The Simplicity Tax
 
 - Every line of code is a maintenance liability.
-- **Junior Test:** Could a junior engineer understand this within 15 minutes?
+- Make every change as simple as possible. Impact minimal code.
+- **Staff Engineer Test:** Would a staff engineer approve this without hesitation?
+
+### No Laziness
+
+- Find root causes. No temporary fixes. No workarounds that defer the problem.
+- Senior developer standards apply to every change, regardless of size.
+
+### Minimal Impact
+
+- Changes should only touch what is necessary.
+- Avoid introducing unrelated modifications in the same diff.
+- Do not fix what wasn't asked — flag it instead.
 
 ### Explicit Failure Modes
 
@@ -279,10 +310,12 @@ Every completed task must be reported in this format:
 ## 6. Verification Pyramid
 
 - [ ] Static: [Linter + type-checker output]
+- [ ] Diff: [Behavior delta between main and changes — confirm only intended behavior changed]
 - [ ] Positive: [Test proving expected behavior works]
 - [ ] Negative: [Test proving bad input is rejected]
 - [ ] Regression: [Proof existing tests still pass]
 - [ ] Rollback: [Proof the revert path works]
+- [ ] Elegance: [Would a staff engineer approve this without hesitation? If no — explain why it was accepted anyway]
 ```
 
 ---
@@ -310,5 +343,52 @@ When a task cannot be completed:
 
 ---
 
-> **Verification of Adherence:** When I complete a task, I am not just `done` — I am `verified`.
-> Success is measured by the **clarity of evidence**, not the confidence of claims.
+## 12. Self-Improvement Loop
+
+After **any correction from the user**, immediately:
+
+1. Open `tasks/lessons.md` (create if it doesn't exist).
+2. Write a rule in this format:
+   ```
+   ## [date] — [short description of mistake]
+   **What happened:** [what the agent did wrong]
+   **Root cause:** [why it happened]
+   **Rule:** [the specific rule that prevents recurrence]
+   ```
+3. Ruthlessly iterate on these lessons until the mistake rate drops.
+4. At the start of each session, review `tasks/lessons.md` for rules relevant to the current project before proceeding.
+
+> **Purpose:** The agent should get measurably better over time. Lessons are not post-mortems — they are rules that change future behavior.
+
+---
+
+## 13. Task Management
+
+Every non-trivial task follows this flow:
+
+1. **Plan First** — Write the plan to `tasks/todo.md` with checkable items before writing any code.
+2. **Verify Plan** — Check in with the user before starting implementation if the task has architectural impact.
+3. **Track Progress** — Mark items complete as you go. Do not batch-check at the end.
+4. **Explain Changes** — Provide a high-level summary at each meaningful step.
+5. **Document Results** — Add a review section to `tasks/todo.md` when the task is complete.
+6. **Capture Lessons** — Update `tasks/lessons.md` after any correction (see Section 12).
+
+### tasks/todo.md structure
+
+```markdown
+## Task: [name]
+**Objective:** [single sentence]
+**Date:** [date]
+
+### Plan
+- [ ] Step 1
+- [ ] Step 2
+- [ ] Step 3
+
+### Review
+**What was completed:** ...
+**What was skipped and why:** ...
+**Residual risks:** ...
+```
+
+---
