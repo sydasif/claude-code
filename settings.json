@@ -10,14 +10,24 @@
     "allow": [],
     "deny": []
   },
-  "model": "opus",
+  "model": "sonnet",
   "hooks": {
-    "PreToolUse": [],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash ~/.claude/hooks/protect-files.sh"
+          }
+        ]
+      }
+    ],
     "SessionStart": []
   },
   "statusLine": {
     "type": "command",
-    "command": "/bin/bash /home/zulu/.claude/hooks/statusline.sh"
+    "command": "/bin/bash ~/.claude/hooks/statusline.sh"
   },
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true,
