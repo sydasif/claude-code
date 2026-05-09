@@ -12,16 +12,7 @@
   },
   "model": "sonnet",
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash ~/.claude/hooks/protect-files.sh"
-          }
-        ]
-      },
+    "PostToolUse": [
       {
         "matcher": "Bash",
         "hooks": [
@@ -41,6 +32,17 @@
           {
             "type": "command",
             "command": "/bin/bash ~/.claude/hooks/ruff-after-edit.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/bash ~/.claude/hooks/protect-files.sh"
           }
         ]
       }
