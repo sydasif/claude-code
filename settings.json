@@ -14,15 +14,6 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/usr/bin/python3 ~/.claude/hooks/block-cmd.py"
-          }
-        ]
-      },
-      {
         "matcher": "Write|Edit|MultiEdit",
         "hooks": [
           {
@@ -37,6 +28,15 @@
       }
     ],
     "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 ~/.claude/hooks/block-cmd.py"
+          }
+        ]
+      },
       {
         "matcher": "Edit|Write",
         "hooks": [
