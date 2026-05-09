@@ -40,7 +40,7 @@
           },
           {
             "type": "command",
-            "command": "/bi/bash ~/.claude/hooks/ruff-after-edit.sh"
+            "command": "/bin/bash ~/.claude/hooks/ruff-after-edit.sh"
           }
         ]
       }
