@@ -24,7 +24,6 @@
       "Bash(dd *)"
     ],
     "allow": [
-      "Read(*)",
       "Bash(ls *)",
       "Bash(pwd)",
       "Bash(git status)",
@@ -41,7 +40,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx prettier --write \"$CLAUDE_TOOL_INPUT_FILE_PATH\""
+            "command": "/bin/bash ~/.claude/hooks/prettier-after-edit.sh"
           },
           {
             "type": "command",
