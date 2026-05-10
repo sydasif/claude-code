@@ -53,10 +53,7 @@ Then follow any instructions inside that file to load sub-references as needed.
 
 | Skill | Path | Use When |
 | :---- | :--- | :------- |
-| `python-expert` | `~/.claude/skills/python-expert/SKILL.md` | Python development, typing, async, frameworks |
-| `devops-iac-engineer` | `~/.claude/skills/devops-iac-engineer/SKILL.md` | Terraform, Kubernetes, cloud infrastructure |
 | `docker-expert` | `~/.claude/skills/docker-expert/SKILL.md` | Dockerfile, Compose, container security |
-| `github-workflow-automation` | `~/.claude/skills/github-workflow-automation/SKILL.md` | GitHub Actions, PR automation, GitOps |
 | `mcp-builder` | `~/.claude/skills/mcp-builder/SKILL.md` | Building MCP servers (Python or TypeScript) |
 | `code-cleanup` | `~/.claude/skills/code-cleanup/SKILL.md` | Pruning dead code, YAGNI/DRY/KISS pass |
 | `code-refactor` | `~/.claude/skills/code-refactor/SKILL.md` | Modernising legacy Python |

@@ -7,6 +7,14 @@
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemini-3.1-flash-lite"
   },
   "permissions": {
+    "allow": [
+      "Bash(ls *)",
+      "Bash(pwd)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(uv sync)",
+      "Bash(ruff check *)"
+    ],
     "deny": [
       "Read(.env*)",
       "Read(*/.env*)",
@@ -22,17 +30,9 @@
       "Bash(git push --force *)",
       "Bash(mkfs *)",
       "Bash(dd *)"
-    ],
-    "allow": [
-      "Bash(ls *)",
-      "Bash(pwd)",
-      "Bash(git status)",
-      "Bash(git diff)",
-      "Bash(uv sync)",
-      "Bash(ruff check *)"
     ]
   },
-  "model": "opus",
+  "model": "haiku",
   "hooks": {
     "PostToolUse": [
       {
