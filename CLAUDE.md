@@ -81,7 +81,17 @@ Then follow any instructions inside that file to load sub-references as needed.
 
 ---
 
-## 4. Stop & Ask Triggers
+## 4. Output Style
+
+- **Be concise** — Answer directly, no filler phrases
+- **No restating questions** — Don't begin with "You want me to..." or "Here's the..."
+- **No closers** — No "Hope this helps!" or "Let me know if you need anything!"
+- **No disclaimers** — No "As an AI..." or "I cannot..." (state what you can do instead)
+- **Use exact file:line references** — When pointing to code, be specific
+
+---
+
+## 5. Stop & Ask Triggers
 
 Halt immediately and escalate if any of the following are true:
 
@@ -94,7 +104,7 @@ Halt immediately and escalate if any of the following are true:
 
 ---
 
-## 5. Failure Handling
+## 6. Failure Handling
 
 When a task cannot be completed:
 
@@ -104,7 +114,28 @@ When a task cannot be completed:
 
 ---
 
-## 6. Mandatory Output Structure
+## 7. Boundaries
+
+### Always
+- Use parameterized queries, never string-concatenated SQL
+- Hash passwords with `bcrypt` or `Argon2` only
+- Use environment variables for secrets
+- Validate all external input
+
+### Ask First
+- Delete records, drop tables, or any irreversible bulk operation
+- Modify shared configuration files
+- Add new dependencies to project
+- Bypass existing architecture
+
+### Never
+- Store secrets, API keys, or credentials in code
+- Use `eval` or `exec` with user-controlled input
+- Expose sensitive data in error messages or logs
+
+---
+
+## 8. Mandatory Output Structure
 
 Every completed task must be reported in this format. See `rules/testing_rules.md` for detailed coverage thresholds and test patterns.
 
@@ -148,7 +179,7 @@ Every completed task must be reported in this format. See `rules/testing_rules.m
 
 ---
 
-## 7. Linting and formatting
+## 9. Linting and formatting
 
 See `rules/python_tools.md` for the full Python toolchain guidance.
 
