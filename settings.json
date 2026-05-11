@@ -1,61 +1,39 @@
 {
   "env": {
-    "ANTHROPIC_BASE_URL": "http://localhost:4000",
+    "ANTHROPIC_BASE_URL": "http://localhost:8080/anthropic",
     "ANTHROPIC_AUTH_TOKEN": "sk-1234",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "gemini-3.1-flash-lite",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "gemma-4-31b-it",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemma-4-26b-a4b-it"
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "gemini/gemini-3.1-flash-lite",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "gemini/gemma-4-31b-it",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemini/gemma-4-26b-a4b-it"
   },
   "permissions": {
     "allow": [
-      "Bash(ls *)",
       "Bash(pwd)",
-      "Bash(git status)",
+      "Bash(ls *)",
       "Bash(git diff)",
-      "Bash(uv sync)",
+      "Bash(git status)",
       "Bash(ruff check *)"
     ],
     "deny": [
-      "Read(.env*)",
-      "Read(*/.env*)",
       "Read(.git/*)",
+      "Read(.env*)",
       "Read(*.pem)",
       "Read(*.key)",
-      "Read(id_rsa*)",
-      "Read(credentials.json)",
-      "Read(secrets.json)",
-      "Bash(rm -rf *)",
-      "Bash(sudo *)",
-      "Bash(chmod 777 *)",
-      "Bash(git push --force *)",
       "Bash(mkfs *)",
-      "Bash(dd *)"
+      "Bash(sudo *)",
+      "Read(*/.env*)",
+      "Read(id_rsa*)",
+      "Bash(rm -rf *)",
+      "Bash(chmod 777 *)",
+      "Read(secrets.json)",
+      "Read(credentials.json)",
+      "Bash(git push --force *)"
     ]
   },
-  "model": "opus",
+  "model": "sonnet",
   "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/bash ~/.claude/hooks/ruff-after-edit.sh"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ~/.claude/hooks/block-patterns.py"
-          }
-        ]
-      }
-    ],
+    "PostToolUse": [],
+    "PreToolUse": [],
     "Stop": []
   },
   "statusLine": {
