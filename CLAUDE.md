@@ -44,7 +44,7 @@ Before delegating to a subagent:
 Skills are **not auto-loaded**. Before starting a task, explicitly read the relevant skill file with the `Read` tool, e.g.:
 
 ```bash
-Read ~/.claude/skills/python-expert/SKILL.md
+Read ~/.claude/skills/code-cleanup/SKILL.md
 ```
 
 Then follow any instructions inside that file to load sub-references as needed.

@@ -13,7 +13,7 @@ This skill transforms legacy Python code into modern, maintainable, and efficien
 
 > If `guidelines`, are missing, treat those as informational placeholders and apply your team's conventions directly.
 
-- For comprehensive Python best practices, see `python-expert` skill.
+
 
 ---
 
