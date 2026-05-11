@@ -243,3 +243,9 @@ When operating as an agent across multiple passes or context windows:
 - Batch changes by module. Do not accumulate a multi-module diff and apply it in one step.
 - Never weaken a failing test to make cleanup pass. Surface the failure and stop.
 - If a cleanup action introduces a regression the agent cannot resolve, revert and report — do not work around it silently.
+
+---
+
+## See Also
+
+- `code-refactor` skill — For modernizing Python code after cleanup

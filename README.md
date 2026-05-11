@@ -39,8 +39,13 @@ The configuration follows a **Progressive Disclosure Strategy**, separating crit
 ```text
 ~/.claude/
 ├── CLAUDE.md                # Core engineering mandates (auto-loaded)
-├── skills/                  # Intent-based workflows and references
-│   ├── code-refactor/       # Modernization & cleanup sequences
+├── rules/                   # Domain-specific rules (git, testing, python)
+├── skills/                  # Intent-based workflows
+│   ├── code-cleanup/        # YAGNI/DRY/KISS cleanup
+│   ├── code-refactor/       # Python modernization
+│   ├── code-review/         # Final gate review
+│   ├── docker-expert/       # Container guidance
+│   └── mcp-builder/         # MCP server creation
 └── agents/                  # TIER 4: Specialized subagents
     └── code-reviewer.md     # Read-only semantic analysis configuration
 ```

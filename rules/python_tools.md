@@ -54,3 +54,9 @@ uv run bandit -r src/          # Static security analysis
 - **`safety check` findings:** Any vulnerability rated medium or above is a **blocking issue**. Report it in the Discovery Report under Assumptions & Risks and halt until the user confirms how to proceed. Low-severity findings are reported but do not block.
 - **`bandit` findings:** Severity HIGH or confidence HIGH = blocking. Everything else = report in the output structure under Assumptions & Risks, do not auto-fix.
 - Never suppress or ignore security scan output. If a finding is a known false positive, document why explicitly.
+
+---
+
+## See Also
+
+- `rules/testing_rules.md` — Test patterns, coverage thresholds

@@ -204,3 +204,8 @@ logger.error("Timeout on %s", host)
 ---
 
 Use this skill to modernize legacy Python code into clean, maintainable, and efficient implementations using contemporary Python features and best practices — after the codebase has been pruned with `code-cleanup`.
+
+## See Also
+
+- `code-cleanup` skill — Run this first to prune dead code before refactoring
+- `code-review` skill — For final gate review after refactoring

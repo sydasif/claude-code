@@ -35,3 +35,9 @@ These are **targets**, not hard gates that block all work on a new or under-test
 uv run pytest
 uv run pytest --cov=src --cov-branch --cov-fail-under=90
 ```
+
+---
+
+## See Also
+
+- `rules/python_tools.md` — Type checking, linting, security scans
