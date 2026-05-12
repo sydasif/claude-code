@@ -54,9 +54,7 @@ def extract_command_info(hook_data_str):
             if "file_path" in tool_input:
                 metadata["file_path"] = tool_input["file_path"]
             if "command" in tool_input:
-                metadata["command"] = tool_input["command"][
-                    :100
-                ]  # First 100 chars only
+                metadata["command"] = tool_input["command"][:100]  # First 100 chars only
             if "content" in tool_input:
                 metadata["content_size"] = len(str(tool_input["content"]))
             if "new_string" in tool_input:
@@ -65,10 +63,7 @@ def extract_command_info(hook_data_str):
                 metadata["old_string_size"] = len(str(tool_input["old_string"]))
             # Keep small metadata intact
             for key, value in tool_input.items():
-                if (
-                    key not in ["content", "new_string", "old_string"]
-                    and len(str(value)) < 200
-                ):
+                if key not in ["content", "new_string", "old_string"] and len(str(value)) < 200:
                     metadata[key] = value
             info["tool_metadata"] = metadata
 
@@ -95,9 +90,7 @@ def extract_command_info(hook_data_str):
             "user": os.environ.get("USER", "unknown"),
             "project": os.path.basename(os.getcwd()),
             "error": f"Failed to parse hook data: {str(e)}",
-            "raw_data": hook_data_str[:200] + "..."
-            if len(hook_data_str) > 200
-            else hook_data_str,
+            "raw_data": hook_data_str[:200] + "..." if len(hook_data_str) > 200 else hook_data_str,
         }
 
 

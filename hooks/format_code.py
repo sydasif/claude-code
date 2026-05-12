@@ -7,22 +7,35 @@ import sys
 from pathlib import Path
 
 PRETTIER_EXTENSIONS = {
-    ".js", ".jsx", ".mjs", ".cjs",
-    ".ts", ".tsx", ".mts", ".cts",
-    ".css", ".scss", ".less",
-    ".html", ".htm", ".vue",
-    ".json", ".json5", ".jsonc",
-    ".yaml", ".yml",
-    ".md", ".mdx",
-    ".graphql", ".gql",
+    ".js",
+    ".jsx",
+    ".mjs",
+    ".cjs",
+    ".ts",
+    ".tsx",
+    ".mts",
+    ".cts",
+    ".css",
+    ".scss",
+    ".less",
+    ".html",
+    ".htm",
+    ".vue",
+    ".json",
+    ".json5",
+    ".jsonc",
+    ".yaml",
+    ".yml",
+    ".md",
+    ".mdx",
+    ".graphql",
+    ".gql",
 }
 
 
 def format_prettier(file_path):
     try:
-        subprocess.run(
-            ["prettier", "--write", file_path], check=True, capture_output=True
-        )
+        subprocess.run(["prettier", "--write", file_path], check=True, capture_output=True)
         return True
     except (subprocess.CalledProcessError, FileNotFoundError):
         return False

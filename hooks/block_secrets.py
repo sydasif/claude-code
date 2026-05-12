@@ -46,7 +46,9 @@ def main():
 
         # Check prefix match for variant files (e.g. .env.production)
         # Requires trailing dot to avoid matching .envrc or .envfile
-        elif any(name_lower == ext or name_lower.startswith(ext + ".") for ext in sensitive_extensions):
+        elif any(
+            name_lower == ext or name_lower.startswith(ext + ".") for ext in sensitive_extensions
+        ):
             blocking = True
 
         # Check for dotted variants: name contains .key. or .pem. etc.

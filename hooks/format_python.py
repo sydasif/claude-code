@@ -18,9 +18,7 @@ def format_ruff(file_path):
 def lint_ruff(file_path):
     """Run ruff check --fix. Returns True if command ran (not whether issues were found)."""
     try:
-        subprocess.run(
-            ["ruff", "check", "--fix", file_path], check=False, capture_output=True
-        )
+        subprocess.run(["ruff", "check", "--fix", file_path], check=False, capture_output=True)
         return True
     except FileNotFoundError:
         return False

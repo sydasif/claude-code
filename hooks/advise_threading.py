@@ -24,7 +24,10 @@ def check_for_threading(content):
         (r"threading\.Lock", "threading.Lock"),
         (r"threading\.Event", "threading.Event"),
         (r"threading\.Semaphore", "threading.Semaphore"),
-        (r"(from\s+concurrent\.futures\s+import.*ThreadPoolExecutor|concurrent\.futures\.ThreadPoolExecutor)", "ThreadPoolExecutor"),
+        (
+            r"(from\s+concurrent\.futures\s+import.*ThreadPoolExecutor|concurrent\.futures\.ThreadPoolExecutor)",
+            "ThreadPoolExecutor",
+        ),
     ]
     detected_patterns = []
     for pattern, description in threading_patterns:
@@ -65,9 +68,7 @@ def main():
 
         hook_data = json.loads(hook_input)
 
-        tool_name = hook_data.get("tool_name", "") or os.environ.get(
-            "CLAUDE_TOOL_NAME", ""
-        )
+        tool_name = hook_data.get("tool_name", "") or os.environ.get("CLAUDE_TOOL_NAME", "")
         tool_input = hook_data.get("tool_input", {}) or hook_data
 
         # Only check Write, Edit, MultiEdit tools for Python content
