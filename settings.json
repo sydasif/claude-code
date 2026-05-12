@@ -34,15 +34,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/zulu/.claude/hooks/audit_logger.py"
+            "command": "python3 /home/zulu/.claude/hooks/audit_logger.py"
           },
           {
             "type": "command",
-            "command": "/home/zulu/.claude/hooks/format_code.py"
-          },
-          {
-            "type": "command",
-            "command": "/home/zulu/.claude/hooks/format_python.py"
+            "command": "python3 /home/zulu/.claude/hooks/format_python.py"
           }
         ]
       }
@@ -53,14 +49,15 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/zulu/.claude/hooks/block_secrets.py"
+            "command": "python3 /home/zulu/.claude/hooks/block_secrets.py"
           },
           {
             "type": "command",
-            "command": "/home/zulu/.claude/hooks/block_pip.py"
+            "command": "python3 /home/zulu/.claude/hooks/block_pip.py"
           },
           {
-            "command": "/home/zulu/.claude/hooks/advise_threading.py"
+            "type": "command",
+            "command": "python3 /home/zulu/.claude/hooks/advise_threading.py"
           }
         ]
       }
