@@ -35,15 +35,6 @@ Before delegating to a subagent:
 
 ---
 
-## Always-On Rules
-
-- **Python style**: @rules/python-style.md
-- **Python testing**: @rules/python-testing.md (or invoke `python-testing` skill)
-- **Git conventions**: @rules/git.md
-- **Templates**: @rules/templates.md
-
----
-
 ## Core Principles
 
 ### Security-First Engineering
@@ -152,21 +143,6 @@ See `rules/python-style.md` for the full Python toolchain guidance.
 - Format: `uv run ruff format .`
 
 > **Note**: `ruff` configuration lives in `pyproject.toml` under `[tool.ruff]`.
-
----
-
-## Available Skills
-
-| Skill            | Path                                       | Use When                                    |
-| :--------------- | :----------------------------------------- | :------------------------------------------ |
-| `docker-expert`  | `~/.claude/skills/docker-expert/SKILL.md`  | Dockerfile, Compose, container security     |
-| `mcp-builder`    | `~/.claude/skills/mcp-builder/SKILL.md`    | Building MCP servers (Python or TypeScript) |
-| `code-cleanup`   | `~/.claude/skills/code-cleanup/SKILL.md`   | Pruning dead code, YAGNI/DRY/KISS pass      |
-| `code-refactor`  | `~/.claude/skills/code-refactor/SKILL.md`  | Modernising legacy Python                   |
-| `code-review`    | `~/.claude/skills/code-review/SKILL.md`    | Final gate review before submitting work    |
-| `ddg-search`     | `~/.claude/skills/ddg-search/SKILL.md`     | Web search, documentation lookup            |
-| `python-testing` | `~/.claude/skills/python-testing/SKILL.md` | Testing patterns, coverage thresholds       |
-| `repomix`        | `~/.claude/skills/repomix/SKILL.md`        | Codebase packaging                          |
 
 ---
 
