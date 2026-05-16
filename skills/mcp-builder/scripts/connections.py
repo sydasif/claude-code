@@ -73,7 +73,9 @@ class MCPConnection(ABC):
 class MCPConnectionStdio(MCPConnection):
     """MCP connection using standard input/output."""
 
-    def __init__(self, command: str, args: list[str] = None, env: dict[str, str] = None):
+    def __init__(
+        self, command: str, args: list[str] = None, env: dict[str, str] = None
+    ):
         super().__init__()
         self.command = command
         self.args = args or []
@@ -109,43 +111,15 @@ class MCPConnectionHTTP(MCPConnection):
         return streamablehttp_client(url=self.url, headers=self.headers)
 
 
-def create_connection(
-    transport: str,
-    command: str = None,
-    args: list[str] = None,
-    env: dict[str, str] = None,
-    url: str = None,
-    headers: dict[str, str] = None,
-) -> MCPConnection:
-    """Factory function to create the appropriate MCP connection.
+def create_connection(connection_type: str, **kwargs) -> MCPConnection:
+    """Factory function to create MCP connections."""
+    connection_map = {
+        "stdio": MCPConnectionStdio,
+        "sse": MCPConnectionSSE,
+        "http": MCPConnectionHTTP,
+    }
 
-    Args:
-        transport: Connection type ("stdio", "sse", or "http")
-        command: Command to run (stdio only)
-        args: Command arguments (stdio only)
-        env: Environment variables (stdio only)
-        url: Server URL (sse and http only)
-        headers: HTTP headers (sse and http only)
+    if connection_type not in connection_map:
+        raise ValueError(f"Unknown connection type: {connection_type}")
 
-    Returns:
-        MCPConnection instance
-    """
-    transport = transport.lower()
-
-    if transport == "stdio":
-        if not command:
-            raise ValueError("Command is required for stdio transport")
-        return MCPConnectionStdio(command=command, args=args, env=env)
-
-    elif transport == "sse":
-        if not url:
-            raise ValueError("URL is required for sse transport")
-        return MCPConnectionSSE(url=url, headers=headers)
-
-    elif transport in ["http", "streamable_http", "streamable-http"]:
-        if not url:
-            raise ValueError("URL is required for http transport")
-        return MCPConnectionHTTP(url=url, headers=headers)
-
-    else:
-        raise ValueError(f"Unsupported transport type: {transport}. Use 'stdio', 'sse', or 'http'")
+    return connection_map[connection_type](**kwargs)

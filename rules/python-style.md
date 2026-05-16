@@ -6,8 +6,8 @@
 | --------- | ----------------------------------------------------------------------- |
 | `uv`      | Environment management + dependencies                                   |
 | `ruff`    | Linting + formatting                                                    |
-| `pyright` | Static type checking — new projects                                     |
-| `mypy`    | Static type checking — existing projects or legacy library dependencies |
+| `mypy`    | Static type checking — new projects                                     |
+| `pyright` | Static type checking — existing projects or legacy library dependencies |
 | `pytest`  | Test runner                                                             |
 
 ## Type Checker Selection
@@ -16,7 +16,7 @@ Before running type checks, determine which checker the project uses:
 
 | Situation                                                             | Use                                                          |
 | --------------------------------------------------------------------- | ------------------------------------------------------------ |
-| New project, no existing type config                                  | `pyright --strict`                                           |
+| New project, no existing type config                                  | `mypy --strict`                                              |
 | Existing project already configured with `mypy`                       | Keep `mypy` — do not migrate mid-project                     |
 | `pyrightconfig.json` present                                          | `pyright`                                                    |
 | `mypy.ini` or `[tool.mypy]` in `pyproject.toml` present               | `mypy`                                                       |
@@ -34,10 +34,10 @@ uv run ruff check --fix .      # Lint and auto-fix
 uv run ruff format .           # Format code
 
 # New projects
-uv run pyright src/            # Type check (strict)
+uv run mypy src/               # Type check (strict)
 
 # Existing projects
-uv run mypy src/               # Type check
+uv run pyright src/            # Type check
 
 uv run pytest                  # Run tests
 ```
@@ -59,4 +59,4 @@ uv run bandit -r src/          # Static security analysis
 
 ## See Also
 
-- `rules/testing_rules.md` — Test patterns, coverage thresholds
+- `@rules/python-testing.md` — Test patterns, coverage thresholds

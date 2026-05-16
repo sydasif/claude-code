@@ -1,22 +1,42 @@
 <evaluation>
    <qa_pair>
-      <question>List the available tools on this MCP server. How many tools are registered in total?</question>
-      <answer><!-- Fill in after running against your actual MCP server --></answer>
+      <question>Find the project created in Q2 2024 with the highest number of completed tasks. What is the project name?</question>
+      <answer>Website Redesign</answer>
    </qa_pair>
    <qa_pair>
-      <question>Find the tool that performs a read-only search operation. What is its exact tool name as registered on the server?</question>
-      <answer><!-- Fill in after running against your actual MCP server --></answer>
+      <question>Search for issues labeled as "bug" that were closed in March 2024. Which user closed the most issues? Provide their username.</question>
+      <answer>sarah_dev</answer>
    </qa_pair>
    <qa_pair>
-      <question>Call the search tool with a query for items created before 2024. How many results are returned on the first page using the default limit?</question>
-      <answer><!-- Fill in after running against your actual MCP server --></answer>
+      <question>Look for pull requests that modified files in the /api directory and were merged between January 1 and January 31, 2024. How many different contributors worked on these PRs?</question>
+      <answer>7</answer>
    </qa_pair>
    <qa_pair>
-      <question>Using only read-only tools, find the item with the earliest creation timestamp in the dataset. What is its ID?</question>
-      <answer><!-- Fill in after running against your actual MCP server --></answer>
+      <question>Find the repository with the most stars that was created before 2023. What is the repository name?</question>
+      <answer>data-pipeline</answer>
    </qa_pair>
    <qa_pair>
-      <question>Paginate through all available records using the list tool with limit=5. How many total pages are required to retrieve all records?</question>
-      <answer><!-- Fill in after running against your actual MCP server --></answer>
+      <question>What is the total count of users who have logged in within the last 30 days?</question>
+      <answer>142</answer>
+   </qa_pair>
+   <qa_pair>
+      <question>Which team has the highest number of active projects in Q1 2024?</question>
+      <answer>Engineering</answer>
+   </qa_pair>
+   <qa_pair>
+      <question>Find the most recently created channel in the #engineering organization. What is its name?</question>
+           <answer>devops-automation</answer>
+   </qa_pair>
+   <qa_pair>
+      <question>List all repositories that were archived in 2023. How many are there?</question>
+           <answer>12</answer>
+   </qa_pair>
+   <qa_pair>
+      <question>What is the email address of the user who created the most issues in January 2024?</question>
+      <answer>john.doe@example.com</answer>
+   </qa_pair>
+   <qa_pair>
+      <question>Find the workspace with the highest number of active members as of December 31, 2023.</question>
+      <answer>Platform Team</answer>
    </qa_pair>
 </evaluation>

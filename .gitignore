@@ -23,6 +23,7 @@ tasks/
 backups/
 sessions/
 .last-cleanup
+.ruff_cache/
 
 # Credentials and secrets
 .credentials.json
@@ -40,6 +41,4 @@ Thumbs.db
 *.backup
 *.bak
 *~
-hooks/__pycache__/approve-cmd.cpython-314.pyc
-hooks/__pycache__/block-cmd.cpython-314.pyc
 audit.log

@@ -30,7 +30,7 @@ The configuration follows a **Progressive Disclosure Strategy**, separating crit
 
 - **Path:** `~/.claude/agents/`
 - **Behavior:** Spawned for deterministic, isolated subtasks.
-- **Control:** Supports strict permissioning (e.g., read-only) and model-specific selection (Haiku vs. Sonnet).
+- **Control:** Supports strict permissioning and model-specific selection (gemma-4-26b, gemini-3.1-flash, gemma-4-31b).
 
 ---
 
@@ -44,10 +44,16 @@ The configuration follows a **Progressive Disclosure Strategy**, separating crit
 │   ├── code-cleanup/        # YAGNI/DRY/KISS cleanup
 │   ├── code-refactor/       # Python modernization
 │   ├── code-review/         # Final gate review
+│   ├── ddg-search/          # Web search & docs
 │   ├── docker-expert/       # Container guidance
-│   └── mcp-builder/         # MCP server creation
+│   ├── mcp-builder/         # MCP server creation
+│   ├── python-testing/     # Test patterns & coverage
+│   └── repomix/             # Codebase packaging
 └── agents/                  # TIER 4: Specialized subagents
-    └── code-reviewer.md     # Read-only semantic analysis configuration
+    ├── cleanup.md           # YAGNI/DRY/KISS cleanup
+    ├── refactor.md         # Python modernization
+    ├── research.md          # Deep-dive research
+    └── review.md            # Final-gate review
 ```
 
 ---
@@ -82,7 +88,7 @@ Utilize the read-only Subagent for semantic verification without risk of uninten
 
 ```bash
 # Request a structured review
-Use the code-reviewer subagent to analyze the current diff for PEP-8 compliance.
+Use the review subagent to analyze the current diff for adherence to standards.
 ```
 
 ---
