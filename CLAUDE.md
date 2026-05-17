@@ -5,13 +5,26 @@
 
 ---
 
+## Environment
+
+Declare these before any task begins. Sub-agents inherit this context explicitly.
+
+- **Runtime:** [e.g., Python 3.12 / Node 20 / Go 1.22]
+- **OS Target:** [e.g., Linux x86-64 / macOS arm64]
+- **Package Manager:** [e.g., uv / pnpm / cargo]
+- **Primary Framework:** [e.g., FastAPI / Next.js / Axum]
+
+---
+
 ## Authority
 
-| Proceed & Notify         | Propose & Wait               | Do Not Touch                    |
-| ------------------------ | ---------------------------- | ------------------------------- |
-| Refactoring, deps, tests | Architecture, APIs, new deps | Secrets, CI/CD, destructive ops |
+| Proceed & Notify                 | Propose & Wait                   | Do Not Touch                    |
+| -------------------------------- | -------------------------------- | ------------------------------- |
+| Refactoring, tests, dep upgrades | Architecture, APIs, net-new deps | Secrets, CI/CD, destructive ops |
 
-Destructive ops: stop, describe what will be destroyed, wait for confirmation.
+**Dep upgrade vs. net-new dep:** Upgrading an existing dep is Proceed & Notify. Adding a dependency that does not exist in the lockfile is Propose & Wait. Before proposing a net-new dep, check: last commit date, CVE history, and transitive weight.
+
+Destructive ops: stop, describe exactly what will be destroyed, wait for explicit confirmation.
 
 ---
 
@@ -19,18 +32,17 @@ Destructive ops: stop, describe what will be destroyed, wait for confirmation.
 
 1. **Discovery**: Surface assumptions → call-site search → pattern search → read rules
 2. **Plan**: State non-goals + rollback path. Isolate pure tasks for parallel execution.
-3. **Execute**: One module per pass. Skill chain: @cleanup → @refactor → @review.
-
-Pass full context to subagents. They have no memory between calls.
+3. **Execute**: One module per pass, with full context passed to sub-agents, and no memory between calls.
 
 ### Subagent Scoping Rules
 
 Before delegating to a subagent:
 
 - Define the exact input it receives and the exact output it must return.
-- "Pure" tasks: read-only analysis, isolated transformations with no shared state.
-- "Side-Effect" tasks: file writes, API calls — never parallelize these without explicit sequencing.
-- Pass full context explicitly. Subagents have no memory of the parent task.
+- **Pure tasks**: read-only analysis, isolated transformations with no shared state — safe to parallelize.
+- **Side-effect tasks**: file writes, API calls — never parallelize without explicit sequencing.
+- Pass full context explicitly. Sub-agents have no memory of the parent task.
+- If a subagent fails twice with the same error, halt and surface — do not retry blindly.
 - If a subagent returns conflicting results, halt and surface the conflict.
 
 ---
@@ -46,7 +58,7 @@ Before delegating to a subagent:
 ### The Simplicity Tax
 
 - Every line of code is a maintenance liability.
-- **Junior Test:** Could a junior engineer understand this within 15 minutes?
+- If a function needs more than one level of abstraction to explain verbally, simplify it.
 
 ### Explicit Failure Modes
 
@@ -55,64 +67,47 @@ Before delegating to a subagent:
 
 ---
 
-## Project Templates
+## Git
 
-Ready-to-use project templates. Each file shows the complete content inside code fences — copy it into your project and customize.
+- Commits are atomic: one logical change per commit.
+- Message format: `<type>(<scope>): <imperative summary>` — types: `feat`, `fix`, `refactor`, `test`, `chore`
+- Never commit commented-out code or debug artifacts.
 
-These files are **not** auto-loaded (they'd bloat every session). Reference them on demand.
+---
 
-| Template                | File                              | Purpose                                                             |
-| ----------------------- | --------------------------------- | ------------------------------------------------------------------- |
-| pyproject.toml          | `@templates/pyproject-toml.md`    | Project config with ruff, mypy, pytest, coverage, bandit, uv-secure |
-| README.md               | `@templates/readme-structure.md`  | Standard project README with dev and testing sections               |
-| .pre-commit-config.yaml | `@templates/pre-commit-config.md` | Pre-commit hooks for ruff, mypy, bandit, safety, pytest             |
-| GitHub Actions CI       | `@templates/github-actions-ci.md` | CI/CD pipeline with lint, test, security, and build jobs            |
+## Testing
 
-### Quick Start for a New Project
+This is a quick reference for testing.
 
-```bash
-# 1. Initialize project
-uv init my-project
-cd my-project
+- Framework: [fill in per project — e.g., pytest / vitest / go test]
+- Name tests: `test_<unit>_<condition>_<expected_outcome>`
+- No mocks on I/O boundaries you own. Mock only external deps (third-party APIs, cloud SDKs).
+- Every behaviour change ships with a matching test — positive and negative.
 
-# 2. Copy pyproject.toml template (from @templates/pyproject-toml.md)
-# 3. Copy pre-commit config template (from @templates/pre-commit-config.md)
-# 4. Copy CI workflow template to .github/workflows/ci.yml (from @templates/github-actions-ci.md)
-# 5. Copy README template (from @templates/readme-structure.md)
-
-# 6. Install dependencies
-uv sync
-
-# 7. Install pre-commit hooks
-uv run pre-commit install
-
-# 8. Run all checks
-uv run pre-commit run --all-files
-uv run pytest
-```
+> See `python-testing.md` for full details.
 
 ---
 
 ## Output Style
 
-- **Be concise** — Answer directly, no filler phrases
-- **No restating questions** — Don't begin with "You want me to..." or "Here's the..."
+- **Be concise** — Answer directly, no filler.
+- **No restating** — Don't begin with "You want me to…" or "Here's the…"
 - **No closers** — No "Hope this helps!" or "Let me know if you need anything!"
-- **No disclaimers** — No "As an AI..." or "I cannot..." (state what you can do instead)
-- **Use exact file:line references** — When pointing to code, be specific
+- **No disclaimers** — No "As an AI…" — state what you can do instead.
+- **Use exact file:line references** — When pointing to code, be specific.
 
 ---
 
 ## Required Output
 
-Every completed task must be reported in this format:
+> **Required for any task touching 2+ files or any task that modifies existing behaviour.**
 
 ```markdown
 ## 1. Discovery Report
 
 - **Found Patterns:** [e.g., "Project uses Pydantic for all validation"]
 - **Affected Areas:** [Files/modules that reference the changed code]
-- **Missing Guidelines:** [Any files from Section 2 that were absent]
+- **Missing Guidelines:** [Any expected config files that were absent]
 - **Coverage Baseline:** [Current coverage vs. thresholds — note any gaps]
 
 ## 2. Strategic Plan
@@ -126,7 +121,7 @@ Every completed task must be reported in this format:
 
 - **Assumption:** [e.g., "API always returns UTF-8 encoded responses"]
 - **Risk:** [e.g., "New dependency adds ~5MB to binary size"]
-- **Security Scan Findings:** [Any safety/bandit results, or "none"]
+- **Security Scan Findings:** [Any safety/bandit/audit results, or "none"]
 
 ## 4. Proposed Changes
 
@@ -138,12 +133,26 @@ Every completed task must be reported in this format:
 
 ## 6. Verification Pyramid
 
-- [ ] Static: [Linter + type-checker output]
-- [ ] Positive: [Test proving expected behavior works]
+- [ ] Static: ruff check + ruff format (or equivalent linter/type-checker) — output pasted here
+- [ ] Positive: [Test proving expected behaviour works]
 - [ ] Negative: [Test proving bad input is rejected]
 - [ ] Regression: [Proof existing tests still pass]
 - [ ] Rollback: [Proof the revert path works]
 ```
+
+---
+
+## Linting & Formatting
+
+**Quick reference** — `ruff` for both lint and format, see `python-style.md` for full details.
+
+```sh
+uv run ruff check .          # lint
+uv run ruff check --fix .    # lint + auto-fix
+uv run ruff format .         # format
+```
+
+> Config lives in `pyproject.toml` under `[tool.ruff]`. The Static step of the Verification Pyramid is not complete until ruff exits 0.
 
 ---
 
@@ -152,7 +161,7 @@ Every completed task must be reported in this format:
 Halt immediately and escalate if any of the following are true:
 
 1. A **security vulnerability** is found in unrelated code.
-2. The surgical scope has expanded to **more than 5 files outside the stated scope**.
+2. The surgical scope has expanded to **more than 5 files outside the Surgical Scope** defined in the Strategic Plan.
 3. Requirements are **contradictory** (e.g., "maximize speed" + "use this known-slow library").
 4. The correct solution requires **bypassing existing architecture**.
 5. A task requires a **destructive data operation**.
@@ -167,20 +176,6 @@ When a task cannot be completed:
 1. **Show the Dead End** — Provide the exact error, constraint, or blocker.
 2. **Offer Pivot Options** — "I can't do X because Y, but I can do Z instead."
 3. **Preserve Working State** — Deliver whatever partial work is valid and usable.
-
----
-
-## Linting and formatting
-
-See `rules/python-style.md` for the full Python toolchain guidance.
-
-**Quick reference**: Use `ruff` for both linting and formatting.
-
-- Lint: `uv run ruff check .`
-- Lint and auto-fix: `uv run ruff check --fix .`
-- Format: `uv run ruff format .`
-
-> **Note**: `ruff` configuration lives in `pyproject.toml` under `[tool.ruff]`.
 
 ---
 
