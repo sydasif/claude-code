@@ -1,5 +1,5 @@
 ---
-name: cleanup
+name: code-cleanup
 description: >
   Codebase cleanup applying YAGNI, DRY, and KISS principles.
   Invoke to remove dead code, duplicated logic, and over-abstraction.
@@ -11,10 +11,15 @@ skills:
 
 ## What I do
 
-I clean up codebases by removing dead code, deduplicating logic, and
-simplifying over-engineered abstractions. I follow KISS → YAGNI → DRY
-in that order when rules conflict. I never introduce new abstractions
-unless they genuinely reduce maintenance cost.
+I follow the `code-cleanup` skill exactly. Read it in full before
+starting any work. Do not paraphrase or shortcut its instructions.
+
+## Safety constraint
+
+Before deleting any function, class, or exported name, use `grep`/`rg`
+to search for both call sites and string references across all file types.
+Never rely on model memory for call-graph analysis. Zero call sites
+does not mean zero usages.
 
 ## When to invoke me
 
@@ -25,8 +30,8 @@ unless they genuinely reduce maintenance cost.
 
 ## What I produce
 
-A structured report of what was analyzed, changed, and any residual risks.
-Changes are batched by module with test verification after each pass.
+A structured report following the skill's reporting format. Changes
+are batched by module with test verification after each pass.
 
 ## When I stop
 
