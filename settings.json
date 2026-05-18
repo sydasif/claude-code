@@ -33,34 +33,55 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "",
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /home/zulu/.claude/hooks/audit_logger.py"
-          },
+            "command": "python3",
+            "args": ["/home/zulu/.claude/hooks/audit_logger.py"]
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
           {
             "type": "command",
-            "command": "python3 /home/zulu/.claude/hooks/format_python.py"
+            "command": "python3",
+            "args": ["/home/zulu/.claude/hooks/format_python.py"]
           }
         ]
       }
     ],
     "PreToolUse": [
       {
-        "matcher": "",
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /home/zulu/.claude/hooks/block_secrets.py"
-          },
+            "command": "python3",
+            "args": ["/home/zulu/.claude/hooks/block_secrets.py"]
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
           {
             "type": "command",
-            "command": "python3 /home/zulu/.claude/hooks/block_pip.py"
-          },
+            "command": "python3",
+            "args": ["/home/zulu/.claude/hooks/advise_threading.py"]
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
           {
             "type": "command",
-            "command": "python3 /home/zulu/.claude/hooks/advise_threading.py"
+            "command": "python3",
+            "args": ["/home/zulu/.claude/hooks/block_pip.py"],
+            "if": "Bash(pip install *)"
           }
         ]
       }
