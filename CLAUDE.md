@@ -84,7 +84,7 @@ This is a quick reference for testing.
 - No mocks on I/O boundaries you own. Mock only external deps (third-party APIs, cloud SDKs).
 - Every behaviour change ships with a matching test — positive and negative.
 
-> See `python-testing.md` for full details.
+> See `rules/python-testing.md` for full details.
 
 ---
 
@@ -144,7 +144,7 @@ This is a quick reference for testing.
 
 ## Linting & Formatting
 
-**Quick reference** — `ruff` for both lint and format, see `python-style.md` for full details.
+**Quick reference** — `ruff` for both lint and format, see `rules/python-style.md` for full details.
 
 ```sh
 uv run ruff check .          # lint

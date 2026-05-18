@@ -12,7 +12,10 @@
       "Bash(ls *)",
       "Bash(git diff)",
       "Bash(git status)",
-      "Bash(ruff check *)"
+      "Bash(uv run *)",
+      "Bash(ruff check *)",
+      "Bash(ruff format *)",
+      "Bash(ruff check --fix *)"
     ],
     "deny": [
       "Read(.git/*)",

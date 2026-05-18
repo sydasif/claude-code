@@ -46,7 +46,7 @@ def generate_async_suggestion(detected_patterns):
         "threading.Lock": "Use: asyncio.Lock()",
         "threading.Event": "Use: asyncio.Event()",
         "threading.Semaphore": "Use: asyncio.Semaphore()",
-        "ThreadPoolExecutor": "Use: asyncio.create_task() for I/O bound, or asyncio.run_in_executor() for CPU-bound tasks",
+        "ThreadPoolExecutor": "Use: loop.run_in_executor() for CPU-bound, asyncio.create_task() for I/O-bound",
     }
     advice = []
     for pattern in detected_patterns:
@@ -68,7 +68,9 @@ def main():
 
         hook_data = json.loads(hook_input)
 
-        tool_name = hook_data.get("tool_name", "") or os.environ.get("CLAUDE_TOOL_NAME", "")
+        tool_name = hook_data.get("tool_name", "") or os.environ.get(
+            "CLAUDE_TOOL_NAME", ""
+        )
         tool_input = hook_data.get("tool_input", {}) or hook_data
 
         # Only check Write, Edit, MultiEdit tools for Python content

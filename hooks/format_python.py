@@ -18,7 +18,9 @@ def format_ruff(file_path):
 def lint_ruff(file_path):
     """Run ruff check --fix. Returns True if command ran (not whether issues were found)."""
     try:
-        subprocess.run(["ruff", "check", "--fix", file_path], check=False, capture_output=True)
+        subprocess.run(
+            ["ruff", "check", "--fix", file_path], check=False, capture_output=True
+        )
         return True
     except FileNotFoundError:
         return False
@@ -52,8 +54,6 @@ def main():
         formatted = format_ruff(file_path)
         linted = lint_ruff(file_path)
 
-        if formatted or linted:
-            print(f"Formatted and linted {file_path}")
     except (json.JSONDecodeError, KeyError):
         pass
     sys.exit(0)
