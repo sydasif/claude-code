@@ -6,86 +6,20 @@
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "gemma-4-31b-it",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemma-4-26b-a4b-it"
   },
-  "permissions": {
-    "allow": [
-      "Bash(pwd)",
-      "Bash(ls *)",
-      "Bash(git diff)",
-      "Bash(git status)",
-      "Bash(uv run *)",
-      "Bash(ruff check *)",
-      "Bash(ruff format *)",
-      "Bash(ruff check --fix *)"
-    ],
-    "deny": [
-      "Read(.git/*)",
-      "Bash(mkfs *)",
-      "Bash(sudo *)",
-      "Read(id_rsa*)",
-      "Bash(rm -rf *)",
-      "Bash(chmod 777 *)",
-      "Read(secrets.json)",
-      "Read(credentials.json)",
-      "Bash(git push --force *)"
-    ]
-  },
   "hooks": {
     "PostToolUse": [
-      {
-        "matcher": ".*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3",
-            "args": ["/home/zulu/.claude/hooks/audit_logger.py"]
-          }
-        ]
-      },
       {
         "matcher": "Write|Edit|MultiEdit",
         "hooks": [
           {
             "type": "command",
             "command": "python3",
+            "if": ".py, .ipynb, .pyc",
             "args": ["/home/zulu/.claude/hooks/format_python.py"]
           }
         ]
       }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": ".*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3",
-            "args": ["/home/zulu/.claude/hooks/block_secrets.py"]
-          }
-        ]
-      },
-      {
-        "matcher": "Write|Edit|MultiEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3",
-            "args": ["/home/zulu/.claude/hooks/advise_threading.py"]
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3",
-            "args": ["/home/zulu/.claude/hooks/block_pip.py"],
-            "if": "Bash(pip install *)"
-          }
-        ]
-      }
-    ],
-    "Stop": []
+    ]
   },
   "statusLine": {
     "type": "command",
