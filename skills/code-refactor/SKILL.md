@@ -1,6 +1,6 @@
 ---
 name: code-refactor
-description: Modernize legacy Python code with best practices, type hints, and efficient patterns.
+description: Modernize legacy Python code with best practices, type hints, and efficient patterns. Use when asked to refactor, modernize, or update Python code.
 ---
 
 # Python Refactoring Specialist
@@ -11,9 +11,7 @@ description: Modernize legacy Python code with best practices, type hints, and e
 
 This skill transforms legacy Python code into modern, maintainable, and efficient implementations following current best practices.
 
-> If `guidelines`, are missing, treat those as informational placeholders and apply your team's conventions directly.
-
-
+> If `guidelines` are missing, treat those as informational placeholders and apply your team's conventions directly.
 
 ---
 
@@ -21,64 +19,80 @@ This skill transforms legacy Python code into modern, maintainable, and efficien
 
 ### 1. Assessment
 
-1. Identify legacy patterns in the code
-2. Prioritize refactoring based on impact and risk
-3. Check for existing tests — ensure they exist and pass before refactoring anything
+1. **Check the project's minimum supported Python version** before applying any version-gated pattern. Look in `pyproject.toml`, `setup.cfg`, `.python-version`, or CI config (e.g., `python-version` matrix in `.github/workflows/`). Only apply features available at or below that floor — do not use `match` statements on a 3.9 codebase, `tomllib` below 3.11, etc.
+2. **Inventory legacy patterns** using the Modernization Checklist below as your scanning tool. For each item, flag it as: _applies and safe_, _applies but needs version check_, or _not present_.
+3. Prioritize refactoring based on impact and risk.
+4. Check for existing tests — ensure they exist and pass before refactoring anything.
 
-### 2. Safe Refactoring Steps
+### 2. When to Skip a Modernization
 
-1. Run existing tests to establish a baseline
-2. Apply one refactoring pattern at a time
-3. Run tests after each change
-4. Verify functionality remains identical
+Not every pattern needs updating. Skip a change if:
 
-### 3. Modernization Checklist
+- The existing code is already clear, short, and readable — changing it adds ceremony without aiding comprehension or safety.
+- The change is version-gated and the project's minimum Python version is too low.
+- The file is generated, a one-off migration script, or otherwise unlikely to be maintained.
+- The abstraction introduced (e.g., a dataclass for a two-field struct) is heavier than the code it replaces.
+
+Apply modernization where it reduces noise, improves safety, or makes intent clearer — not as a mechanical sweep.
+
+### 3. Safe Refactoring Steps
+
+1. Run existing tests to establish a baseline.
+2. For large codebases with many mechanical changes (f-strings, pathlib, import ordering), consider running automated tools first — `pyupgrade`, `ruff --fix`, or `python-modernize` — to handle bulk transformations safely. Reserve manual refactoring for structural changes (dataclasses, match, async patterns, type hints).
+3. Apply one refactoring pattern at a time.
+4. Run tests after each change.
+5. Verify functionality remains identical.
+
+### 4. Modernization Checklist
 
 **String and data handling**
 
-- [ ] All string formatting uses f-strings (replace `%` and `.format()`)
-- [ ] Path operations use `pathlib` (replace `os.path.*`)
-- [ ] Config parsing uses `tomllib` (3.11+) or `tomli` where `configparser` is overkill
+- [ ] Replace `%` and `.format()` string formatting with f-strings
+- [ ] Replace `os.path.*` path operations with `pathlib`
+- [ ] Replace `configparser` with `tomllib` (3.11+) or `tomli` where appropriate
 
 **Type system**
 
-- [ ] Function signatures have type hints on inputs and return values
-- [ ] Keyword-only arguments used where callers should not rely on positional order
-- [ ] `TypedDict` or dataclasses used for structured dicts passed between functions
+- [ ] Add type hints to function signatures (inputs and return values)
+- [ ] Use keyword-only arguments where callers should not rely on positional order
+- [ ] Replace structured dicts passed between functions with `TypedDict` or dataclasses
 
 **Classes and data structures**
 
-- [ ] Simple attribute-only classes replaced with `@dataclass`
-- [ ] Boilerplate methods (`__init__`, `__repr__`, `__eq__`) removed where dataclass covers them
-- [ ] `__slots__` added to hot-path dataclasses where memory efficiency matters
+- [ ] Replace simple attribute-only classes with `@dataclass`
+- [ ] Remove boilerplate methods (`__init__`, `__repr__`, `__eq__`) where dataclass covers them
+- [ ] Add `__slots__` to hot-path dataclasses where memory efficiency matters
 
 **Control flow**
 
-- [ ] Long `if/elif` chains over a single variable replaced with `match` statements (Python 3.10+)
-- [ ] Complex lambda functions moved to named functions
-- [ ] Iterations use appropriate patterns: `enumerate`, list/dict/set comprehensions, `zip`
+- [ ] Replace long `if/elif` chains over a single variable with `match` statements (Python 3.10+ only)
+- [ ] Move complex lambda functions to named functions
+- [ ] Use appropriate iteration patterns: `enumerate`, list/dict/set comprehensions, `zip`
 
 **Resource and error handling**
 
-- [ ] Context managers handle all file, socket, and connection resources
-- [ ] Exception handling is specific — no bare `except:` or `except Exception:` without re-raise
-- [ ] `print` statements for diagnostics replaced with `logging` calls at appropriate levels
+- [ ] Use context managers for all file, socket, and connection resources
+- [ ] Replace bare `except:` or `except Exception:` without re-raise with specific exception types
+- [ ] Replace diagnostic `print` statements with `logging` calls at appropriate levels
 
 **Async (if applicable)**
 
-- [ ] `asyncio` patterns are consistent — no mixing of sync blocking calls inside async functions
-- [ ] `async with` and `async for` used where available on async-capable resources
+- [ ] Use consistent `asyncio` patterns — no sync blocking calls (e.g., `time.sleep`, `open()`) inside async functions
+- [ ] Use `async with` and `async for` where available on async-capable resources
+- [ ] Await all coroutines — unawaited coroutines silently do nothing
+- [ ] Use `asyncio.gather()` for concurrent independent tasks instead of sequential `await` calls
+- [ ] Replace `asyncio.sleep(0)` busy-loops with proper event-driven patterns
 
 **Imports**
 
-- [ ] Imports organized in standard groups: stdlib → third-party → local
-- [ ] No unused imports (should already be clear after `code-cleanup` pass)
+- [ ] Organize imports in standard groups: stdlib → third-party → local
+- [ ] Remove unused imports (should already be clear after `code-cleanup` pass)
 
 ---
 
 ## Quality Assurance
 
-For detailed tool commands, see `CLAUDE.md`.
+For detailed tool commands, see `CLAUDE.md` if present in the project root; otherwise use the defaults below.
 
 ### Before Refactoring
 
@@ -161,7 +175,7 @@ if config_path.exists():
         ...
 ```
 
-### Scenario 4: Migrate to match statements
+### Scenario 4: Migrate to match statements (Python 3.10+ only)
 
 ```python
 # Before
@@ -200,6 +214,8 @@ logger = logging.getLogger(__name__)
 logger.debug("Connecting to %s", host)
 logger.error("Timeout on %s", host)
 ```
+
+> **Why `%`-style args in logging, not f-strings?** The logging module uses lazy formatting — the string is only interpolated if the log level is actually active. With f-strings, the interpolation happens unconditionally at the call site, even if the message is never emitted. Use `%`-style positional args (`"msg %s", value`) in all `logger.*` calls.
 
 ---
 

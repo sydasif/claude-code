@@ -31,6 +31,8 @@ Use these tie-breakers:
 - Prefer a shared helper when duplicated logic represents a real policy — error shape, security validation, serialization, timeout handling, or network execution.
 - Preserve public APIs unless the user explicitly accepts breaking changes.
 
+> **YAGNI guardrail (read before applying YAGNI)**: YAGNI is not a license for sloppy deletion. The goal is to remove speculative complexity, not to paint the codebase into a corner. Prefer removing _implementations_ of unused features over removing _seams_ that make future change possible. If a removal structurally forecloses an obvious and reasonable future extension point, pause and flag it rather than deleting silently.
+
 ---
 
 ## Pre-Flight Gates
@@ -43,7 +45,7 @@ Run `git status`. If there are uncommitted user changes, confirm the cleanup sco
 
 ### Gate 2 — Test coverage baseline
 
-Assess whether the codebase has meaningful automated test coverage before ranking anything as "safe cleanup." If test coverage is thin or absent, escalate all findings to "needs care" and warn the user. YAGNI and KISS cleanup without tests can break behavior silently.
+Assess whether the codebase has meaningful automated test coverage before ranking anything as "safe cleanup." A rough heuristic: if there are no tests at all, or fewer than one test per exported function or class, treat coverage as thin. If test coverage is thin or absent, escalate all findings to "needs care" and warn the user. YAGNI and KISS cleanup without tests can break behavior silently.
 
 ### Gate 3 — Project-level overrides
 
@@ -56,10 +58,11 @@ Read `AGENTS.md`, `README.md`, contribution docs, and any style/convention files
 ### 1. Inspect the project shape
 
 - Read repository guidance: `AGENTS.md`, `README.md`, contribution docs, test commands.
-- Map source, tests, docs, and public interfaces.
+- Map source, tests, docs, and public interfaces — skipping generated directories (`dist/`, `build/`, `__pycache__`, `.next/`, and similar output folders).
 - Confirm git status is clean (Gate 1 above).
 - Assess test coverage (Gate 2 above).
 - Note any project-specific overrides (Gate 3 above).
+- **If the repository is large (more than ~20 modules or top-level source files), confirm the intended scope with the user before proceeding.** Default to a single module or layer per session rather than sweeping the whole codebase.
 
 ### 2. Identify candidates with evidence
 
@@ -93,6 +96,7 @@ Resolve conflicts using the priority order: KISS, then YAGNI, then DRY.
 ### 4. Make narrow, batched changes
 
 - Scope edits to one module or layer per pass. Do not sweep the entire codebase in a single change.
+- **Separate formatting/style-only changes** (whitespace, naming conventions, import ordering) **from semantic changes** (logic, structure, duplication removal) into distinct commits or passes. Never mix them in the same diff.
 - Avoid mixing style cleanup with behavior changes in the same diff.
 - Do not introduce a new abstraction unless it removes real complexity across multiple call sites.
 - Preserve existing naming, error shape, and test style.
@@ -137,7 +141,7 @@ Look for code that exists only for hypothetical future use:
 
 If any answer is "yes" or "unclear," report it as a compatibility risk — do not delete.
 
-> **YAGNI misapplication guard**: YAGNI is not a license for sloppy deletion. The goal is to remove speculative complexity, not to paint the codebase into a corner. Prefer removing _implementations_ of unused features over removing _seams_ that make future change possible.
+> **YAGNI misapplication guard**: See the guardrail note in the Priority Order section above. YAGNI targets speculative _implementations_, not structural _seams_.
 
 ---
 
@@ -181,7 +185,9 @@ Prefer the simplest form that still preserves:
 - Existing public API.
 - Local architectural rules.
 
-> Note: simplicity is domain-relative. Some problems are inherently complex. KISS means "don't add accidental complexity," not "avoid all complexity." A solution that is simple for a domain expert may look complex to a novice — use the team's conventions as the baseline, not an idealized minimum.
+**Apply KISS relative to the idioms of the language and framework in use.** Do not flag idiomatic patterns as complexity — Go error returns, Rust trait bounds, Java interface patterns, and similar conventions are expected, not accidental complexity. Use the team's conventions as the baseline, not an idealized minimum.
+
+> Note: simplicity is domain-relative. Some problems are inherently complex. KISS means "don't add accidental complexity," not "avoid all complexity."
 
 ---
 
@@ -239,7 +245,7 @@ Finish with:
 
 When operating as an agent across multiple passes or context windows:
 
-- Leave a `cleanup-progress.md` file at the repo root noting: what was analyzed, what was changed, what is pending, and any unresolved risks.
+- Leave a `cleanup-progress.md` file at the repo root noting: what was analyzed, what was changed, what is pending, and any unresolved risks. Only do this if you have access to a persistent filesystem across sessions. In single-session contexts (e.g., Claude.ai without file upload), track progress inline in the conversation instead.
 - Batch changes by module. Do not accumulate a multi-module diff and apply it in one step.
 - Never weaken a failing test to make cleanup pass. Surface the failure and stop.
 - If a cleanup action introduces a regression the agent cannot resolve, revert and report — do not work around it silently.
