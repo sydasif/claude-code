@@ -11,7 +11,7 @@ description: Modernize legacy Python code with best practices, type hints, and e
 
 This skill transforms legacy Python code into modern, maintainable, and efficient implementations following current best practices.
 
-> If `guidelines` are missing, treat those as informational placeholders and apply your team's conventions directly.
+> **Style and toolchain:** `rules/python-style.md` (auto-loaded). Project `CLAUDE.md` or `AGENTS.md` overrides global rules.
 
 ---
 
@@ -96,14 +96,16 @@ For detailed tool commands, see `CLAUDE.md` if present in the project root; othe
 
 ### Before Refactoring
 
-Run type checking, linting, and tests to establish baseline:
+Run type checking, linting, and tests to establish baseline (from project root; use `uv run` when `pyproject.toml` exists):
 
+```sh
+uv run mypy src/
+uv run ruff check .
+uv run pytest --tb=short
+uv run pytest --cov=src --cov-report=term-missing
 ```
-mypy <target>
-ruff check <target>   # or flake8
-pytest --tb=short
-pytest --cov=<target> --cov-report=term-missing
-```
+
+If the project has no `uv`/`pyproject.toml`, use commands from the project README instead.
 
 Record the baseline pass/fail counts. Any test that was already failing before refactoring is not your regression to fix — flag it and leave it.
 
@@ -223,5 +225,6 @@ Use this skill to modernize legacy Python code into clean, maintainable, and eff
 
 ## See Also
 
+- `rules/python-style.md` — Toolchain, typing, security scans
 - `code-cleanup` skill — Run this first to prune dead code before refactoring
 - `code-review` skill — For final gate review after refactoring

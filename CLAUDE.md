@@ -7,12 +7,17 @@
 
 ## Environment
 
-Declare these before any task begins. Sub-agents inherit this context explicitly.
+Declare these before any task begins. Sub-agents inherit this context explicitly. Project `CLAUDE.md` overrides these defaults.
 
-- **Runtime:** [e.g., Python 3.12 / Node 20 / Go 1.22]
-- **OS Target:** [e.g., Linux x86-64 / macOS arm64]
-- **Package Manager:** [e.g., uv / pnpm / cargo]
-- **Primary Framework:** [e.g., FastAPI / Next.js / Axum]
+- **Runtime:** Python 3.12+ (minimum 3.10 per project `requires-python`)
+- **OS Target:** Linux x86-64
+- **Package Manager:** `uv`
+- **Primary Framework:** Per project (FastAPI, Django, Flask, or stdlib scripts)
+
+### Python workflow
+
+- **Canonical rules (auto-loaded):** `rules/python-style.md` (toolchain, lint, types, security), `rules/python-testing.md` (pytest, coverage). Do not restate their content in plans or reports.
+- **Skill pipeline:** `code-cleanup` → `code-refactor` → `code-review` when doing structured Python maintenance.
 
 ---
 
@@ -30,7 +35,7 @@ Destructive ops: stop, describe exactly what will be destroyed, wait for explici
 
 ## Process
 
-1. **Discovery**: Surface assumptions → call-site search → pattern search → read rules
+1. **Discovery**: Surface assumptions → call-site search → pattern search → apply project docs and auto-loaded rules
 2. **Plan**: State non-goals + rollback path. Isolate pure tasks for parallel execution.
 3. **Execute**: One module per pass, with full context passed to sub-agents, and no memory between calls.
 
@@ -77,14 +82,7 @@ Before delegating to a subagent:
 
 ## Testing
 
-This is a quick reference for testing.
-
-- Framework: [fill in per project — e.g., pytest / vitest / go test]
-- Name tests: `test_<unit>_<condition>_<expected_outcome>`
-- No mocks on I/O boundaries you own. Mock only external deps (third-party APIs, cloud SDKs).
-- Every behaviour change ships with a matching test — positive and negative.
-
-> See `rules/python-testing.md` for full details.
+See `rules/python-testing.md` (auto-loaded). Unless the user says otherwise, behaviour changes need positive and negative tests.
 
 ---
 
@@ -133,26 +131,12 @@ This is a quick reference for testing.
 
 ## 6. Verification Pyramid
 
-- [ ] Static: ruff check + ruff format (or equivalent linter/type-checker) — output pasted here
+- [ ] Static: lint, format, and types per `rules/python-style.md` — output pasted here
 - [ ] Positive: [Test proving expected behaviour works]
 - [ ] Negative: [Test proving bad input is rejected]
 - [ ] Regression: [Proof existing tests still pass]
 - [ ] Rollback: [Proof the revert path works]
 ```
-
----
-
-## Linting & Formatting
-
-**Quick reference** — `ruff` for both lint and format, see `rules/python-style.md` for full details.
-
-```sh
-uv run ruff check .          # lint
-uv run ruff check --fix .    # lint + auto-fix
-uv run ruff format .         # format
-```
-
-> Config lives in `pyproject.toml` under `[tool.ruff]`. The Static step of the Verification Pyramid is not complete until ruff exits 0.
 
 ---
 

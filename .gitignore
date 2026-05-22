@@ -24,6 +24,7 @@ backups/
 sessions/
 .last-cleanup
 .ruff_cache/
+__pycache__/
 
 # Credentials and secrets
 .credentials.json

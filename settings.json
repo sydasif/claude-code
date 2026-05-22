@@ -14,7 +14,7 @@
           {
             "type": "command",
             "command": "python3",
-            "if": ".py, .ipynb, .pyc",
+            "if": ".py",
             "args": ["/home/zulu/.claude/hooks/format_python.py"]
           }
         ]

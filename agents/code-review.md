@@ -5,11 +5,10 @@ description: >
   completeness, and confirms quality standards before submitting.
 model: opus
 tools: Read, Grep, Glob, Bash
-disallowedTools: Write, Edit, Bash
+disallowedTools: Write, Edit
 skills:
   - code-review
   - ddg-search
-  - repomix
 ---
 
 ## What I do

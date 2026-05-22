@@ -20,6 +20,9 @@ description: Python toolchain, style, and code review rules (single canonical so
 | `bandit`    | Security linting                      |
 | `safety`    | Dependency vulnerability scanning     |
 | `uv-secure` | Project dependency security scanning  |
+| Pyright LSP | In-editor type hints (`pyright-lsp` in `settings.json`) |
+
+When **pyright-lsp** is enabled, use IDE diagnostics while editing; still run `uv run mypy` (or the project’s configured checker) before marking work verified — LSP and CI checks can differ.
 
 ## Type Checker Selection
 
@@ -206,11 +209,11 @@ Remove unused dependencies.
 
 ### Version-Specific Features to Use
 
-| Python | Key features to leverage                                             |
-| ------ | -------------------------------------------------------------------- | ----------------------------------------------- |
-| 3.10   | `match`/`case`, `X                                                   | Y`union syntax,`TypeGuard`, `dataclass` kw_only |
-| 3.11   | `Self` type, `Never`, `@dataclass(slots=True)`, `asyncio.TaskGroup`  |
-| 3.12   | `@override`, `type` statement, `typing.Unpack`, perf improvements    |
+| Python | Key features to leverage                                          |
+| ------ | ----------------------------------------------------------------- |
+| 3.10   | `match`/`case`, `X \| Y` union syntax, `TypeGuard`, `kw_only` dataclasses |
+| 3.11   | `Self` type, `Never`, `@dataclass(slots=True)`, `asyncio.TaskGroup` |
+| 3.12   | `@override`, `type` statement, `typing.Unpack`, perf improvements |
 | 3.13   | Free-threaded mode (experimental), JIT compiler, improved `locals()` |
 
 ---
@@ -219,23 +222,7 @@ Remove unused dependencies.
 
 ### Standard Workflow (GitHub Actions)
 
-```yaml
-# See .github/workflows/ci-template.yml for full template
-steps:
-  - uses: actions/checkout@v6
-  - run: mkdir -p /tmp/.uv-cache
-  - uses: astral-sh/setup-uv@v5
-    with:
-      enable-cache: true
-      cache-dependency-glob: "uv.lock"
-  - run: uv sync --locked --all-extras --dev
-  - run: uv run ruff check .
-  - run: uv run ruff format --check .
-  - run: uv run mypy src/
-  - run: uv run pytest --cov=src
-  - run: uv run bandit -r src/ || true
-  - run: uv run safety check || true
-```
+Canonical workflow file: `~/.claude/templates/ci-python.yml` — copy to `.github/workflows/ci.yml` in the project.
 
 ### Pre-commit
 

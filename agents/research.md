@@ -9,7 +9,6 @@ tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit
 skills:
   - ddg-search
-  - repomix
 ---
 
 ## What I do

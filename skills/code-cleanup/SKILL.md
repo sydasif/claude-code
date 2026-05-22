@@ -245,7 +245,8 @@ Finish with:
 
 When operating as an agent across multiple passes or context windows:
 
-- Leave a `cleanup-progress.md` file at the repo root noting: what was analyzed, what was changed, what is pending, and any unresolved risks. Only do this if you have access to a persistent filesystem across sessions. In single-session contexts (e.g., Claude.ai without file upload), track progress inline in the conversation instead.
+- **Default:** Track progress in the conversation (implementation report or findings report). Do **not** create `cleanup-progress.md` unless the user explicitly asks for a persisted progress file (e.g. multi-day cleanup across sessions).
+- **Opt-in only:** If the user requests it, write `cleanup-progress.md` at the repo root with: analyzed scope, changes made, pending work, unresolved risks. Remove or update it when the cleanup is finished, or leave removal to the user.
 - Batch changes by module. Do not accumulate a multi-module diff and apply it in one step.
 - Never weaken a failing test to make cleanup pass. Surface the failure and stop.
 - If a cleanup action introduces a regression the agent cannot resolve, revert and report — do not work around it silently.

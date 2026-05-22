@@ -80,7 +80,31 @@ Work through this checklist against the actual diff, not from memory.
 - [ ] No new file path traversal risks
 - [ ] Dependencies added or upgraded are from known, maintained sources
 
-### 4. Fresh-Perspective Questions
+### 4. Python toolchain verification
+
+Run when the diff touches Python (`.py`, `pyproject.toml`, `uv.lock`, or test/config under `tests/`). This skill does not fix failures — record command output and flag regressions.
+
+Follow **Standard Workflow** and **Security Scans** in `rules/python-style.md` (auto-loaded). Use project README commands if there is no `pyproject.toml`. Adjust paths (`src/`, `mypy` target) per the project layout.
+
+**Record in the report:**
+
+- [ ] Each command run (or skipped with reason)
+- [ ] Exit status / summary (pass, fail, not run)
+- [ ] Any new failures vs. a stated pre-change baseline
+- [ ] Security scans run or skipped — if skipped despite auth/network/deps changes, flag in **Security flags**
+
+### 5. Codebase context (repomix vs search)
+
+| Use | When |
+| ----- | ----- |
+| **`rg` / `Grep` / `Glob`** | Reviewing a known diff; named symbols, files, or modules; verifying call sites and imports in changed areas |
+| **repomix MCP** (`repomix-mcp` plugin) | Large or unfamiliar repo; cross-cutting architecture questions; diff touches many packages and local search is insufficient; user asks for a packed overview |
+
+Default to targeted search for final-gate review of **uncommitted or PR-scoped changes**. Use repomix when orientation cost of repeated broad searches exceeds one pack pass — then cite findings with file paths from the pack output.
+
+Do not repomix when the scope is a few files and `git diff` plus `rg` already covers it.
+
+### 6. Fresh-Perspective Questions
 
 Answer each question based on evidence in the code, not intuition:
 
@@ -112,6 +136,7 @@ Always produce a structured review report — do not summarize in prose only.
 - Tests: [pass / issues found]
 - Dead code and hygiene: [pass / issues found]
 - Documentation: [pass / issues found]
+- Python toolchain: [pass / fail / not applicable — list commands run]
 - Security flags: [none / list any]
 
 ### Issues Found
@@ -133,6 +158,13 @@ Items flagged in prior passes that remain open.
 [ ] Needs fixes — blocking issues listed above
 [ ] Needs discussion — questions that require user input before proceeding
 ```
+
+---
+
+## See Also
+
+- `rules/python-style.md`, `rules/python-testing.md` (auto-loaded)
+- `code-cleanup`, `code-refactor` skills — Prior passes in the pipeline
 
 ---
 
