@@ -3,7 +3,6 @@ name: review-code
 description: >
   Final-gate review of completed changes. Catches errors, verifies
   completeness, and confirms quality standards before submitting.
-model: opus
 tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit
 skills:

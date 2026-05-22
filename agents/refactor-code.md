@@ -3,7 +3,6 @@ name: refactor-code
 description: >
   Modernize legacy Python code with best practices, type hints,
   and efficient patterns.
-model: opus
 tools: Read, Grep, Glob, Edit, Write, Bash
 skills:
   - refactor-code

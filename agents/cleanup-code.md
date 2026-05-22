@@ -3,7 +3,6 @@ name: cleanup-code
 description: >
   Codebase cleanup applying YAGNI, DRY, and KISS principles.
   Invoke to remove dead code, duplicated logic, and over-abstraction.
-model: haiku
 tools: Read, Grep, Glob, Edit, Write, Bash
 skills:
   - cleanup-code
