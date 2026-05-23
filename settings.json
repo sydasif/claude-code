@@ -7,9 +7,7 @@
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemma-4-26b-a4b-it"
   },
   "permissions": {
-    "allow": [
-      "WebSearch"
-    ]
+    "allow": ["WebSearch"]
   },
   "hooks": {
     "PreToolUse": [
