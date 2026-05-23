@@ -16,7 +16,7 @@ Global Claude Code config for Python work.
 ├── rules/
 ├── skills/          # cleanup-code, refactor-code, review-code, ddg-search, …
 ├── agents/          # matching subagents
-├── hooks/           # ruff on .py save, statusline
+├── hooks/           # ruff on .py save, statusline, safety hooks
 ├── templates/ci-python.yml
 └── settings.json    # plugins: pyright-lsp, repomix-mcp
 ```
@@ -27,4 +27,15 @@ Global Claude Code config for Python work.
 
 ## Overrides
 
-Project `./CLAUDE.md` > global `~/.claude/CLAUDE.md` > system defaults.
+## Safety Hooks
+
+Two hooks from `claude-code-hooks` are active:
+
+- `block-dangerous-commands.js`: Prevents catastrophic shell commands.
+- `protect-secrets.js`: Prevents secret exfiltration and access.
+
+**Safety Levels:** Change the `SAFETY_LEVEL` constant at the top of each script in `~/.claude/hooks/`:
+
+- `critical`: Only catastrophic disasters.
+- `high`: Recommended. Stops disasters + data loss/leaks.
+- `strict`: Maximum safety. Blocks cautious/risky actions.
