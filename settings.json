@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /home/zulu/.claude/hooks/ruff-after-edit.sh"
+            "command": "bash /home/zulu/.claude/hooks/format-after-edit.sh"
           }
         ]
       }
