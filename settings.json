@@ -4,10 +4,13 @@
     "ANTHROPIC_AUTH_TOKEN": "sk-1234",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "gemini-3.1-flash-lite",
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "gemma-4-31b-it",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemma-4-26b-a4b-it"
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemma-4-26b-a4b-it",
+    "ENABLE_LSP_TOOL": "1"
   },
   "permissions": {
-    "allow": ["WebSearch"]
+    "allow": [
+      "WebSearch"
+    ]
   },
   "hooks": {
     "PreToolUse": [
@@ -39,7 +42,8 @@
   },
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true,
-    "repomix-mcp@repomix": true
+    "repomix-mcp@repomix": true,
+    "typescript-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "repomix": {
