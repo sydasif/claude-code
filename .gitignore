@@ -10,6 +10,7 @@ shell-snapshots/
 statsig/
 telemetry/
 todos/
+hooks-logs/
 
 # Local files and caches
 history.jsonl
