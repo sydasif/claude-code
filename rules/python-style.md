@@ -39,6 +39,8 @@ Never add a second type checker to a project that already has one configured.
 
 ## Standard Workflow
 
+Note: Ruff linting and formatting are automatically applied to edited Python files via a `PostToolUse` hook.
+
 ```bash
 uv sync                        # Install dependencies
 uv run ruff check --fix .      # Lint and auto-fix

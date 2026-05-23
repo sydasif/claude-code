@@ -6,14 +6,30 @@
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "gemma-4-31b-it",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemma-4-26b-a4b-it"
   },
+  "permissions": {
+    "allow": [
+      "WebSearch"
+    ]
+  },
   "hooks": {
-    "PostToolUse": [
+    "PreToolUse": [
       {
-        "matcher": "Write|Edit",
+        "matcher": "WebSearch",
         "hooks": [
           {
             "type": "command",
-            "command": "FILE=$(jq -r '.tool_input.file_path') && if [[ \"$FILE\" == *.py ]]; then uv run ruff check --fix \"$FILE\"; uv run ruff format \"$FILE\"; fi"
+            "command": "bash /home/zulu/.claude/hooks/block-websearch.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/zulu/.claude/hooks/ruff-after-edit.sh"
           }
         ]
       }
