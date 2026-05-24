@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /home/zulu/.claude/hooks/block-websearch.sh"
+            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use ddg_search for web searches'}}))\""
           }
         ]
       },

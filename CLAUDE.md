@@ -118,45 +118,18 @@ See `rules/python-testing.md` (auto-loaded). Unless the user says otherwise, beh
 
 ## Required Output
 
-> **Required for any task touching 2+ files or any task that modifies existing behavior.**
+> **Required for any task that modifies existing behavior.**
 
-```markdown
-## 1. Discovery Report
+**Multi-file or behavior changes:**
 
-- **Found Patterns:** [e.g., "Project uses Pydantic for all validation"]
-- **Affected Areas:** [Files/modules that reference the changed code]
-- **Missing Guidelines:** [Any expected config files that were absent]
-- **Coverage Baseline:** [Current coverage vs. thresholds — note any gaps]
+1. **Discovery Report** - Patterns, affected areas, coverage baseline
+2. **Strategic Plan** - Objective, scope, non-goals, skill pipeline
+3. **Assumptions & Risks** - Key assumptions, risks, security findings
+4. **Proposed Changes** - File-by-file actions with reasons
+5. **Skipped Candidates** - Items evaluated but not actioned
+6. **Verification Pyramid** - Static checks, positive/negative/regression tests, rollback
 
-## 2. Strategic Plan
-
-- **Primary Objective:** [Single-sentence goal]
-- **Surgical Scope:** [Exact functions, classes, or line ranges targeted]
-- **Non-Goals:** [What is explicitly out of scope]
-- **Skill Pipeline:** [Which skills were invoked and in what order]
-
-## 3. Assumptions & Risks
-
-- **Assumption:** [e.g., "API always returns UTF-8 encoded responses"]
-- **Risk:** [e.g., "New dependency adds ~5MB to binary size"]
-- **Security Scan Findings:** [Any safety/bandit/audit results, or "none"]
-
-## 4. Proposed Changes
-
-- [file.py] → [Action taken] — (Reason)
-
-## 5. Skipped Candidates
-
-- [file.py:item] → Skipped — (Reason: public API / thin coverage / out of scope / etc.)
-
-## 6. Verification Pyramid
-
-- [ ] Static: lint, format, and types per `rules/python-style.md` — output pasted here
-- [ ] Positive: [Test proving expected behaviour works]
-- [ ] Negative: [Test proving bad input is rejected]
-- [ ] Regression: [Proof existing tests still pass]
-- [ ] Rollback: [Proof the revert path works]
-```
+**Single-file/no behavior change:** Verification pyramid only.
 
 ---
 

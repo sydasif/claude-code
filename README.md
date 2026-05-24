@@ -1,64 +1,74 @@
-# Global Claude Code Configuration (~/.claude)
+# Claude Code Global Configuration
 
-This directory contains the global configuration, rules, and hooks used to guide Claude Code across multiple projects.
+## Structure
 
-## 📖 Core Guidance
-
-Claude's behavior is governed by the following auto-loaded files:
-
-- **`CLAUDE.md`**: Defines the operational process, authority levels, and high-level mandates.
-- **`rules/python-style.md`**: Canonical toolchain and style requirements for Python (uv, ruff, mypy).
-- **`rules/python-testing.md`**: Standards for pytest, coverage targets, and verification.
-
-## 📂 Directory Layout
-
-```text
+```
 ~/.claude/
-├── CLAUDE.md             # Global process and authority
-├── rules/                # Domain-specific style and testing rules
-│   ├── python-style.md
-│   └── python-testing.md
-├── skills/               # Custom Claude Agent Skills
-├── agents/               # Specialized sub-agents
-├── hooks/                # Tool execution hooks (Pre/Post)
-│   ├── format-code.js    # Auto-formatting for Python, JS, TS, JSON, MD, YAML, HTML
-│   ├── protect-secrets.js # Prevents secret exfiltration
-│   ├── block-dangerous-commands.js # Prevents catastrophic shell operations
-│   ├── block-websearch.sh # Controls WebSearch access
-│   └── statusline.sh     # Custom status line indicator
-├── templates/            # Boilerplate (e.g., ci-python.yml)
-└── settings.json         # Harness settings, plugins, and hook registrations
+├── CLAUDE.md           # Core process, authority, output format
+├── settings.json       # Hooks, permissions, plugins, environment
+├── README.md           # This file
+├── hooks/              # Pre/Post tool execution hooks
+│   ├── protect-secrets.js       # Blocks secret exposure (SAFETY_LEVEL=high)
+│   ├── block-dangerous-commands.js # Blocks catastrophic shell commands
+│   ├── format-code.js           # Auto-formats Python (ruff) + web files (prettier)
+│   └── statusline.sh            # Git-integrated status line
+├── rules/              # Auto-loaded via InstructionsLoaded event
+│   ├── python-style.md          # Toolchain, typing, security
+│   └── python-testing.md        # pytest, coverage, AAA pattern
+├── skills/             # Custom skills (invoked by Claude)
+│   ├── cleanup-code/            # YAGNI, DRY, KISS cleanup
+│   ├── refactor-code/           # Modern Python patterns
+│   └── review-code/             # Final gate verification
+├── agents/             # Subagents with isolated context windows
+│   ├── cleanup-code.md
+│   ├── refactor-code.md
+│   └── review-code.md
+└── templates/          # Boilerplate templates
+    └── ci-python.yml   # GitHub Actions workflow
 ```
 
-## 🛠️ Hooks System
+## Core Workflow
 
-Hooks are registered in `settings.json` and execute automatically during tool use.
+**Skill pipeline (structured Python maintenance):**
+```
+cleanup-code → refactor-code → review-code
+```
 
-### 🎨 Formatting Hook (`format-code.js`)
+**Invoke via:**
+- `@cleanup-code` - Remove dead code, duplication, over-abstraction
+- `@refactor-code` - Modernize with type hints, dataclasses, pathlib
+- `@review-code` - Fresh-eyes verification before submit
 
-Triggered on `Write` and `Edit` operations. It ensures consistent style across AI-generated changes:
+## Hooks Summary
 
-- **Python**: Uses `ruff` for lint-fixing and formatting.
-- **Web/Config**: Uses `prettier` for `.js`, `.ts`, `.json`, `.md`, `.yaml`, `.yml`, and `.html`.
-- **Logs**: Activity is logged to `~/.claude/hooks-logs/YYYY-MM-DD.jsonl`.
+| Hook | Trigger | Action |
+|------|---------|--------|
+| `protect-secrets.js` | Read/Edit/Write/Bash | Blocks secret exposure |
+| `block-dangerous-commands.js` | Bash | Blocks `rm -rf ~`, `dd`, fork bombs |
+| `format-code.js` | Write/Edit | Auto-formats Python + web files |
+| `statusline.sh` | Status bar | Shows dir, model, git status |
 
-### 🛡️ Safety Hooks
+## Safety Levels
 
-Prevent high-risk operations and data leaks:
+Edit `SAFETY_LEVEL` in hook files:
+- `critical` - Catastrophic disasters only
+- `high` (default) - Disasters + data loss + secrets
+- `strict` - Maximum restriction
 
-- **`protect-secrets.js`**: Scans for and blocks the exposure of sensitive credentials.
-- **`block-dangerous-commands.js`**: Blocks destructive shell commands (e.g., `rm -rf /`).
-- **`block-websearch.sh`**: Provides a layer of control over external web access.
+## Python Requirements
 
-**Safety Levels**: Modify the `SAFETY_LEVEL` constant in the script:
+- Minimum: Python 3.10
+- Target: Python 3.12+
+- Toolchain: `uv`, `ruff`, `mypy`, `pytest`
 
-- `critical`: Only blocks catastrophic disasters.
-- `high`: (Recommended) Stops disasters, data loss, and leaks.
-- `strict`: Maximum restriction for highly cautious environments.
+## External Dependencies
 
-## 🐍 Python Pipeline
+Hooks require:
+- `node` (for JS hooks)
+- `bash` (for statusline)
+- `git` (for statusline)
+- `jq` or `python3` (JSON parsing fallback)
 
-When performing structured Python maintenance, follow this skill pipeline:
-`cleanup-code` $\rightarrow$ `refactor-code` $\rightarrow$ `review-code`
-
-All changes must be verified against the thresholds in `rules/python-testing.md`.
+Optional for formatting:
+- `ruff` (Python formatting)
+- `prettier` (web file formatting)
