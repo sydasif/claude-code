@@ -46,7 +46,7 @@ Before delegating to a subagent:
 - Define the exact input it receives and the exact output it must return.
 - **Pure tasks**: read-only analysis, isolated transformations with no shared state — safe to parallelize.
 - **Side-effect tasks**: file writes, API calls — never parallelize without explicit sequencing.
-- Pass full context explicitly. Sub-agents have no memory of the parent task.
+- Pass full context explicitly. Sub-agents have **no memory of the parent task** and do not automatically inherit context.
 - If a subagent fails twice with the same error, halt and surface — do not retry blindly.
 - If a subagent returns conflicting results, halt and surface the conflict.
 
@@ -118,7 +118,7 @@ See `rules/python-testing.md` (auto-loaded). Unless the user says otherwise, beh
 
 ## Required Output
 
-> **Required for any task touching 2+ files or any task that modifies existing behaviour.**
+> **Required for any task touching 2+ files or any task that modifies existing behavior.**
 
 ```markdown
 ## 1. Discovery Report

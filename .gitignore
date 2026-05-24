@@ -4,7 +4,7 @@ file-history/
 ide/
 plans/
 plugins/
-projects/
+projects/          # Claude Code project directories
 session-env/
 shell-snapshots/
 statsig/
@@ -16,7 +16,7 @@ hooks-logs/
 history.jsonl
 stats-cache.json
 config.json
-cache/
+cache/             # General cache directory
 paste-cache/
 tasks/
 .update.lock
@@ -28,7 +28,7 @@ sessions/
 __pycache__/
 
 # Credentials and secrets
-.credentials.json
+.credentials.json  # Local credential overrides
 *.pem
 *.key
 id_rsa*
@@ -39,8 +39,10 @@ id_ed25519*
 .DS_Store
 Thumbs.db
 
-# Backup files
+# Backup and temporary files
 *.backup
 *.bak
 *~
+*.swp
+*.swo
 audit.log
