@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ~/.claude/hooks/block-dangerous-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js"
           }
         ]
       },
