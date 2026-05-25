@@ -8,4 +8,4 @@
 
 Use `logging` module. `logger = logging.getLogger(__name__)`. Use `logger.info()`, `.warning()`, `.error()`, `.debug()`.
 
-> **Important**: Use `%`-style positional args in logging calls (`logger.info("User %s logged in", username)`) for lazy formatting. Do not use f‑strings in logging.
+Use `%`-style positional args in logging calls (`logger.info("User %s logged in", username)`) for lazy formatting. Do not use f‑strings in logging.

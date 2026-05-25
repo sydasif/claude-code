@@ -19,4 +19,4 @@
 
 Never add a second type checker to a project that already has one configured.
 
-> **Note**: `pyright-lsp` (in‑editor) and `mypy` (CI) may occasionally disagree. For CI and pre‑merge verification, `mypy` output is authoritative.
+`pyright-lsp` (editor) and `mypy` (CI) may disagree. `mypy` output is authoritative for CI and pre-merge verification.

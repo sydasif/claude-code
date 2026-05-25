@@ -14,7 +14,7 @@
 
 ## Standard Workflow
 
-> **Note**: Ruff linting and formatting are automatically applied to edited Python files via a `PostToolUse` hook.
+Ruff linting and formatting apply automatically to edited Python files via a `PostToolUse` hook.
 
 ```bash
 uv sync                        # Install dependencies
@@ -48,7 +48,7 @@ uv run uv-secure scan          # Project security scanning
 2. Third-party
 3. Local application
 
-Blank lines between groups. Absolute imports preferred. `from module import name` over `import module.name`.
+Blank lines between groups. Absolute imports preferred. Prefer `from module import name` over `import module.name`.
 
 ## Modern Python Basics
 
@@ -62,7 +62,7 @@ Blank lines between groups. Absolute imports preferred. `from module import name
 
 ## Dependency Management
 
-Use `uv`. No direct `pip install`. Use `pyproject.toml`. Pin in `uv.lock`. Regularly update with `uv lock --upgrade`. Remove unused dependencies.
+Use `uv`. No direct `pip install`. Use `pyproject.toml` and `uv.lock`. Update via `uv lock --upgrade`. Remove unused dependencies.
 
 ## CI/CD Integration
 

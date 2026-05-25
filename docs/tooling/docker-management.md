@@ -37,7 +37,7 @@ ENV PATH="/app/.venv/bin:$PATH"
 CMD ["uv", "run", "python", "main.py"]
 ```
 
-## Key Benefits
+## Benefits
 
 - **Smaller final image**: Build dependencies aren't included in the final image
 - **Faster builds**: UV's speed advantage for dependency resolution
@@ -126,8 +126,8 @@ CMD ["uv", "run", "python", "main.py"]
 
 ## Tips
 
-1. **Order matters**: Copy `pyproject.toml` and `uv.lock` before application code for better caching
-2. **Use `--frozen`**: Ensures exact dependency versions from lockfile
-3. **Use `--no-cache`**: Prevents UV cache from bloating the image
-4. **Consider `--no-dev`**: Skip development dependencies in production
-5. **Set PATH**: Ensure the virtual environment is activated properly
+1. **Order**: Copy `pyproject.toml` and `uv.lock` before code for better caching
+2. **`--frozen`**: Ensures exact versions from lockfile
+3. **`--no-cache`**: Prevents image bloat
+4. **`--no-dev`**: Skip development dependencies in production
+5. **PATH**: Ensure the virtual environment is activated

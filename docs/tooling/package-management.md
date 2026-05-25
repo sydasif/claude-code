@@ -75,7 +75,7 @@ uv pip sync   -r requirements.txt   # deterministic install
 | `UV_PYTHON`               | pin interpreter in CI   | `3.11`        |
 | `UV_NO_COLOR`             | disable ANSI coloring   | `1`           |
 
-Other handy commands:
+Other commands:
 
 ```bash
 uv cache dir && uv cache info      # show path + stats

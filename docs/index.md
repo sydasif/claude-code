@@ -1,6 +1,6 @@
 # Python Development Rules Index
 
-This directory contains modular Python standards. Load individual files as needed, or load this index to see the full structure.
+Modular Python standards. Load individual files or this index for the full structure.
 
 ## Tooling
 

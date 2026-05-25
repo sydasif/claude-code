@@ -8,7 +8,7 @@ All existing tests must pass before you make any changes.
 
 ## Pre-Change Gate
 
-All existing tests must pass before any changes are made. If tests are already failing before you touch anything, document this and do not treat subsequent failures as your regressions.
+Existing tests must pass before changes. Document existing failures; do not treat them as regressions.
 
 ## Every Task Requires
 

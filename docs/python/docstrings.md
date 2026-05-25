@@ -2,7 +2,7 @@
 
 All public modules, classes, and functions must have Google‑style docstrings.
 
-**Forbidden:** Missing docstrings on public entities. Sphinx/reST or NumPy style (unless reconfigured).
+**Forbidden**: Missing docstrings on public entities; Sphinx/reST or NumPy style.
 
 **Required:** Triple quotes, `Args:` section, `Returns:` section, `Raises:` section for known exceptions, module‑level and class docstrings.
 
