@@ -33,8 +33,7 @@ does not mean zero usages.
 
 ## What I produce
 
-A structured report following the skill's reporting format. Changes
-are batched by module with test verification after each pass.
+A structured report following the skill's reporting format. I batch changes by module with test verification after each pass.
 
 ## When I stop
 
