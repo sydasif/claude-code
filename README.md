@@ -1,17 +1,17 @@
 # Claude Code Python Development Environment
 
-A production‑grade, opinionated configuration for Claude Code that enforces code quality, security, and structured thinking in Python projects.
+A configuration for Claude Code to maintain code quality, security, and structure in Python projects.
 
 ---
 
-## What’s Inside
+## Features
 
-- **3‑skill pipeline** – `cleanup-code` (YAGNI/DRY/KISS) → `refactor-code` (modernization) → `review-code` (final gate)
-- **Security hooks** – blocks dangerous commands (`rm -rf ~`, `dd`, force push to main), protects secrets (`.env`, SSH keys, AWS creds), prevents exfiltration
-- **Auto‑formatting** – runs `ruff` on Python, `prettier` on JS/TS/JSON/Markdown after every write/edit
-- **Canonical Python standards** – `uv`, `ruff`, `mypy --strict`, `pytest`, Google docstrings, `pathlib`, f‑strings, dataclasses
-- **Testing discipline** – AAA pattern, coverage targets (95% business logic), pre‑change test gates
-- **Status line** – shows `📁 path | 🧠 model | 🌿 branch +files` to keep Claude context‑aware
+- **Three-skill pipeline**: `cleanup-code` (YAGNI/DRY/KISS), `refactor-code` (modernization), and `review-code` (final gate)
+- **Security hooks**: Block dangerous commands (like `rm -rf ~` or force pushes to main), protect secrets, and prevent exfiltration
+- **Auto-formatting**: Run `ruff` on Python and `prettier` on JS/TS/JSON/Markdown after every edit
+- **Python standards**: Use `uv`, `ruff`, `mypy --strict`, `pytest`, Google docstrings, `pathlib`, f-strings, and dataclasses
+- **Testing standards**: Use the AAA pattern, target 95% business logic coverage, and run pre-change test gates
+- **Status line**: Display `📁 path | 🧠 model | 🌿 branch +files` for context awareness
 
 ---
 
@@ -21,8 +21,8 @@ A production‑grade, opinionated configuration for Claude Code that enforces co
 # Clone this repository to ~/.claude (or symlink)
 git clone <this-repo> ~/.claude
 
-# The configuration is automatically applied when Claude Code starts.
-# For a new Python project, copy the CI template:
+# Claude Code applies this configuration automatically.
+# Copy the CI template for new Python projects:
 cp ~/.claude/templates/ci-python.yml .github/workflows/ci.yml
 ```
 
