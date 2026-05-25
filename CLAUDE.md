@@ -9,17 +9,17 @@
 
 Declare these before any task begins:
 
-- **Runtime:** Python 3.12+ (minimum 3.10 per project `requires-python`)
+- **Runtime:** Python 3.12+ (minimum 3.10 per project)
 - **OS Target:** Linux x86-64 / macOS x86-64 / Windows x86-64
 - **Package Manager:** `uv` for Python package management
 - **Primary Framework:** As per project requirements or library
 
 ### Python workflow
 
-- **Canonical rules:** @~/.claude/docs/index.md (Python standards, Docker, uv, pytest, coverage)
+- **Canonical rules:** @~/.claude/docs/index.md (Python standards, Docker, tooling)
 - **Package management:** see @~/.claude/docs/tooling/package-management.md (uv)
 - **Testing:** see @~/.claude/docs/python/testing.md (pytest, coverage)
-- **Skill pipeline:** Optimize codebase with `cleanup-code` → `refactor-code` → `security-audit` → `review-code` skills
+- **Skill pipeline:** Optimize codebase with `cleanup-code` → `refactor-code` → `review-code` skills
 
 ---
 
@@ -62,10 +62,6 @@ Prefer LSP over `Grep`/`Glob`/`Read` for code navigation:
 - `incomingCalls` / `outgoingCalls` for call hierarchy
 
 Before renaming or changing a function signature, use `findReferences` to find all call sites first.
-
-Use Grep/Glob only for text/pattern searches (comments, strings, config values) where LSP doesn't help.
-
-After writing or editing code, check LSP diagnostics before moving on. Fix any type errors or missing imports immediately.
 
 ---
 

@@ -3,7 +3,7 @@ description: Commit changes, check for docs updates, commit docs separately, pus
 ---
 
 1. **Inventory** — Show `git status`, `git diff`, `git diff --cached`, `git log --oneline -10`
-2. **Commit code changes** — Stage all files with `git add -A`, then commit following `@CLAUDE.md` format: `<type>(<scope>): <imperative summary>`
+2. **Commit code changes** — Stage all files with `git add`, then commit following `@CLAUDE.md` format: `<type>(<scope>): <imperative summary>`
 3. **Audit docs** — For each changed file, check if any corresponding docs in `docs/` need updating. If so, make the updates.
 4. **Commit docs separately** — With message `docs: update documentation for <feature>`
 5. **Push** — `git push`
