@@ -94,6 +94,40 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-cache --no-dev
 
-# Production stage (similar to basic structure, plus non‑root user)
-# ... (full example in original file)
+# Production stage
+FROM debian:bookworm-slim
+
+# Install uv and runtime dependencies
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+RUN apt-get update && apt-get install -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN useradd --create-home --shell /bin/bash app
+
+WORKDIR /app
+
+# Copy virtual environment
+COPY --from=builder /app/.venv /app/.venv
+
+# Copy application code
+COPY --chown=app:app . .
+
+# Switch to non-root user
+USER app
+
+# Activate virtual environment
+ENV PATH="/app/.venv/bin:$PATH"
+
+EXPOSE 8000
+
+CMD ["uv", "run", "python", "main.py"]
 ```
+
+## Tips
+
+1. **Order matters**: Copy `pyproject.toml` and `uv.lock` before application code for better caching
+2. **Use `--frozen`**: Ensures exact dependency versions from lockfile
+3. **Use `--no-cache`**: Prevents UV cache from bloating the image
+4. **Consider `--no-dev`**: Skip development dependencies in production
+5. **Set PATH**: Ensure the virtual environment is activated properly

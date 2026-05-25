@@ -1,8 +1,3 @@
----
-name: python-testing
-description: Python testing standards, patterns, and best practices
----
-
 # Python Testing Standards
 
 Use pytest. AAA pattern. Tests fully independent. No shared mutable state.

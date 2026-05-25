@@ -1,4 +1,4 @@
-### uv Field Manual (Code‑Gen Ready, Bootstrap‑free)
+# uv Field Manual (Code‑Gen Ready, Bootstrap‑free)
 
 _Assumption: `uv` is already installed and available on `PATH`._
 
@@ -178,7 +178,3 @@ uv tool install pre-commit
 uv python install 3.12
 uv python pin 3.12
 ```
-
----
-
-_End of manual_

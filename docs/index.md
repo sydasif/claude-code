@@ -27,4 +27,4 @@ This directory contains modular Python standards. Load individual files as neede
 ## Frameworks & Versioning
 
 - [Framework Specifics](./python/frameworks.md) – FastAPI, Django, Flask
-- [Python Version Policy](./python/version-policy.md) – minimum versions, feature tables, EOL policy
+- [Python Version Policy](./python/version.md) – minimum versions, feature tables, EOL policy
