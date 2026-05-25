@@ -1,15 +1,15 @@
 ---
 name: refactor-code
-description: Modernize legacy Python code with best practices, type hints, and efficient patterns. Use when asked to refactor, modernize, or update Python code.
+description: Modernize legacy Python code with type hints and efficient patterns. Use when asked to refactor, modernize, or update Python code.
 ---
 
 # Python Refactoring Specialist
 
-> **Prerequisite**: Run the `cleanup-code` skill before this one if the codebase hasn't been pruned recently.
-> This skill modernizes code that _should exist_ — not code that should be deleted.
+> Prune with `cleanup-code` before refactoring.
+> Refactor code that _should exist_ — not code that should be deleted.
 > Cleanup first, refactor second.
 
-This skill transforms legacy Python code into modern, maintainable, and efficient implementations following current best practices.
+Transform legacy Python code into maintainable, efficient implementations.
 
 ---
 
@@ -24,19 +24,19 @@ This skill transforms legacy Python code into modern, maintainable, and efficien
 
 ### 2. When to Skip a Modernization
 
-Not every pattern needs updating. Skip a change if:
+Skip updates if:
 
-- The existing code is already clear, short, and readable — changing it adds ceremony without aiding comprehension or safety.
+- The code is already clear and short.
 - The change is version-gated and the project's minimum Python version is too low.
-- The file is generated, a one-off migration script, or otherwise unlikely to be maintained.
-- The abstraction introduced (e.g., a dataclass for a two-field struct) is heavier than the code it replaces.
+- The file is generated, a one-off migration script, or unlikely to be maintained.
+- The abstraction (e.g., a dataclass for a two-field struct) is heavier than the code it replaces.
 
-Apply modernization where it reduces noise, improves safety, or makes intent clearer — not as a mechanical sweep.
+Modernize to reduce noise, improve safety, or clarify intent.
 
 ### 3. Safe Refactoring Steps
 
 1. Run existing tests to establish a baseline.
-2. For large codebases with many mechanical changes (f-strings, pathlib, import ordering), consider running automated tools first — `pyupgrade`, `ruff --fix`, or `python-modernize` — to handle bulk transformations safely. Reserve manual refactoring for structural changes (dataclasses, match, async patterns, type hints).
+2. For large codebases with many mechanical changes (f-strings, pathlib, import ordering), run automated tools first — `pyupgrade`, `ruff --fix`, or `python-modernize` — for bulk transformations. Reserve manual refactoring for structural changes (dataclasses, match, async patterns, type hints).
 3. Apply one refactoring pattern at a time.
 4. Run tests after each change.
 5. Verify functionality remains identical.
@@ -77,14 +77,14 @@ Apply modernization where it reduces noise, improves safety, or makes intent cle
 
 - [ ] Use consistent `asyncio` patterns — no sync blocking calls (e.g., `time.sleep`, `open()`) inside async functions
 - [ ] Use `async with` and `async for` where available on async-capable resources
-- [ ] Await all coroutines — unawaited coroutines silently do nothing
+- [ ] Await all coroutines — unawaited coroutines do nothing
 - [ ] Use `asyncio.gather()` for concurrent independent tasks instead of sequential `await` calls
 - [ ] Replace `asyncio.sleep(0)` busy-loops with proper event-driven patterns
 
 **Imports**
 
 - [ ] Organize imports in standard groups: stdlib → third-party → local
-- [ ] Remove unused imports (should already be clear after `cleanup-code` pass)
+- [ ] Remove unused imports
 
 ---
 
@@ -105,7 +105,7 @@ uv run pytest --cov=src --cov-report=term-missing
 
 If the project has no `uv`/`pyproject.toml`, use commands from the project README instead.
 
-Record the baseline pass/fail counts. Any test that was already failing before refactoring is not your regression to fix — flag it and leave it.
+Record the baseline pass/fail counts. Flag existing test failures; do not treat them as regressions.
 
 ### After Refactoring
 
@@ -114,7 +114,7 @@ Verify refactored code passes all checks:
 - Type checking (no new mypy errors)
 - Linting (no new lint violations)
 - Unit tests (same or better pass rate as baseline)
-- Coverage (no meaningful drop from baseline)
+- Coverage must match the baseline
 
 ---
 
@@ -219,7 +219,7 @@ logger.error("Timeout on %s", host)
 
 ---
 
-Use this skill to modernize legacy Python code into clean, maintainable, and efficient implementations using contemporary Python features and best practices — after the codebase has been pruned with `cleanup-code`.
+Modernize legacy Python code after pruning with `cleanup-code`.
 
 ## See Also
 

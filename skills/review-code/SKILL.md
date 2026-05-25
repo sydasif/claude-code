@@ -1,15 +1,15 @@
 ---
 name: review-code
-description: Final-gate review of completed code changes using a systematic, fresh-eyes verification approach. Use this skill whenever the user asks to "review my code", "check my changes", or any time they've finished a cleanup, refactor, feature, or fix and want a quality check before submitting.
+description: Final-gate review of completed code changes using a systematic verification approach. Use when the user asks to "review my code", "check my changes", or after a cleanup, refactor, feature, or fix.
 ---
 
 # Code Review — Final Gate
 
-> **Critical constraint**: This skill surfaces problems only. It does **not** make changes to code.
-> If issues are found, report them clearly and stop. Do not attempt fixes inline.
+> Surface problems only. Do **not** modify code.
+> Report issues clearly and stop. Do not attempt inline fixes.
 
-**When to use**: After completing a `cleanup-code`, `refactor-code`, feature implementation, or bug fix.
-This is the last check before work is considered done.
+**When to use**: After a `cleanup-code`, `refactor-code`, feature implementation, or bug fix.
+Last check before finishing work.
 
 ---
 
@@ -17,13 +17,13 @@ This is the last check before work is considered done.
 
 ### 1. Orient to the Work
 
-Before reviewing, gather context:
+Gather context:
 
 - What task was completed? (cleanup, refactor, feature, fix)
-- What files were changed? Run `git diff --name-only HEAD` if in a git repo; otherwise list changed files from context or ask the user.
-- If `git` is unavailable, ask the user to provide the diff or list of changed files directly.
-- Are there residual risk notes from a prior `cleanup-code` or `refactor-code` pass? Review those first — they are highest priority.
-- What is the stated scope? Flag anything in the diff that falls outside it.
+- Which files changed? Run `git diff --name-only HEAD` if in a git repo; otherwise list changed files from context or ask the user.
+- If `git` is unavailable, ask the user for the diff or file list.
+- Review residual risk notes from prior `cleanup-code` or `refactor-code` passes first.
+- Which scope was stated? Flag changes outside it.
 
 ### 2. Structural Verification
 
@@ -36,14 +36,14 @@ Inspect the file system to confirm expected outputs:
 
 ### 3. Code-Specific Checklist
 
-Work through each item against the actual diff, not from memory. Record a result (pass / issue found) for each.
+Check each item against the diff. Record a result (pass / issue found) for each.
 
 **Correctness**
 
 - Logic changes preserve original behavior, or the deviation is intentional and documented.
 - Edge cases handled: empty inputs, None/null, zero, out-of-range values.
-- Error handling is specific — no new bare `except:` / `catch (e) {}` blocks.
-- No silent failures: errors surface rather than being swallowed.
+- Error handling is specific — no bare `except:` / `catch (e) {}` blocks.
+- Errors surface rather than being swallowed.
 
 **Public contracts**
 
@@ -57,19 +57,19 @@ Work through each item against the actual diff, not from memory. Record a result
 - All tests pass at the same rate as the pre-change baseline.
 - No tests deleted, weakened, or skipped to make the diff pass.
 - New helpers or changed shared utilities have test coverage.
-- Coverage did not meaningfully drop from baseline.
+- Coverage matches baseline.
 
 **Dead code and hygiene**
 
-- No new unused imports introduced.
-- No debug `print` / `console.log` statements or commented-out code left in.
-- No TODO/FIXME comments introduced without a tracking reference.
+- No new unused imports.
+- No debug `print` / `console.log` statements or commented-out code.
+- No TODO/FIXME comments without a tracking reference.
 
 **Documentation and references**
 
-- Inline comments reflect current behavior, not prior behavior.
-- Updated public APIs are reflected in docstrings.
-- Cross-skill references (`cleanup-code`, `refactor-code` notes) are resolved or explicitly deferred.
+- Inline comments reflect current behavior.
+- Docstrings reflect updated public APIs.
+- Cross-skill references (`cleanup-code`, `refactor-code` notes) are resolved or deferred.
 
 **Security (always flag, never evaluate severity yourself)**
 
@@ -80,12 +80,12 @@ Work through each item against the actual diff, not from memory. Record a result
 
 ### 4. Fresh-Perspective Questions
 
-Answer each based on evidence in the code, not intuition:
+Answer based on evidence, not intuition:
 
 - Does this solve the original problem completely, or only partially?
 - Is there anything surprising in the diff — behavior that doesn't match the task description?
 - Could a new team member follow this implementation without asking questions?
-- Did the change stay within its stated scope, or did it drift?
+- Did the change stay within scope, or did it drift?
 - Are there residual risks from a prior pass that were flagged but not resolved?
 
 ---
@@ -169,8 +169,8 @@ Ready to submit — no blocking issues found.
 
 ## Notes for Agentic Operation
 
-- **This skill does not make changes.** If issues are found, report them and stop. Do not fix inline.
-- If a blocking issue is found, stop and surface it before any further work.
-- If scope drift is found (diff contains changes outside what was asked), flag it explicitly — do not silently accept it.
-- Security flags are always reported regardless of apparent severity. Do not self-assess security risk — surface it for the user.
+- **This skill does not modify code.** Report issues and stop. Do not fix inline.
+- Stop and surface blocking issues before further work.
+- Flag scope drift explicitly — do not silently accept it.
+- Report all security flags regardless of apparent severity. Surface them for the user.
 - If `git` is unavailable and the user hasn't provided a diff, ask: "Can you share the diff or list the changed files so I can review them?"
