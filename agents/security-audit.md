@@ -9,7 +9,7 @@ skills:
 
 # Docs
 
-@~/.claude/docs/python-index.md
+@~/.claude/docs/index.md
 
 ## What I do
 
