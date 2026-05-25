@@ -46,3 +46,4 @@ Thumbs.db
 *.swp
 *.swo
 audit.log
+.mypy_cache/

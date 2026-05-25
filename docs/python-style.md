@@ -11,18 +11,20 @@ description: Python toolchain, style, and code review rules (single canonical so
 
 ## Required Toolchain
 
-| Tool        | Purpose                               |
-| ----------- | ------------------------------------- |
-| `uv`        | Environment management + dependencies |
-| `ruff`      | Linting + formatting                  |
-| `mypy`      | Static type checking                  |
-| `pytest`    | Test runner                           |
-| `bandit`    | Security linting                      |
-| `safety`    | Dependency vulnerability scanning     |
-| `uv-secure` | Project dependency security scanning  |
+| Tool        | Purpose                                                 |
+| ----------- | ------------------------------------------------------- |
+| `uv`        | Environment management + dependencies                   |
+| `ruff`      | Linting + formatting                                    |
+| `mypy`      | Static type checking                                    |
+| `pytest`    | Test runner                                             |
+| `bandit`    | Security linting                                        |
+| `safety`    | Dependency vulnerability scanning                       |
+| `uv-secure` | Project dependency security scanning                    |
 | Pyright LSP | In-editor type hints (`pyright-lsp` in `settings.json`) |
 
 When **pyright-lsp** is enabled, use IDE diagnostics while editing; still run `uv run mypy` (or the project’s configured checker) before marking work verified — LSP and CI checks can differ.
+
+> **Note**: `pyright-lsp` (in‑editor) and `mypy` (CI) may occasionally disagree on type correctness. For CI and pre‑merge verification, `mypy` output is authoritative. If you encounter a discrepancy, adjust the code to satisfy `mypy` first, then consider whether `pyright` can be updated or configured differently.
 
 ## Type Checker Selection
 
@@ -211,12 +213,12 @@ Remove unused dependencies.
 
 ### Version-Specific Features to Use
 
-| Python | Key features to leverage                                          |
-| ------ | ----------------------------------------------------------------- |
+| Python | Key features to leverage                                                  |
+| ------ | ------------------------------------------------------------------------- |
 | 3.10   | `match`/`case`, `X \| Y` union syntax, `TypeGuard`, `kw_only` dataclasses |
-| 3.11   | `Self` type, `Never`, `@dataclass(slots=True)`, `asyncio.TaskGroup` |
-| 3.12   | `@override`, `type` statement, `typing.Unpack`, perf improvements |
-| 3.13   | Free-threaded mode (experimental), JIT compiler, improved `locals()` |
+| 3.11   | `Self` type, `Never`, `@dataclass(slots=True)`, `asyncio.TaskGroup`       |
+| 3.12   | `@override`, `type` statement, `typing.Unpack`, perf improvements         |
+| 3.13   | Free-threaded mode (experimental), JIT compiler, improved `locals()`      |
 
 ---
 

@@ -409,6 +409,12 @@ const BASH_PATTERNS = [
     regex: /\bbase64\b[^|;]*(\.env|credentials|secrets|id_rsa|\.pem)/i,
     reason: "Base64 encoding secrets",
   },
+  {
+    level: "high",
+    id: "edit-uv-lock",
+    regex: /\b(vi|vim|nano|code|edit|subl)\s+uv\.lock\b/,
+    reason: "Use `uv lock` to update uv.lock, never edit manually",
+  },
 ];
 
 const LEVELS = { critical: 1, high: 2, strict: 3 };
