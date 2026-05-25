@@ -1,11 +1,11 @@
 ---
 name: blog-expert
-description: Rewrite technical documents, networking guides, engineering notes, RFC-style content, tutorials, or documentation into beginner-friendly blog posts with simple explanations, practical examples, conversational tone, and improved readability. Use this skill whenever the user wants to transform technical content into a blog post, asks to "make this beginner-friendly", wants to simplify documentation, or needs to write a tutorial-style article from dry reference material. Trigger even if they just say "turn this into a blog post" or "explain this simply for beginners."
+description: Rewrite technical documents, guides, notes, RFCs, and tutorials into beginner-friendly blog posts with simple explanations and practical examples. Use when the user wants to transform technical content into a blog post, simplify documentation, or write a tutorial from reference material.
 ---
 
-# Beginner-Friendly Technical Blog Writer
+# Technical Blog Writer
 
-Transform complex technical content into clear, engaging blog posts that help beginners understand difficult topics without losing technical accuracy.
+Transform complex technical content into clear blog posts that help beginners understand difficult topics without losing accuracy.
 
 ---
 
@@ -71,11 +71,11 @@ Use the source material as reference, but reorganize it freely to improve clarit
 
 # Writing Style
 
-Write in a:
+Use a:
 
 - Friendly tone
 - Conversational style
-- Clear and approachable voice
+- Approachable voice
 - Practical teaching style
 
 Avoid sounding:
@@ -91,11 +91,11 @@ Avoid sounding:
 
 - Use short paragraphs (2–4 sentences)
 - Use clear H2 and H3 headings
-- Use bullet points for easy scanning
+- Use bullet points for scanning
 - Include practical examples
-- Add CLI or code snippets when helpful
+- Add CLI or code snippets
 - Use fenced code blocks with language identifiers
-- Keep explanations concise and focused
+- Keep explanations concise
 
 Example:
 
@@ -107,8 +107,8 @@ show ip route
 
 # Technical Accuracy Rules
 
-- Preserve technical correctness when simplifying concepts
-- Do not invent technical details
+- Preserve technical correctness
+- Do not invent details
 - Do not guess missing information
 - Explain unclear sections cautiously
 - Keep important commands and configurations intact
@@ -122,7 +122,7 @@ show ip route
 - Summarize diagrams in plain English
 - Keep useful configuration examples
 - Remove unnecessary vendor formatting
-- Focus on what readers actually need to understand
+- Focus on what readers need to understand
 
 ---
 
@@ -140,7 +140,7 @@ show ip route
 
 # Blog Structure
 
-Follow this structure as a guideline while adapting it naturally to the topic.
+Adapt this structure naturally to the topic.
 
 ---
 
@@ -222,21 +222,21 @@ End with:
 
 If the source material is:
 
-## Incomplete
+### Incomplete
 
 - Preserve available meaning
 - Avoid assumptions
 - Organize content clearly
 
-## Too Technical
+### Too Technical
 
-- Simplify carefully without losing accuracy
+- Simplify without losing accuracy
 
-## Poorly Structured
+### Poorly Structured
 
-- Rebuild the flow logically
+- Rebuild flow logically
 
-## Very Short
+### Very Short
 
 - Expand explanations using beginner-friendly context without inventing facts
 
@@ -252,9 +252,9 @@ Prefer:
 
 Avoid:
 
-- overly academic transition words
+- academic transition words
 - corporate filler language
-- unnecessarily complex phrasing
+- complex phrasing
 
 ---
 
