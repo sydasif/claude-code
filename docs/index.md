@@ -2,6 +2,11 @@
 
 This directory contains modular Python standards. Load individual files as needed, or load this index to see the full structure.
 
+## Tooling
+
+- [Package Management](./tooling/package-management.md) – `uv` workflows, project vs script flow, CI/CD recipes
+- [Docker & uv](./tooling/docker-management.md) – Containerizing Python apps with `uv`
+
 ## Core
 
 - [Core Style & Toolchain](./python/style-core.md) – `uv`, `ruff`, `mypy`, workflow, naming, imports, modern Python basics

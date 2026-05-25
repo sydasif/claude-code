@@ -16,15 +16,10 @@ Declare these before any task begins:
 
 ### Python workflow
 
-- **Canonical rules:** @~/.claude/docs/python-index.md (modular Python standards)
-- **Testing:** see @~/.claude/docs/python/testing.md (`pytest`, `coverage`)
+- **Canonical rules:** @~/.claude/docs/index.md (Python standards, Docker, uv, pytest, coverage)
+- **Package management:** see @~/.claude/docs/tooling/package-management.md (uv)
+- **Testing:** see @~/.claude/docs/python/testing.md (pytest, coverage)
 - **Skill pipeline:** Optimize codebase with `cleanup-code` → `refactor-code` → `security-audit` → `review-code` skills
-
-### Loaded Rules
-
-- @~/.claude/docs/guidelines/karpathy-guidelines.md
-- @~/.claude/docs/tooling/using-uv.md
-- @~/.claude/docs/tooling/docker-uv.md
 
 ---
 
