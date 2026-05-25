@@ -49,7 +49,7 @@ Assess whether the codebase has meaningful automated test coverage before rankin
 
 ### Gate 3 — Project-level overrides
 
-Read `AGENTS.md`, `README.md`, contribution docs, and any style/convention files. If project-level guidance conflicts with the principles in this skill, **project guidance takes precedence**. Note any overrides in the findings report.
+Read `CLAUDE.md` or `README.md`, contribution docs, and any style/convention files. If project-level guidance conflicts with the principles in this skill, **project guidance takes precedence**. Note any overrides in the findings report.
 
 ---
 
@@ -57,7 +57,7 @@ Read `AGENTS.md`, `README.md`, contribution docs, and any style/convention files
 
 ### 1. Inspect the project shape
 
-- Read repository guidance: `AGENTS.md`, `README.md`, contribution docs, test commands.
+- Read repository guidance: `CLAUDE.md`, `README.md`, contribution docs, test commands.
 - Map source, tests, docs, and public interfaces — skipping generated directories (`dist/`, `build/`, `__pycache__`, `.next/`, and similar output folders).
 - Confirm git status is clean (Gate 1 above).
 - Assess test coverage (Gate 2 above).
@@ -205,7 +205,7 @@ Use this shape:
 ### Pre-flight
 - Git status: [clean / uncommitted changes — describe]
 - Test coverage: [adequate / thin / unknown — describe risk]
-- Project overrides from AGENTS.md: [none / list any]
+- Project overrides from CLAUDE.md or README.md: [none / list any]
 
 ### Candidates (ordered by risk or payoff)
 - [file:line] Description — category (safe / needs care / skip)

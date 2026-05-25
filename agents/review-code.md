@@ -7,7 +7,6 @@ tools: Read, Grep, Glob, Bash
 disallowedTools: Write, Edit
 skills:
   - review-code
-  - ddg-search
 ---
 
 # Docs

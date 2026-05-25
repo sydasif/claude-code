@@ -11,8 +11,6 @@ description: Modernize legacy Python code with best practices, type hints, and e
 
 This skill transforms legacy Python code into modern, maintainable, and efficient implementations following current best practices.
 
-> **Style and toolchain:** `rules/python-style.md` (auto-loaded). Project `CLAUDE.md` or `AGENTS.md` overrides global rules.
-
 ---
 
 ## Refactoring Process
