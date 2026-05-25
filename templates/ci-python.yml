@@ -21,9 +21,9 @@ jobs:
       - run: uv run ruff format --check .
       - run: uv run mypy src/
       - run: uv run pytest --cov=src
-      # WARNING: The || true prevents CI from failing on security issues.
+      # WARNING: `|| true` skips failure on security issues.
       # Remove || true to enforce blocking on medium+ severity vulnerabilities.
       - run: uv run bandit -r src/ || true
-      # WARNING: The || true prevents CI from failing on dependency vulnerabilities.
+      # WARNING: `|| true` skips failure on dependency vulnerabilities.
       # Remove || true to enforce blocking on unsafe packages.
       - run: uv run safety check || true
