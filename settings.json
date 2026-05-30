@@ -1,7 +1,7 @@
 {
   "env": {
+    "ANTHROPIC_BASE_URL": "http://localhost:4000",
     "ANTHROPIC_AUTH_TOKEN": "sk-1234",
-    "ANTHROPIC_BASE_URL": "http://localhost:8080/anthropic",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "gemma-4-26b-a4b-it",
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "gemma-4-31b-it",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "gemini-3.1-flash-lite"
