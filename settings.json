@@ -7,7 +7,12 @@
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "gemini-3.1-flash-lite"
   },
   "permissions": {
-    "allow": ["WebSearch"]
+    "allow": [
+      "WebSearch",
+      "Bash(git add *)",
+      "Bash(git push)",
+      "mcp__ddg_search__*"
+    ]
   },
   "hooks": {
     "PostToolUse": [
@@ -59,7 +64,9 @@
     "pyright-lsp@claude-plugins-official": true,
     "repomix-mcp@repomix": true,
     "typescript-lsp@claude-plugins-official": true,
-    "context7@claude-plugins-official": true
+    "context7@claude-plugins-official": true,
+    "pydantic-ai@claude-plugins-official": true,
+    "exa@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "repomix": {
