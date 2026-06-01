@@ -8,7 +8,7 @@ A configuration for Claude Code to maintain code quality, security, and structur
 
 - **Three-skill pipeline**: `cleanup-code` (YAGNI/DRY/KISS), `refactor-code` (modernization), and `review-code` (final gate)
 - **Security hooks**: Block dangerous commands (like `rm -rf ~` or force pushes to main), protect secrets, and prevent exfiltration
-- **Externalized secrets**: API tokens live in `~/.claude/.env` (chmod 600) and are loaded by the shell at startup; only non-secret env stays in `settings.json`
+- **Externalized env**: All `ANTHROPIC_*` (and any other) environment variables live in `~/.claude/.env` (chmod 600) and are loaded by the shell at startup; `settings.json` carries config only, no env block
 - **Auto-formatting**: Run `ruff` on Python and `prettier` on JS/TS/JSON/Markdown after every edit
 - **Python standards**: Use `uv`, `ruff`, `mypy --strict`, `pytest`, Google docstrings, `pathlib`, f-strings, and dataclasses
 - **Testing standards**: Use the AAA pattern, target 95% business logic coverage, and run pre-change test gates
@@ -60,23 +60,23 @@ source ~/.zshrc
 [ -n "${ANTHROPIC_AUTH_TOKEN+x}" ] && echo "token loaded" || echo "token missing"
 ```
 
-Only put non-secret values in `settings.json`'s `env` block (base URL, model names, etc.). The `protect-secrets` hook intentionally blocks the agent from creating, reading, or modifying `.env` files — you manage secrets yourself.
+Put **all** environment variables in `~/.claude/.env` — secrets and non-secrets alike (base URL, model names, anything `ANTHROPIC_*`). `settings.json` carries no `env` block; the shell loader is the single source. The `protect-secrets` hook intentionally blocks the agent from creating, reading, or modifying `.env` files — you manage the file yourself.
 
 ---
 
 ## Key Files
 
-| Path                      | Purpose                                                                      |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| `CLAUDE.md`               | Base instructions – security‑first, structured outputs, stop triggers        |
-| `settings.json`           | Hooks, permissions, plugins, status line, **non-secret env only**            |
-| `~/.claude/.env`          | **User-local**, `chmod 600` — API tokens and other secrets; not tracked      |
-| `hooks/*.js`              | Pre/Post tool hooks – block dangerous commands, protect secrets, format code |
-| `skills/*/SKILL.md`       | Reusable capabilities (cleanup, refactor, review, blog writing, humanizing)  |
-| `agents/*.md`             | Specialized sub‑agents with tool restrictions                                |
-| `docs/index.md`           | Modular Python standards — style, typing, security, performance, frameworks  |
-| `docs/python/testing.md`  | Testing standards, coverage thresholds, commands                             |
-| `templates/ci-python.yml` | GitHub Actions workflow template                                             |
+| Path                      | Purpose                                                                            |
+| ------------------------- | ---------------------------------------------------------------------------------- |
+| `CLAUDE.md`               | Base instructions – security‑first, structured outputs, stop triggers              |
+| `settings.json`           | Hooks, permissions, plugins, status line — config only, no env block               |
+| `~/.claude/.env`          | **User-local**, `chmod 600` — all `ANTHROPIC_*` env and other secrets; not tracked |
+| `hooks/*.js`              | Pre/Post tool hooks – block dangerous commands, protect secrets, format code       |
+| `skills/*/SKILL.md`       | Reusable capabilities (cleanup, refactor, review, blog writing, humanizing)        |
+| `agents/*.md`             | Specialized sub‑agents with tool restrictions                                      |
+| `docs/index.md`           | Modular Python standards — style, typing, security, performance, frameworks        |
+| `docs/python/testing.md`  | Testing standards, coverage thresholds, commands                                   |
+| `templates/ci-python.yml` | GitHub Actions workflow template                                                   |
 
 ---
 
