@@ -4,7 +4,7 @@ description: >
   Final-gate review after security audit. Catches errors, verifies
   completeness, and confirms quality standards before submitting.
 model: deepseek-v4-flash-free
-color: violet
+color: orange
 skills:
   - review-code
 ---
