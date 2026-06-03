@@ -3,7 +3,8 @@ name: refactor-code
 description: >
   Modernize legacy Python code with best practices, type hints,
   and efficient patterns.
-tools: Read, Grep, Glob, Edit, Write, Bash
+model: deepseek-v4-flash-free
+color: green
 skills:
   - refactor-code
 ---

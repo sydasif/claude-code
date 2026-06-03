@@ -3,7 +3,8 @@ name: cleanup-code
 description: >
   Codebase cleanup applying YAGNI, DRY, and KISS principles.
   Invoke to remove dead code, duplicated logic, and over-abstraction.
-tools: Read, Grep, Glob, Edit, Write, Bash
+model: deepseek-v4-flash-free
+color: red
 skills:
   - cleanup-code
 ---

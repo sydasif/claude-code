@@ -8,7 +8,6 @@
       "mcp__ddg_search__*"
     ]
   },
-  "model": "opus",
   "hooks": {
     "PostToolUse": [
       {

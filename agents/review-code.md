@@ -3,8 +3,8 @@ name: review-code
 description: >
   Final-gate review after security audit. Catches errors, verifies
   completeness, and confirms quality standards before submitting.
-tools: Read, Grep, Glob, Bash
-disallowedTools: Write, Edit
+model: deepseek-v4-flash-free
+color: violet
 skills:
   - review-code
 ---
