@@ -2,9 +2,6 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "Bash(git add *)",
-      "Bash(git push)",
-      "Bash(uv run *)",
       "mcp__ddg_search__*"
     ]
   },
@@ -61,13 +58,19 @@
     "typescript-lsp@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
     "pydantic-ai@claude-plugins-official": true,
-    "exa@claude-plugins-official": true
+    "document-skills@anthropic-agent-skills": true
   },
   "extraKnownMarketplaces": {
     "repomix": {
       "source": {
         "source": "github",
         "repo": "yamadashy/repomix"
+      }
+    },
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
       }
     }
   },
