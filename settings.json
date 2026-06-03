@@ -8,6 +8,7 @@
       "mcp__ddg_search__*"
     ]
   },
+  "model": "sonnet",
   "hooks": {
     "PostToolUse": [
       {
