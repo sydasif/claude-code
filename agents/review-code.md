@@ -1,10 +1,8 @@
 ---
 name: review-code
-description: >
-  Final-gate review after security audit. Catches errors, verifies
-  completeness, and confirms quality standards before submitting.
-model: deepseek-v4-flash-free
-color: orange
+description: "Final-gate review after security audit. Catches errors, verifies completeness, and confirms quality standards before submitting."
+model: inherit
+color: blue
 skills:
   - review-code
 ---
