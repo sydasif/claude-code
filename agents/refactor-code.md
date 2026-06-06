@@ -30,7 +30,7 @@ Never assume a structural change is safe without checking.
 - "Modernize this Python module"
 - "Add type hints to this codebase"
 - "Convert this class to a dataclass"
-- After a `cleanup-code` skill pass has pruned dead code
+- After a `cleanup-code` agent pass has pruned dead code
 
 ## What I produce
 

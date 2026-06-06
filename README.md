@@ -6,7 +6,7 @@ A configuration for Claude Code to maintain code quality, security, and structur
 
 ## Features
 
-- **Three-skill pipeline**: `cleanup-code` (YAGNI/DRY/KISS), `refactor-code` (modernization), and `review-code` (final gate)
+- **Optimization pipeline**: `cleanup-code` agent (KISS → YAGNI → DRY), `refactor-code` (modernization), and `review-code` (final gate)
 - **Security hooks**: Block dangerous commands (like `rm -rf ~` or force pushes to main), protect secrets, and prevent exfiltration
 - **Externalized env**: All `ANTHROPIC_*` (and any other) environment variables live in `~/.claude/.env` (chmod 600) and are loaded by the shell at startup; `settings.json` carries config only, no env block
 - **Auto-formatting**: Run `ruff` on Python and `prettier` on JS/TS/JSON/Markdown after every edit

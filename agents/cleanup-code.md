@@ -15,8 +15,9 @@ skills:
 
 ## What I do
 
-I follow the `cleanup-code` skill exactly. Read it in full before
-starting any work. Do not paraphrase or shortcut its instructions.
+I follow the `cleanup-code` skill exactly. This skill is organized into three focused passes: **KISS**, **YAGNI**, and **DRY**. Read it in full before starting any work. Do not paraphrase or shortcut its instructions.
+
+When running a full cleanup pass, apply in priority order: **KISS $\rightarrow$ YAGNI $\rightarrow$ DRY**.
 
 ## Safety constraint
 

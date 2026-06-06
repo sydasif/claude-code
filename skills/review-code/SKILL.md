@@ -8,7 +8,7 @@ description: Final-gate review of completed code changes using a systematic veri
 > Surface problems only. Do **not** modify code.
 > Report issues clearly and stop. Do not attempt inline fixes.
 
-**When to use**: After a `cleanup-code`, `refactor-code`, feature implementation, or bug fix.
+**When to use**: After a `cleanup-code` agent pass, `refactor-code`, feature implementation, or bug fix.
 Last check before finishing work.
 
 ---
@@ -22,7 +22,7 @@ Gather context:
 - What task was completed? (cleanup, refactor, feature, fix)
 - Which files changed? Run `git diff --name-only HEAD` if in a git repo; otherwise list changed files from context or ask the user.
 - If `git` is unavailable, ask the user for the diff or file list.
-- Review residual risk notes from prior `cleanup-code` or `refactor-code` passes first.
+- Review residual risk notes from prior `cleanup-code` agent or `refactor-code` passes first.
 - Which scope was stated? Flag changes outside it.
 
 ### 2. Structural Verification
@@ -38,40 +38,31 @@ Inspect the file system to confirm expected outputs:
 
 Check each item against the diff. Record a result (pass / issue found) for each.
 
-**Correctness**
+**Section 1: Correctness & Contracts**
 
 - Logic changes preserve original behavior, or the deviation is intentional and documented.
 - Edge cases handled: empty inputs, None/null, zero, out-of-range values.
 - Error handling is specific — no bare `except:` / `catch (e) {}` blocks.
 - Errors surface rather than being swallowed.
-
-**Public contracts**
-
 - No public function signatures changed without explicit user approval.
 - No exported names renamed or removed.
 - No config key or environment variable names changed.
 - API response shapes preserved.
 
-**Tests**
+**Section 2: Hygiene & Documentation**
 
 - All tests pass at the same rate as the pre-change baseline.
 - No tests deleted, weakened, or skipped to make the diff pass.
 - New helpers or changed shared utilities have test coverage.
 - Coverage matches baseline.
-
-**Dead code and hygiene**
-
 - No new unused imports.
 - No debug `print` / `console.log` statements or commented-out code.
 - No TODO/FIXME comments without a tracking reference.
-
-**Documentation and references**
-
 - Inline comments reflect current behavior.
 - Docstrings reflect updated public APIs.
-- Cross-skill references (`cleanup-code`, `refactor-code` notes) are resolved or deferred.
+- Cross-pass references (`cleanup-code` agent, `refactor-code` notes) are resolved or deferred.
 
-**Security (always flag, never evaluate severity yourself)**
+**Section 3: Security & Risks**
 
 - No secrets, tokens, or credentials in the diff.
 - No new shell injection vectors (unescaped user input in subprocess calls, etc.).

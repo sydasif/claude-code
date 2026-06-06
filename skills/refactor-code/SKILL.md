@@ -5,7 +5,7 @@ description: Modernize legacy Python code with type hints and efficient patterns
 
 # Python Refactoring Specialist
 
-> Prune with `cleanup-code` before refactoring.
+> Prune with the `cleanup-code` agent before refactoring.
 > Refactor code that _should exist_ — not code that should be deleted.
 > Cleanup first, refactor second.
 
@@ -43,32 +43,26 @@ Modernize to reduce noise, improve safety, or clarify intent.
 
 ### 4. Modernization Checklist
 
-**String and data handling**
-
-- [ ] Replace `%` and `.format()` string formatting with f-strings
-- [ ] Replace `os.path.*` path operations with `pathlib`
-- [ ] Replace `configparser` with `tomllib` (3.11+) or `tomli` where appropriate
-
-**Type system**
+**Section 1: Type System**
 
 - [ ] Add type hints to function signatures (inputs and return values)
 - [ ] Use keyword-only arguments where callers should not rely on positional order
 - [ ] Replace structured dicts passed between functions with `TypedDict` or dataclasses
 
-**Classes and data structures**
+**Section 2: Syntax Modernization**
+
+- [ ] Replace `%` and `.format()` string formatting with f-strings
+- [ ] Replace `os.path.*` path operations with `pathlib`
+- [ ] Replace `configparser` with `tomllib` (3.11+) or `tomli` where appropriate
+- [ ] Replace long `if/elif` chains over a single variable with `match` statements (Python 3.10+ only)
+
+**Section 3: Structural Improvements**
 
 - [ ] Replace simple attribute-only classes with `@dataclass`
 - [ ] Remove boilerplate methods (`__init__`, `__repr__`, `__eq__`) where dataclass covers them
 - [ ] Add `__slots__` to hot-path dataclasses where memory efficiency matters
-
-**Control flow**
-
-- [ ] Replace long `if/elif` chains over a single variable with `match` statements (Python 3.10+ only)
 - [ ] Move complex lambda functions to named functions
 - [ ] Use appropriate iteration patterns: `enumerate`, list/dict/set comprehensions, `zip`
-
-**Resource and error handling**
-
 - [ ] Use context managers for all file, socket, and connection resources
 - [ ] Replace bare `except:` or `except Exception:` without re-raise with specific exception types
 - [ ] Replace diagnostic `print` statements with `logging` calls at appropriate levels
@@ -219,10 +213,10 @@ logger.error("Timeout on %s", host)
 
 ---
 
-Modernize legacy Python code after pruning with `cleanup-code`.
+Modernize legacy Python code after pruning with the `cleanup-code` agent.
 
 ## See Also
 
 - `rules/python-style.md` — Toolchain, typing, security scans
-- `cleanup-code` skill — Run this first to prune dead code before refactoring
+- `cleanup-code` agent — Run this first to prune dead code before refactoring
 - `review-code` skill — For final gate review after refactoring

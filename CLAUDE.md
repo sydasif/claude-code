@@ -18,7 +18,7 @@ Before starting any task, I confirm the baseline:
 - **Standards:** @~/.claude/docs/index.md (Python, Docker, tooling)
 - **Packages:** @~/.claude/docs/tooling/package-management.md (`uv`)
 - **Testing:** @~/.claude/docs/python/testing.md (`pytest`, coverage)
-- **Optimization:** Use the `cleanup-code` → `refactor-code` → `review-code` pipeline
+- **Optimization:** Use the `cleanup-code` agent → `refactor-code` → `review-code` pipeline
 
 ---
 
