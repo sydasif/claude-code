@@ -1,0 +1,41 @@
+# Dockerfile.python — multistage uv-based Python image
+# Customise ENTRYPOINT / CMD, EXPOSE, and the package name for your app.
+#
+# Stages:
+#   1. builder — installs production deps into a virtual environment
+#   2. project — copies the application source
+#   3. runtime — bare slim image with only the venv + uv runtime
+
+# Stage 1: build dependencies
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
+WORKDIR /app
+
+# Copy manifests first for Docker layer caching
+COPY pyproject.toml uv.lock ./
+RUN uv sync --locked --no-install-project --no-dev --frozen
+
+# Stage 2: copy in the project source
+FROM builder AS project
+COPY src ./src
+
+# Stage 3: runtime image
+FROM python:3.12-slim
+
+# Copy uv binary and the virtual environment from the builder
+COPY --from=builder /uv /bin/uv
+COPY --from=project /app/.venv /app/.venv
+COPY --from=project /app/src /app/src
+
+# Non-root user for production
+RUN useradd --create-home --shell /bin/bash app
+USER app
+
+WORKDIR /app
+ENV PATH="/app/.venv/bin:$PATH" \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+EXPOSE 8000
+
+# Customise the entry point for your application
+CMD ["uv", "run", "python", "-m", "myapp"]
