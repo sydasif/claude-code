@@ -1,105 +1,121 @@
 ---
 name: debug-code
-description: >-
-  Systematic debugging skill. Use this whenever you encounter an error,
-  unexpected behavior, test failure, or any "why doesn't this work" question.
-  This includes config errors, import failures, runtime exceptions, wrong
-  output, flaky tests, and "it works on my machine" problems. Do NOT just
-  guess or fix the surface symptom — follow the full investigation pipeline
-  to find the root cause. This skill also applies when the user asks you
-  to "debug", "investigate", "figure out why", "trace this error",
-  "find the root cause", or "fix this bug".
+description: Debug errors, failed commands, test failures, runtime exceptions, wrong output, flaky behavior, regressions, config/import issues, and bug-fix requests using a local-first CLI workflow with Context7, GitHub CLI, and web-search MCP for external evidence.
 ---
 
 # Debug Code
 
-A systematic investigation pipeline. Follow these steps in order. Do not
-skip steps. Do not jump to conclusions. Each step builds on the last.
+## Operating Principle
 
-## Pipeline
+Treat errors as symptoms until evidence shows the cause. Work from the most concrete signal available: exact command, full output, local code, recent changes, tests, current docs/source for external dependencies, then the smallest fix that explains all observed behavior.
 
-### Step 1: Identify the error
+Do not jump straight from an error string to an edit. First reproduce, isolate, explain, then change.
 
-- Read the **full error message**, not just the last line.
-- Note the **exact file, line number, and error type**.
-- Check if the error is reproducible — run it twice.
-- Ask: _what did I expect to happen, and what actually happened?_
+## Tool Priority
 
-### Step 2: Search the web / GitHub
+Use the best available tool for the evidence needed. Do not block debugging just because a preferred tool is missing.
 
-Use your search tools (WebSearch, WebFetch) to find:
+- Local CLI first: `rg`, `rg --files`, `git status`, `git diff`, focused tests, logs, dependency manifests, lockfiles, and local dependency source.
+- Context7: use for current, version-aware library/framework documentation and code examples when dependency behavior matters. Context7 supports CLI/skills and MCP modes.
+- GitHub CLI (`gh`): use for GitHub-native evidence such as issues, PRs, checks, releases, repo metadata, source files, and API calls from the terminal.
+- web-search MCP: use for real-time web/news search, domain-specific docs search, and clean page extraction when current external information or non-GitHub sources matter.
+- Fallback: if MCP tools or `gh` are unavailable, use local files and official web sources. Report unavailable tools only when that limits confidence or verification.
 
-- **Exact error messages** — others have hit this, solutions may exist.
-- **Related issues** on GitHub (search the project's issue tracker).
-- **Known limitations** — sometimes the library simply doesn't support something.
-- **Alternative approaches** — how do other projects solve this?
+## Tool Sources
 
-Search for both the error _and_ the broader pattern (e.g. "Nornir env var expansion"
-_and_ "Nornir SimpleInventory path configuration" — not just the error text).
+- Context7 for current library/framework docs and examples. Source: https://github.com/upstash/context7
+- GitHub CLI `gh` for issues, PRs, checks, releases, source/API access. Source: https://cli.github.com/
+- web-search MCP for web search, domain docs search, and page extraction. Source: https://github.com/sydasif/web-search-mcp
 
-### Step 3: Query library docs (Context7)
+## CLI Workflow
 
-For any library or framework involved, use Context7 to check:
+### 1. Capture The Failure
 
-- **Official API docs** — what does the function actually accept?
-- **Configuration reference** — what values are valid?
-- **Known behaviors** — does it expand `~` but not `$HOME`?
+- Record the exact command, inputs, environment assumptions, full error output, file paths, line numbers, versions, and current working directory.
+- Re-run once when safe to confirm the failure is reproducible. For flaky failures, run enough times to identify the pattern.
+- Separate expected behavior from actual behavior in one sentence.
+- If the user provided only a fragment, inspect logs/tests/code before asking for more.
 
-This often reveals the _gap between what you assumed and what the library does_.
+### 2. Check Local State First
 
-### Step 4: Inspect source code (gh api / direct read)
+Use local evidence before external lookup:
 
-When the docs are unclear or contradict your observation, **go to the source**:
+- Inspect nearby code, call sites, config, fixtures, generated files, dependency manifests, lockfiles, and recent diffs.
+- Prefer fast shell tools: `rg`, `rg --files`, `git diff`, `git status`, targeted test commands, and focused log inspection.
+- Read enough context around each relevant symbol to understand the contract, not just the failing line.
+- Check local dependency source when available before assuming external behavior.
+- Protect unrelated user changes. Do not revert or overwrite changes you did not make.
 
-- Use `gh api` to pull the actual source files from GitHub.
-- Search for the specific function/method involved.
-- Look for string handling, path resolution, env var usage.
-- Compare with **similar OSS implementations** — search for other projects
-  doing the same thing and see how they handle it.
+### 3. Form Testable Hypotheses
 
-This is where the real root cause lives. The preceding steps build context so
-you know _what to look for_ when you open the source.
+Maintain a small hypothesis list:
 
-### Step 5: Compare with other implementations
+- What could produce this exact symptom?
+- What observation would prove or disprove each candidate?
+- Which candidate best explains all evidence, including edge cases?
 
-Search for other OSS projects solving the same problem. Ask:
+Prefer experiments that narrow the search space quickly: focused tests, minimal reproduction commands, temporary logging/inspection that can be removed, or reading the implementation path.
 
-- Do they have the same issue?
-- Did they work around it? How?
-- Is there a consensus pattern (e.g. "always expand vars yourself before passing to the library")?
+### 4. Pull Current External Evidence
 
-This prevents implementing a solution that other projects already proved wrong.
+Use external sources when the issue depends on dependency, framework, CLI, API, OS, or standards behavior that may have changed, or when local code delegates behavior to something outside the repo.
 
-### Step 6: Implement the fix
+Use this order when applicable:
 
-Based on the root cause found in steps 2-5:
+- Context7 for library/framework docs, APIs, configuration, version-specific examples, and known edge cases.
+- `gh issue list`, `gh issue view`, `gh pr view`, `gh pr checks`, `gh release view`, `gh repo view`, and `gh api` for upstream GitHub issues, PRs, releases, metadata, checks, and raw source.
+- web-search MCP `search_web` for broad known-error searches, `search_domain` for official docs or specific sites, and `fetch_page` for reading a specific page cleanly.
 
-- Focus on the **minimal change** that fixes the root cause, not the symptom.
-- If the fix is in library code (you don't control it), wrap it in your own
-  code — load → expand → pass, or monkey-patch as a last resort.
-- If the fix is in your own code, apply it directly.
+Prefer primary sources: official docs, changelogs, release notes, source code, and upstream issues. Use community posts only as leads unless they include reproducible evidence.
 
-### Step 7: Verify
+### 5. Confirm Root Cause Before Editing
 
-- **Static checks** pass (lint, types).
-- **Existing tests** still pass.
-- **New test** covers the fixed case (positive + negative).
-- **Live run** — exercise the actual system, not just the test suite.
-- **Edge case** — test `~`, `$HOME`, relative paths, etc. if path-related.
+Before making code changes, be able to state:
 
-## Why this order
+- The root cause.
+- Why the observed failure follows from that cause.
+- What evidence ruled out the main alternatives.
+- Which behavior the fix must preserve.
 
-Errors are symptoms, not causes. The most common debugging mistake is
-treating the surface error as the problem and fixing it directly, which
-either breaks something else or leaves the real bug untouched.
+If the root cause is still uncertain, keep investigating. If uncertainty remains after reasonable investigation, report the evidence, the uncertainty, and the next best diagnostic step instead of shipping a speculative fix.
 
-Each step narrows the search space:
+### 6. Implement The Smallest Correct Fix
 
-- Step 2 tells you if this is a known problem with a known fix.
-- Step 3 tells you what the library _intends_ to do.
-- Step 4 tells you what it _actually_ does.
-- Step 5 tells you how others navigated the gap.
-- By step 6 you understand the root cause well enough to fix it correctly.
+- Fix the cause, not only the immediate symptom.
+- Follow the repository's existing style, abstractions, and ownership boundaries.
+- Keep changes scoped. Avoid opportunistic refactors unless they are necessary to fix safely.
+- For dependency limitations, adapt at your boundary: validate, normalize, wrap, pin, or document behavior in code/tests as appropriate.
+- Remove temporary debug prints, probes, and scratch artifacts before finishing.
 
-If you hit a dead end at any step, go back to Step 2 with what you learned
-and search again with more specific terms.
+### 7. Verify The Fix
+
+Verification should match risk:
+
+- Re-run the original failing command or reproduction.
+- Run the narrowest relevant test first, then broader tests if the change touches shared behavior.
+- Add or update a regression test when the bug is non-trivial, user-facing, shared, or likely to recur.
+- Cover edge cases that were part of the root cause.
+- Run static checks when the repository has an obvious command for them.
+- Use `gh pr checks` or `gh run view` when CI state is part of the failure or verification.
+
+If a verification command cannot be run, say exactly why and what remains unverified.
+
+## Flaky Or Intermittent Failures
+
+For flakiness, do not rely on a single pass:
+
+- Run repeated attempts or targeted subsets to estimate frequency.
+- Look for ordering, timing, randomness, shared state, network, timezone, locale, filesystem, cache, and parallelism dependencies.
+- Capture seed, timestamps, worker count, and environment details when available.
+- Check upstream issues/releases with `gh` and web-search MCP when the flake may come from a dependency or hosted service.
+- Prefer deterministic fixes over retries. Retries are acceptable only when the underlying operation is inherently unreliable and the retry policy is bounded and justified.
+
+## Reporting Back
+
+When finished, keep the summary evidence-based:
+
+- Root cause in plain language.
+- Files changed and why.
+- Verification commands and outcomes.
+- External sources used, if they affected the conclusion.
+- Remaining risk or unverified areas, if any.
