@@ -16,7 +16,7 @@ skills:
 I follow the `refactor-code` skill exactly. Read it in full before
 starting any work. Do not paraphrase or shortcut its instructions.
 
-After I complete successfully, invoke the `security-audit` agent.
+After I complete successfully, invoke the `review-code` agent and ask it to include a security-focused pass.
 
 ## Safety constraint
 

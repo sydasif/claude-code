@@ -32,7 +32,7 @@ const FORMATTERS = {
 };
 
 for (const ext of PRETTIER_EXTS) {
-  FORMATTERS[ext] = (fp) => [['npx', '--yes', 'prettier', '--write', fp]];
+  FORMATTERS[ext] = (fp) => [['npx', '--no-install', 'prettier', '--write', fp]];
 }
 
 function log(data) {

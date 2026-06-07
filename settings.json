@@ -1,8 +1,26 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
       "WebSearch",
       "mcp__ddg_search__*"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(./secrets/**)",
+      "Read(**/secrets/**)",
+      "Read(./config/credentials.json)",
+      "Read(**/credentials.json)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.claude/.env)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/credentials)",
+      "Read(~/.kube/config)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.netrc)"
     ]
   },
   "model": "claude-gemma4-31b",
