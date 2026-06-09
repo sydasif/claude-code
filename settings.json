@@ -1,7 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "allow": ["WebSearch", "mcp__ddg_search__*"],
+    "allow": [
+      "WebSearch",
+      "mcp__ddg_search__*"
+    ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
@@ -20,7 +23,6 @@
       "Read(~/.netrc)"
     ]
   },
-  "model": "opusplan",
   "hooks": {
     "PostToolUse": [
       {
@@ -48,78 +50,78 @@
         "hooks": [
           {
             "type": "command",
-            "if": "Bash(rm *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(rm *)"
           },
           {
             "type": "command",
-            "if": "Bash(dd *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(dd *)"
           },
           {
             "type": "command",
-            "if": "Bash(mkfs *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(mkfs *)"
           },
           {
             "type": "command",
-            "if": "Bash(chmod *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(chmod *)"
           },
           {
             "type": "command",
-            "if": "Bash(curl *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(curl *)"
           },
           {
             "type": "command",
-            "if": "Bash(wget *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(wget *)"
           },
           {
             "type": "command",
-            "if": "Bash(git push *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(git push *)"
           },
           {
             "type": "command",
-            "if": "Bash(git reset *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(git reset *)"
           },
           {
             "type": "command",
-            "if": "Bash(git clean *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(git clean *)"
           },
           {
             "type": "command",
-            "if": "Bash(git checkout *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(git checkout *)"
           },
           {
             "type": "command",
-            "if": "Bash(docker *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(docker *)"
           },
           {
             "type": "command",
-            "if": "Bash(sudo *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(sudo *)"
           },
           {
             "type": "command",
-            "if": "Bash(crontab *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(crontab *)"
           },
           {
             "type": "command",
-            "if": "Bash(printenv *)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(printenv *)"
           },
           {
             "type": "command",
-            "if": "Bash(env)",
-            "command": "node ~/.claude/hooks/block-commands.js"
+            "command": "node ~/.claude/hooks/block-commands.js",
+            "if": "Bash(env)"
           }
         ]
       },
@@ -162,5 +164,6 @@
   },
   "effortLevel": "high",
   "autoUpdatesChannel": "latest",
+  "skipWorkflowUsageWarning": true,
   "theme": "dark"
 }
