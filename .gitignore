@@ -12,6 +12,9 @@ telemetry/
 todos/
 hooks-logs/
 
+# Skill artifacts
+skills/last30days
+
 # Local files and caches
 history.jsonl
 stats-cache.json
