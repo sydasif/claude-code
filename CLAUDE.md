@@ -12,13 +12,14 @@ Before starting any task, I confirm the baseline:
 - **OS:** Linux, macOS, or Windows x86-64
 - **Package Manager:** `uv`
 - **Framework:** Project-specific
+- **Model:** Configured in `settings.json` (`model: "opusplan"`)
 
 ### Python workflow
 
 - **Standards:** @~/.claude/docs/index.md (Python, Docker, tooling)
 - **Packages:** @~/.claude/docs/tooling/package-management.md (`uv`)
 - **Testing:** @~/.claude/docs/python/testing.md (`pytest`, coverage)
-- **Optimization:** Use the `cleanup-code` agent → `refactor-code` → `review-code` pipeline
+- **Optimization:** Use the `cleanup-code` → `refactor-code` → `review-code` agents pipeline
 
 ---
 
@@ -45,20 +46,15 @@ Before starting any task, I confirm the baseline:
 I define the exact input and expected output before delegating.
 
 - **Pure tasks**: Read-only analysis or isolated transformations.
-- **Side-effect tasks**: File writes or API calls. These are never parallelized without a strict sequence.
+- **Side-effect tasks**: File writes or API calls. Respect system-level parallelization when safe; sequence side-effect tasks within parallel groups.
 - **Context**: All necessary context is passed explicitly.
 
 ### Code Intelligence
 
-LSP beats Grep or Glob for navigation:
+Available tools for code navigation:
 
-- `goToDefinition` / `goToImplementation` for source jumps.
-- `findReferences` for usage audits.
-- `workspaceSymbol` and `documentSymbol` for definitions.
-- `hover` for quick type checks.
-- `incomingCalls` / `outgoingCalls` for hierarchy.
-
-I always run `findReferences` to map all call sites before touching a function signature.
+- `pyright_lsp` - LSP-based type checking
+- `typescript_lsp` - LSP-based type checking for TypeScript
 
 ---
 
@@ -69,8 +65,9 @@ I always run `findReferences` to map all call sites before touching a function s
 - **Input**: Validate type, length, and format for all external data.
 - **Privilege**: Request the absolute minimum permissions.
 - **Secrets**: Environment variables only. No secrets in the code.
+- **File access**: Hooks block reads of `.env`, `.ssh/`, `.aws/credentials`, and other sensitive files. Do not attempt to bypass.
 
-### The Simplicity Tax
+### Simplicity Principle
 
 - Keep code minimal. Less code means less maintenance.
 - If I can't explain a function's logic in one simple sentence, it's too complex. Simplify it.
@@ -79,6 +76,62 @@ I always run `findReferences` to map all call sites before touching a function s
 
 - I design for the real world: timeouts, network drops, full disks, and malformed data.
 - Every design needs a clear failure path.
+
+---
+
+## Hooks & Safety
+
+Three hooks enforce safety and quality automatically:
+
+- **`protect-secrets.js`** - Blocks reads/writes to `.env`, SSH keys, cloud credentials, and other sensitive files. Logs blocked attempts to `~/.claude/hooks-logs/`.
+- **`block-commands.js`** - Blocks dangerous commands: `rm -rf ~`, force pushes to main, `git reset --hard`, `sudo`, `docker`, `curl`, `wget`, `chmod`, `crontab`, `printenv`, `env`.
+- **`format-code.js`** - Auto-formats files after edits: `ruff` for Python, `prettier` for JS/TS/JSON/Markdown/YAML/HTML.
+
+These hooks run automatically. Do not attempt to bypass them.
+
+---
+
+## Available Skills
+
+Reusable capabilities loaded via the `skill` tool:
+
+| Skill           | Purpose                                                                |
+| --------------- | ---------------------------------------------------------------------- |
+| `cleanup-code`  | YAGNI/DRY/KISS cleanup - prune dead code, remove duplication           |
+| `refactor-code` | Modernize Python with type hints, dataclasses, pathlib, f-strings      |
+| `review-code`   | Final-gate review - surface problems, verify contracts, check security |
+| `stop-slop`     | Remove AI writing patterns from prose                                  |
+| `humanizer`     | Remove AI writing patterns using Wikipedia's detection guide           |
+| `debug-code`    | Debug errors, test failures, runtime exceptions                        |
+| `deep-research` | Research topics using web search, docs, community platforms            |
+| `blog-expert`   | Transform technical docs into beginner-friendly blog posts             |
+
+---
+
+## Available Agents
+
+Specialized sub-agents for the optimization pipeline:
+
+| Agent           | Purpose                                                | Model                    |
+| --------------- | ------------------------------------------------------ | ------------------------ |
+| `cleanup-code`  | YAGNI/DRY/KISS cleanup - run first to prune            | `deepseek-v4-flash-free` |
+| `refactor-code` | Modernize Python after cleanup                         | inherit                  |
+| `review-code`   | Final gate - security audit, correctness, completeness | inherit                  |
+
+**Pipeline order:** `cleanup-code` → `refactor-code` → `review-code`
+
+---
+
+## Templates
+
+Production-ready templates in `~/.claude/templates/`:
+
+| Template                 | Purpose                                                      |
+| ------------------------ | ------------------------------------------------------------ |
+| `ci-python.yml`          | GitHub Actions workflow (copy to `.github/workflows/ci.yml`) |
+| `pyproject.toml`         | uv-managed project config with ruff, mypy, pytest, bandit    |
+| `pre-commit-config.yaml` | Pre-commit hooks (copy to `.pre-commit-config.yaml`)         |
+| `Dockerfile.python`      | Multistage uv-based Python image                             |
 
 ---
 
@@ -100,23 +153,6 @@ I always run `findReferences` to map all call sites before touching a function s
 
 ---
 
-## Required Output
-
-> **Required for any task that modifies existing behavior.**
-
-**Multi-file or behavior changes:**
-
-1. **Discovery Report**: Patterns, affected areas, and the coverage baseline.
-2. **Strategic Plan**: Objective, scope, non-goals, and the skill pipeline.
-3. **Assumptions & Risks**: Key assumptions, security findings, and risks.
-4. **Proposed Changes**: Action list by file with justifications.
-5. **Skipped Candidates**: What I evaluated but decided not to change.
-6. **Verification Pyramid**: Static checks, positive/negative/regression tests, and the rollback plan.
-
-**Single-file or no behavior change:** I provide the verification pyramid only.
-
----
-
 ## Stop & Ask Triggers
 
 I halt and escalate immediately if:
@@ -128,16 +164,8 @@ I halt and escalate immediately if:
 5. A task requires a destructive data operation.
 6. Sub-agents return conflicting results.
 
----
-
-## Failure Handling
-
-If a task hits a dead end:
+**Failure handling:**
 
 1. **Show the Dead End**: I provide the exact error or constraint.
 2. **Offer Pivots**: I suggest alternatives (e.g., "I can't do X, but I can do Z").
 3. **Preserve State**: I deliver whatever partial work is still valid.
-
----
-
-> **Verification of Adherence:** I verify my adherence by successfully completing the task.

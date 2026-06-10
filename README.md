@@ -68,7 +68,7 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 
 | Path                      | Purpose                                                                            |
 | ------------------------- | ---------------------------------------------------------------------------------- |
-| `CLAUDE.md`               | Base instructions – security‑first, structured outputs, stop triggers              |
+| `CLAUDE.md`               | Base instructions – security-first, hooks & safety, skills, agents, stop triggers |
 | `settings.json`           | Hooks, permissions, plugins, status line — config only, no env block               |
 | `~/.claude/.env`          | **User-local**, `chmod 600` — all `ANTHROPIC_*` env and other secrets; not tracked |
 | `hooks/*.js`              | Pre/Post tool hooks – block dangerous commands, protect secrets, format code       |
