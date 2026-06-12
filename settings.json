@@ -1,7 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "allow": ["WebSearch", "mcp__ddg_search__*"],
+    "allow": [
+      "WebSearch",
+      "mcp__ddg_search__*"
+    ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
@@ -20,7 +23,6 @@
       "Read(~/.netrc)"
     ]
   },
-  "model": "opusplan",
   "hooks": {
     "PostToolUse": [
       {
@@ -142,7 +144,8 @@
     "repomix-mcp@repomix": true,
     "context7@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "WebSearch@WebSearch": true
   },
   "extraKnownMarketplaces": {
     "repomix": {
@@ -156,6 +159,13 @@
         "source": "github",
         "repo": "anthropics/skills"
       }
+    },
+    "WebSearch": {
+      "source": {
+        "source": "github",
+        "repo": "sydasif/web-search-mcp"
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "high",
