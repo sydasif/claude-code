@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "allow": ["WebSearch", "mcp__ddg_search__*"],
+    "allow": ["WebSearch"],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
@@ -20,7 +20,6 @@
       "Read(~/.netrc)"
     ]
   },
-  "model": "claude-minimax-m3",
   "hooks": {
     "PostToolUse": [
       {
@@ -143,7 +142,9 @@
     "context7@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "web-search@syed-plugins": true
+    "web-search@ninja-plugins": true,
+    "writing@ninja-plugins": true,
+    "coding@ninja-plugins": true
   },
   "extraKnownMarketplaces": {
     "repomix": {
@@ -152,7 +153,7 @@
         "repo": "yamadashy/repomix"
       }
     },
-    "syed-plugins": {
+    "ninja-plugins": {
       "source": {
         "source": "github",
         "repo": "sydasif/claude-plugins"
