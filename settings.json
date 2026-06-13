@@ -23,6 +23,7 @@
       "Read(~/.netrc)"
     ]
   },
+  "model": "haiku",
   "hooks": {
     "PostToolUse": [
       {
@@ -145,7 +146,7 @@
     "context7@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "WebSearch@WebSearch": true
+    "web-search@syed-plugins": true
   },
   "extraKnownMarketplaces": {
     "repomix": {
@@ -154,18 +155,11 @@
         "repo": "yamadashy/repomix"
       }
     },
-    "anthropic-agent-skills": {
+    "syed-plugins": {
       "source": {
         "source": "github",
-        "repo": "anthropics/skills"
+        "repo": "sydasif/claude-plugins"
       }
-    },
-    "WebSearch": {
-      "source": {
-        "source": "github",
-        "repo": "sydasif/web-search-mcp"
-      },
-      "autoUpdate": true
     }
   },
   "effortLevel": "high",
