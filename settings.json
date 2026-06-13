@@ -159,7 +159,8 @@
       "source": {
         "source": "github",
         "repo": "sydasif/claude-plugins"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "high",
