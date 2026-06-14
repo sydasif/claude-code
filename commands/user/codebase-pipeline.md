@@ -17,13 +17,4 @@ Run the full optimization + testing pipeline:
    - Correctness regressions
    - Any issues the prior two stages missed
 
-4. **functional-testing** — After all code changes are verified clean:
-   - Import and call every public function/tool at least once with real inputs
-   - Test normal operation paths (happy path)
-   - Test error edge cases (empty input, missing resources, network failures)
-   - Test all return type variants (markdown, JSON/structured, ErrorResponse)
-   - Verify logging and error messages are clear and actionable
-   - Confirm no crashes, hangs, or unhandled exceptions
-
 Use the project's existing tooling (ruff, mypy, pytest) to verify at each stage.
-Commit after stage 4 if all checks pass. No behavior changes.
