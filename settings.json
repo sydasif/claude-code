@@ -19,7 +19,12 @@
       "Read(~/.aws/credentials)",
       "Read(~/.kube/config)",
       "Read(~/.docker/config.json)",
-      "Read(~/.netrc)"
+      "Read(~/.netrc)",
+      "Bash(rm -rf ~*)",
+      "Bash(rm -rf /*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -fd*)",
+      "WebSearch"
     ]
   },
   "model": "haiku",
@@ -50,78 +55,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(rm *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(dd *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(mkfs *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(chmod *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(curl *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(wget *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(git push *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(git reset *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(git clean *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(git checkout *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(docker *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(sudo *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(crontab *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(printenv *)"
-          },
-          {
-            "type": "command",
-            "command": "node ~/.claude/hooks/block-commands.js",
-            "if": "Bash(env)"
+            "command": "node /home/zulu/.claude/hooks/block-commands.js"
           }
         ]
       },
@@ -130,7 +64,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ~/.claude/hooks/protect-secrets.js"
+            "command": "node /home/zulu/.claude/hooks/protect-secrets.js"
           }
         ]
       }
@@ -158,7 +92,8 @@
       "source": {
         "source": "github",
         "repo": "sydasif/web-search-mcp"
-      }
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "high",
