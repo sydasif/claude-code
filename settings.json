@@ -1,9 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "allow": [
-      "WebSearch"
-    ],
+    "allow": ["WebSearch"],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
@@ -23,8 +21,7 @@
       "Bash(rm -rf ~*)",
       "Bash(rm -rf /*)",
       "Bash(git reset --hard*)",
-      "Bash(git clean -fd*)",
-      "WebSearch"
+      "Bash(git clean -fd*)"
     ]
   },
   "model": "haiku",
