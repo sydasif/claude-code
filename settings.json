@@ -1,7 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "allow": ["WebSearch"],
+    "allow": [
+      "WebSearch"
+    ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
@@ -20,6 +22,7 @@
       "Read(~/.netrc)"
     ]
   },
+  "model": "haiku",
   "hooks": {
     "PostToolUse": [
       {
@@ -142,9 +145,7 @@
     "context7@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "web-search@ninja-plugins": true,
-    "writing@ninja-plugins": true,
-    "coding@ninja-plugins": true
+    "web-search@sydasif-web-search-mcp": true
   },
   "extraKnownMarketplaces": {
     "repomix": {
@@ -153,12 +154,11 @@
         "repo": "yamadashy/repomix"
       }
     },
-    "ninja-plugins": {
+    "sydasif-web-search-mcp": {
       "source": {
         "source": "github",
-        "repo": "sydasif/claude-plugins"
-      },
-      "autoUpdate": true
+        "repo": "sydasif/web-search-mcp"
+      }
     }
   },
   "effortLevel": "high",
