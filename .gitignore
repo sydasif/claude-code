@@ -18,6 +18,7 @@ skills/last30days
 # Local files and caches
 history.jsonl
 stats-cache.json
+mcp-needs-auth-cache.json
 config.json
 cache/
 paste-cache/
