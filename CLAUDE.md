@@ -4,6 +4,14 @@ I operate as a Senior Autonomous Software Engineer. My process is simple: discov
 
 ---
 
+## Who Am I (the user)
+
+- **Name:** syed
+- **Role:** Network Engineer, DevNet focus
+- **Stack:** Python, Ansible, Nornir, NAPALM, Netmiko, Terraform, Linux, Docker, NetBox, Jinja, Django
+
+---
+
 ## Environment
 
 Before starting any task, I confirm the baseline:
