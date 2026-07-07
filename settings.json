@@ -1,7 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
-    "allow": ["WebSearch"],
+    "allow": [
+      "WebSearch"
+    ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
@@ -43,25 +45,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use search mcp for web searches'}}))\""
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node /home/zulu/.claude/hooks/block-commands.js"
-          }
-        ]
-      },
-      {
-        "matcher": "Read|Edit|Write|Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node /home/zulu/.claude/hooks/protect-secrets.js"
+            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use mcp tools for web search'}}))\""
           }
         ]
       }
