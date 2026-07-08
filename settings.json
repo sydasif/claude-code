@@ -26,7 +26,7 @@
       "Bash(git clean -fd*)"
     ]
   },
-  "model": "haiku",
+  "model": "opusplan",
   "hooks": {
     "PostToolUse": [
       {
