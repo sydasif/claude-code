@@ -1,7 +1,6 @@
 ---
 name: refactor-code
 description: "Modernize legacy Python code with best practices, type hints, and efficient patterns."
-model: inherit
 color: green
 skills:
   - refactor-code
