@@ -1,12 +1,6 @@
 ---
 name: cleanup-code
 description: Use when asked to review, simplify, refactor, or clean up a project for unnecessary code, duplicated logic, over-abstraction, excessive complexity, stale tests, or docs that no longer match implementation.
-allowed-tools:
-  - "Bash(git:*)"
-  - "Bash(rg:*)"
-  - "Bash(ruff:*)"
-  - "Bash(pytest:*)"
-  - "Bash(uv:*)"
 ---
 
 # Cleanup Principles

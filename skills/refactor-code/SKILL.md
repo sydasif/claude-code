@@ -1,12 +1,6 @@
 ---
 name: refactor-code
 description: Use when asked to refactor, modernize, or update Python code with type hints, dataclasses, pathlib, f-strings, or other best practices. Run cleanup-code first to prune dead code.
-allowed-tools:
-  - "Bash(uv:*)"
-  - "Bash(pyupgrade:*)"
-  - "Bash(ruff:*)"
-  - "Bash(pytest:*)"
-  - "Bash(mypy:*)"
 ---
 
 # Python Refactoring Specialist

@@ -1,13 +1,11 @@
 ---
 name: agnes-video
 description: Use when the user wants to generate videos via the Agnes Video API. Covers text-to-video, image-to-video, keyframe animation, motion assets. Requires AGNES_API_KEY.
-allowed-tools:
-  - "Bash(curl:*)"
 ---
 
 # Agnes Video V2.0
 
-!`[ -z "$AGNES_API_KEY" ] && echo "BLOCKED: AGNES_API_KEY is not set. Export it in your shell before using this skill." || echo "OK: AGNES_API_KEY ready"`
+> **Prerequisite:** `AGNES_API_KEY` must be set in your shell environment. If unset, export it before proceeding: `export AGNES_API_KEY="your-key"`.
 
 Third-party asynchronous video generation API (Sapiens AI). Model: `agnes-video-v2.0`.
 

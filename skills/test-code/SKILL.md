@@ -1,14 +1,6 @@
 ---
 name: test-code
 description: Use when the user wants end-to-end QA validation of a project as a real user/operator would experience it, not just syntax checks or running the existing test suite.
-allowed-tools:
-  - "Bash(uv:*)"
-  - "Bash(pip:*)"
-  - "Bash(pytest:*)"
-  - "Bash(npm:*)"
-  - "Bash(node:*)"
-  - "Bash(python:*)"
-  - "Bash(docker:*)"
 ---
 
 # QA Testing
