@@ -1,7 +1,8 @@
 ---
 name: agnes-video
 description: Use when the user wants to generate videos via the Agnes Video API. Covers text-to-video, image-to-video, keyframe animation, motion assets. Requires AGNES_API_KEY.
-allowed-tools: Bash(curl:*)
+allowed-tools:
+  - "Bash(curl:*)"
 ---
 
 # Agnes Video V2.0
