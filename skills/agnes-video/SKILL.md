@@ -35,6 +35,8 @@ POST https://apihub.agnes-ai.com/v1/videos
 GET https://apihub.agnes-ai.com/agnesapi?video_id=<VIDEO_ID>
 ```
 
+Optionally append `&model_name=agnes-video-v2.0` when using an upstream original video ID, the model is not the default `agnes-video-v2.0`, or you want to explicitly specify the model used to retrieve the result.
+
 **Get video result — legacy** (GET):
 
 ```
@@ -66,7 +68,7 @@ Task statuses: `queued` → `in_progress` → `completed` | `failed`
 | `model`               | string   | Yes      | Always `agnes-video-v2.0`                                          |
 | `prompt`              | string   | Yes      | Text description of the video content                              |
 | `image`               | string   | No       | Public HTTPS URL for image-to-video workflows                      |
-| `mode`                | string   | No       | `ti2vid` or `keyframes`                                            |
+| `mode`                | string   | No       | `ti2vid` (text/image-to-video) or `keyframes` (keyframe animation) |
 | `height`              | integer  | No       | Default `768`                                                      |
 | `width`               | integer  | No       | Default `1152`                                                     |
 | `num_frames`          | integer  | No       | Must be `<= 441` and follow the `8n + 1` rule (1, 9, 17, ..., 441) |
@@ -88,7 +90,7 @@ Task statuses: `queued` → `in_progress` → `completed` | `failed`
 
 ## Resolution tiers
 
-The API normalizes width/height to the closest supported configuration. Use `size` and `seconds` from the response as the source of truth.
+The API normalizes width/height to the closest supported configuration. Supported tiers: `480p`, `720p`, `1080p`. Use `size` and `seconds` from the response as the source of truth.
 
 | Aspect Ratio | Recommended Use Case                           |
 | ------------ | ---------------------------------------------- |
@@ -97,6 +99,18 @@ The API normalizes width/height to the closest supported configuration. Use `siz
 | `1:1`        | Square social media feeds                      |
 | `4:3`        | Traditional landscape, presentations           |
 | `3:4`        | Vertical presentations, portrait-focused       |
+
+## Recommended parameters
+
+| Scenario                  | Recommended Settings                                              |
+| ------------------------- | ----------------------------------------------------------------- |
+| Standard video generation | `width: 1152`, `height: 768`, `num_frames: 121`, `frame_rate: 24` |
+| Social short videos       | `num_frames: 81` or `121`, `frame_rate: 24`                       |
+| Longer videos             | Increase `num_frames` or reduce `frame_rate`                      |
+| Smoother motion           | Use `frame_rate: 24` or `30`                                      |
+| Reproducible results      | Set a fixed `seed`                                                |
+| Keyframe transition       | Use `extra_body.mode: "keyframes"`                                |
+| Avoid unwanted content    | Use `negative_prompt`                                             |
 
 ## Usage patterns
 
@@ -220,8 +234,17 @@ Use `video_id` (not `task_id`) for retrieving results — it's the recommended i
 - Video generation is asynchronous — always poll until `status` is `completed` or `failed`.
 - `num_frames` must be `<= 441` and follow the `8n + 1` rule.
 - `frame_rate` range is `1-60`. Higher frame rate = smoother motion but shorter duration at the same `num_frames`.
+- Video dimensions must be multiples of 64.
 - After parameter normalization, use `size` and `seconds` from the response as the source of truth — not the original request values.
 - Input images for image-to-video and keyframe workflows must be publicly accessible HTTPS URLs.
 - Generation can take tens of seconds to several minutes depending on duration and complexity; use a polling interval of 5-10 seconds.
 - Pricing is listed as $0.005/second standard rate (currently promotional at $0/second); confirm current pricing with the user's account/dashboard rather than assuming a promotional rate is still active, since that can change without notice.
-- Error codes: `400` (invalid request), `401` (unauthorized), `404` (not found), `500` (server error), `503` (service busy).
+- Error codes: `400` (invalid request), `401` (unauthorized), `402` (insufficient balance), `403` (forbidden/no model access), `404` (not found), `405` (wrong HTTP method), `408` (timeout), `409` (conflict/duplicate task), `413` (payload too large), `422` (invalid parameter values), `429` (rate limit exceeded), `500` (server error), `502` (bad gateway), `503` (service busy).
+
+## Integration checklist
+
+- Use `agnes-video-v2.0` as the model name.
+- Video generation is asynchronous. Create a task first, then retrieve the result.
+- New integrations should use `video_id` (not `task_id`) to retrieve video results.
+- Use publicly accessible image URLs for image-to-video and keyframe workflows.
+- After parameter normalization, use the `seconds` and `size` fields from the response as the source of truth.
