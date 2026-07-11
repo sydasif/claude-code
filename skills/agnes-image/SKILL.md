@@ -5,7 +5,7 @@ description: Use when the user wants to generate, edit, or composite images via 
 
 # Agnes Image API
 
-!`[ -z "$AGNES_API_KEY" ] && echo "BLOCKED: AGNES_API_KEY is not set. Export it in your shell before using this skill." || echo "OK: AGNES_API_KEY ready"`
+AGNES_API_KEY is available in the environment.
 
 Third-party image generation API (Sapiens AI). Two models:
 

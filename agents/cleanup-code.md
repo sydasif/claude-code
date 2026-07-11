@@ -6,6 +6,7 @@ description: >
 color: red
 skills:
   - cleanup-code
+model: sonnet
 ---
 
 # Docs

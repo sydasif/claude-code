@@ -1,10 +1,10 @@
 ---
 name: review-code
 description: "Final-gate review after security audit. Catches errors, verifies completeness, and confirms quality standards before submitting."
-model: haiku
 color: blue
 skills:
   - review-code
+model: haiku
 ---
 
 # Docs
