@@ -1,6 +1,7 @@
 ---
 name: review-code
 description: Use when the user asks to "review my code", "check my changes", or after a cleanup, refactor, feature, or fix. Final gate before submitting.
+user-invocable: false
 ---
 
 # Code Review - Final Gate

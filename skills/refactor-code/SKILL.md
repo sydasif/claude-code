@@ -1,6 +1,7 @@
 ---
 name: refactor-code
 description: Use when asked to refactor, modernize, or update Python code with type hints, dataclasses, pathlib, f-strings, or other best practices. Run cleanup-code first to prune dead code.
+user-invocable: false
 ---
 
 # Python Refactoring Specialist

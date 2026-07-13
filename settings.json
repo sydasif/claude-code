@@ -29,7 +29,6 @@
       "Bash(git clean -fd*)"
     ]
   },
-  "model": "opus",
   "hooks": {
     "PostToolUse": [
       {

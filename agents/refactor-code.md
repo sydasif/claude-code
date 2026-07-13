@@ -4,7 +4,7 @@ description: "Modernize legacy Python code with best practices, type hints, and 
 color: green
 skills:
   - refactor-code
-model: sonnet
+model: opus
 ---
 
 # Docs
