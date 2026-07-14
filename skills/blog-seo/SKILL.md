@@ -1,6 +1,6 @@
 ---
 name: blog-seo
-description: A quality loop for finished articles. Watches a /finished folder, scores each article 0-100 against SEO, AEO, and tone rules, then rewrites the weakest sections and rescores until the article reaches 85. Runs standalone or as a morning routine. Rules live in a separate rules.md so the owner can adjust weights and thresholds without touching the loop. Trigger on "seo aeo loop", "quality loop", "score my finished articles", "run the article loop", "/seo-aeo-loop".
+description: A quality loop for finished articles. Watches a /finished folder, scores each article 0-100 against SEO, AEO, and tone rules, then rewrites the weakest sections and re-scores until the article reaches 85. Rules live in a separate rules.md so the owner can adjust weights and thresholds without touching the loop. Trigger on "seo aeo loop", "quality loop", "score my finished articles", "run the article loop", "/blog-seo".
 ---
 
 # SEO/AEO Loop
@@ -13,7 +13,7 @@ An automation scores once and stops. This loop has a goal. Score 85. Below 85, i
 /finished    → articles waiting for the loop (drop .md or .txt here)
 /optimized   → articles that passed 85, with metadata block on top
 /reports     → one scorecard per article per run
-loop-log.md  → memory file: what ran, rounds used, before/after scores
+log.md       → memory file: what ran, rounds used, before/after scores
 rules.md     → the scoring rules (created on first run, owner-editable)
 ```
 
@@ -70,12 +70,12 @@ AEO is what makes ChatGPT, Perplexity, and Claude quote the article instead of s
 **Goal: total score 85 or higher, AND no single block below 60% of its max** (SEO 30+, AEO 18+, Tone 12+). The floor stops the loop from buying SEO points by wrecking the tone.
 
 - **85+ with floors met →** Step 3. Ship.
-- **Below →** rewrite ONLY the weakest failing checks, in order of points lost. Then rescore the whole article. **Round cap: 3.** Log each round's score in loop-log.md.
+- **Below →** rewrite ONLY the weakest failing checks, in order of points lost. Then rescore the whole article. **Round cap: 3.** Log each round's score in log.md.
 - **Cap hit below 85 →** move the article to /optimized anyway, but mark the report FAILED-AT-XX with the exact list of what still fails and why the loop could not fix it (e.g. "content length needs author input"). Never fake the score. Never loosen a rule to pass.
 
 ### Rewrite rules, never break these
 
-- Fix only what the scorecard flags. Do not touch passing sections.
+- Fix only what the score-card flags. Do not touch passing sections.
 - Do not add filler for length. Do not add explanations the author did not write.
 - Do not change section order or delete author content.
 - Tone rules outrank score. If a rewrite gains SEO points but reads generic, revert it and take the lower score.
@@ -99,7 +99,7 @@ Changed: [one line per rewrite]
 Still failing: [only if FAILED]
 ```
 
-Append one line to loop-log.md: date, filename, rounds, before → after.
+Append one line to log.md: date, filename, rounds, before → after.
 
 ## The routine
 
@@ -113,5 +113,5 @@ When asked to automate, create a scheduled routine (07:00 daily or the owner's t
 - rules.md always overrides the defaults in this file. The owner tunes weights, thresholds, and the goal there.
 - Never report a score that was not computed. Never pad. Never pass a failing article.
 - Round cap 3, no exceptions.
-- This skill does not build artifacts or dashboards. It scores, rewrites, rescores, and files the report. Nothing else.
+- This skill does not build artifacts or dashboards. It scores, rewrites, re-scores, and files the report. Nothing else.
 - Do not promise rankings. Structure is checked, SERP positions are not.
