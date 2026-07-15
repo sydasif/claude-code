@@ -6,7 +6,7 @@ description: >
 color: red
 skills:
   - cleanup-code
-model: sonnet
+model: haiku
 ---
 
 # Docs

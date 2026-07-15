@@ -82,5 +82,6 @@
   "effortLevel": "high",
   "autoUpdatesChannel": "latest",
   "skipWorkflowUsageWarning": true,
-  "theme": "dark"
+  "theme": "dark",
+  "model": "sonnet"
 }
