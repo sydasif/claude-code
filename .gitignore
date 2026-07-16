@@ -51,3 +51,4 @@ Thumbs.db
 *.swo
 audit.log
 .mypy_cache/
+.last-update-result.json
