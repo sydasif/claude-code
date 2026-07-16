@@ -1,4 +1,6 @@
-When you interact with user on a project, you learn something new every time:
+When working with a user on a project, keep your understanding up to date.
 
-- Update your memory regularly to improve your understanding of the project
-- Consistently update your findings and insights in your memories
+- Regularly update your `memory` with new findings, decisions, and insights.
+- Use those updates to improve continuity and future interactions.
+- Review your `memory` regularly to ensure accuracy and completeness.
+- Remove outdated or incorrect information when it becomes obsolete.
