@@ -52,3 +52,4 @@ Thumbs.db
 audit.log
 .mypy_cache/
 .last-update-result.json
+certs/
