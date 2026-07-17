@@ -38,7 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use mcp tools for web search'}}))\""
+            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use web-search mcp for web search'}}))\""
           }
         ]
       }
@@ -74,6 +74,5 @@
   "effortLevel": "high",
   "autoUpdatesChannel": "stable",
   "skipWorkflowUsageWarning": true,
-  "theme": "dark",
-  "model": "sonnet"
+  "theme": "dark"
 }
