@@ -23,8 +23,8 @@ metadata:
   node_type: memory
   type: project
   originSessionId: xyz-1234-5678-90ab-cdef
-tags: [tag1, tag2, tag3]
-related: [File1], [File2]
+tags: tag1, tag2, tag3
+related: [[File1]], [[File2]]
 last_update: 2026-02-26
 ```
 
