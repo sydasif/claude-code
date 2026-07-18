@@ -1,8 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "theme": "dark",
-  "effortLevel": "high",
-  "autoUpdatesChannel": "stable",
   "permissions": {
     "allow": [
       "WebSearch"
@@ -71,5 +68,9 @@
         "repo": "kepano/obsidian-skills"
       }
     }
-  }
+  },
+  "effortLevel": "high",
+  "autoUpdatesChannel": "stable",
+  "theme": "dark",
+  "model": "sonnet[1m]"
 }
