@@ -32,24 +32,19 @@ Rule of thumb: would a future session without this memo make a worse decision? I
 
 ```yaml
 ---
+# Built-in front-matter for memory notes.
 name: test-memory
 description: Initial test memory entry for testing memory system
 metadata:
   node_type: memory
-  type: reference
+  type: as-needed
   originSessionId: aaa91fc4-59d8-49ad-9a3c-72590cba5ac5
----
-```
-
-- Add these other fields flat at top level are mandatory for all memory notes:
-
-```yaml
----
+# Append these fields flat at top level are mandatory for all memory notes.
 title: Title for Memo
-tags: [tag1, tag2, tag3] # only add max 3 tags
+tags: [tag1, tag2, tag3] # max 3 tags
 created: YYYY-MM-DD
 last_update: YYYY-MM-DD
-related: ["[[other-topic-slug]]"] # use [[wikilinks]], quoted in YAML
+related: ["[[other-topic-slug]]"] # [[wikilinks]], quoted in YAML
 ---
 ```
 
