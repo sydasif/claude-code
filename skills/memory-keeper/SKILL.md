@@ -21,12 +21,13 @@ Skip it for:
 - Routine changes with no lasting "why"
 - Anything already obvious from reading the code
 - One-off exploratory or throwaway work
+- Anything that is already documented in the project `CLAUDE.md` or `README.md`
 
 Rule of thumb: would a future session without this memo make a worse decision? If no, don't write it.
 
 ## Writing or Updating a Memo
 
-- Create or update `~/.claude/projects/<project>/memory/<topic>.md`
+- Create or update `~/.claude/projects/<project-name>/memory/<topic-name>.md`
 - All memory notes **must** use flat top-level front-matter (no nested under `metadata:` block)
 
 ```yaml
@@ -72,3 +73,5 @@ Add or update a line here every time you write or update a memo.
 
 - **Context efficiency is paramount** — future sessions pay the token cost of everything here.
 - **Signal over noise** — the "why" matters more than the "what."
+
+> Follow the exact front-matter structure and formatting as per the example.

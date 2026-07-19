@@ -14,6 +14,7 @@ Two `mechanisms` carry knowledge across sessions:
 
 - CLAUDE.md: instructions to give Claude persistent context
 - Auto-memory: Claude writes itself based on corrections and preferences
+- Duplication: You must avoid duplicating information in both CLAUDE.md and auto-memory
 
 ### Auto-Memory
 
