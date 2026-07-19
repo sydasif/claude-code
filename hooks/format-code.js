@@ -22,7 +22,7 @@ const { spawnSync } = require('child_process');
 
 const LOG_DIR = path.join(process.env.HOME, '.claude', 'hooks-logs');
 
-const PRETTIER_EXTS = new Set(['.js', '.ts', '.json', '.md', '.yaml', '.yml', '.html']);
+const PRETTIER_EXTS = new Set(['.js', '.ts', '.json', '.md', '.html']);
 
 const FORMATTERS = {
   '.py': (fp) => [
@@ -40,7 +40,7 @@ function log(data) {
     if (!fs.existsSync(LOG_DIR)) fs.mkdirSync(LOG_DIR, { recursive: true });
     const file = path.join(LOG_DIR, `${new Date().toISOString().slice(0, 10)}.jsonl`);
     fs.appendFileSync(file, JSON.stringify({ ts: new Date().toISOString(), hook: 'format-code', ...data }) + '\n');
-  } catch {}
+  } catch { }
 }
 
 function getFormatter(filePath) {
