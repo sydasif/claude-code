@@ -28,16 +28,23 @@ Rule of thumb: would a future session without this memo make a worse decision? I
 ## Writing or Updating a Memo
 
 - Create or update `~/.claude/projects/<project-name>/memory/<topic-name>.md`
-- All memory notes **must** use flat top-level front-matter (no nested under `metadata:` block)
+- All memory notes use built-in front-matter as below:
 
 ```yaml
 ---
-name: short-kebab-case-slug
-description: One sentence on what this memo covers
+name: test-memory
+description: Initial test memory entry for testing memory system
 metadata:
   node_type: memory
-  type: project
-  originSessionId: ee3cb689-bd9b-47e6-9eb0-b43f2f7d9acd
+  type: reference
+  originSessionId: aaa91fc4-59d8-49ad-9a3c-72590cba5ac5
+---
+```
+
+- Add these other fields flat at top level are mandatory for all memory notes:
+
+```yaml
+---
 title: Title for Memo
 tags: [tag1, tag2, tag3] # only add max 3 tags
 created: YYYY-MM-DD
@@ -46,8 +53,7 @@ related: ["[[other-topic-slug]]"] # use [[wikilinks]], quoted in YAML
 ---
 ```
 
-- Update these fields with auto generated values in memory files.
-- Bump `last_update` any time content changes.
+- Do not nest any of these fields under `metadata` — they are top-level fields.
 - Prefer editing an existing memo over creating a near-duplicate one.
 - Point to files/line numbers instead of pasting code into the memo.
 
@@ -73,5 +79,3 @@ Add or update a line here every time you write or update a memo.
 
 - **Context efficiency is paramount** — future sessions pay the token cost of everything here.
 - **Signal over noise** — the "why" matters more than the "what."
-
-> Follow the exact front-matter structure and formatting as per the example.
