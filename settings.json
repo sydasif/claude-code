@@ -7,10 +7,14 @@
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./package-lock.json)",
+      "Read(./.git/**)",
       "Bash(rm -rf ~)",
       "Bash(rm -rf /)"
     ]
   },
+  "model": "haiku",
   "hooks": {
     "PostToolUse": [
       {
@@ -71,6 +75,5 @@
   },
   "effortLevel": "high",
   "autoUpdatesChannel": "stable",
-  "theme": "dark",
-  "model": "sonnet[1m]"
+  "theme": "dark"
 }
