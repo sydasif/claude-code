@@ -14,7 +14,7 @@
       "Bash(rm -rf /)"
     ]
   },
-  "model": "haiku",
+  "model": "sonnet",
   "hooks": {
     "PostToolUse": [
       {
@@ -33,7 +33,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use web-search mcp for web search'}}))\""
+            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use plugin:web-search:web-search'}}))\""
           }
         ]
       }
