@@ -78,6 +78,22 @@ Use `--exclude <substring>` (repeatable) to skip folders like `templates/`
 or `archive/` that would otherwise pollute the results with intentionally
 unlinked scaffolding.
 
+Use `--ignore-dangling <substring>` (repeatable) to suppress gap warnings for
+wikilinks that are intentional semantic labels rather than note references
+(e.g., `--ignore-dangling "-config"` to skip `[[litellm-proxy-config]]`). The
+check is a case-insensitive substring match — any dangling target whose name
+contains the pattern is excluded from the gap report. Unlike `--exclude` which
+filters source files, this only filters the gap output: the dangling links
+still appear in each note's `linked_to`, just not in the gap list.
+
+Use `--` before patterns that start with `-` to prevent argparse from
+interpreting them as flags:
+
+```bash
+python3 scripts/vault_graph.py /path/to/vault --out /tmp/graph.json \\
+    --ignore-dangling "-config" --ignore-dangling "-project"
+```
+
 ## Step 3: Find contradictions and superseded claims
 
 This is the part that needs you to actually read notes, not just the graph.

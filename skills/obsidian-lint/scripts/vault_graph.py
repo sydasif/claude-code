@@ -113,7 +113,7 @@ def normalize(title: str) -> str:
     return title.strip().lower()
 
 
-def build_graph(vault_root: Path, exclude_patterns: list[str]):
+def build_graph(vault_root: Path, exclude_patterns: list[str], ignore_dangling: list[str] | None = None):
     md_files = [
         p for p in vault_root.rglob("*.md")
         if not any(part.startswith(".") for part in p.relative_to(vault_root).parts)
@@ -220,6 +220,7 @@ def build_graph(vault_root: Path, exclude_patterns: list[str]):
             "referenced_by": sorted(v["referenced_by"]),
         }
         for v in dangling.values()
+        if not ignore_dangling or not any(pat.lower() in v["display"].lower() for pat in ignore_dangling)
     ]
     gaps.sort(key=lambda g: -g["reference_count"])
 
@@ -264,6 +265,9 @@ def main():
     parser.add_argument("vault_path", help="Path to the vault root (folder containing .md files)")
     parser.add_argument("--exclude", action="append", default=[],
                          help="Path substring to exclude (e.g. templates, archive). Repeatable.")
+    parser.add_argument("--ignore-dangling", action="append", default=[],
+                         help="Dangling wikilink target substring to ignore (e.g. '-config'). "
+                              "Repeatable — any target matching any pattern is excluded from gaps.")
     parser.add_argument("--out", default=None, help="Write JSON here instead of stdout")
     args = parser.parse_args()
 
@@ -272,7 +276,7 @@ def main():
         print(f"error: {vault_root} is not a directory", file=sys.stderr)
         sys.exit(1)
 
-    result = build_graph(vault_root, args.exclude)
+    result = build_graph(vault_root, args.exclude, args.ignore_dangling)
     output = json.dumps(result, indent=2)
 
     if args.out:
