@@ -32,6 +32,11 @@ The `obsidian` MCP server syncs auto-memory with an Obsidian vault:
 3. **Execute**: Work one module at a time. Require explicit `approval` before writing any file or calling any API
 4. **Verify**: Check the result of each approved change against the expected outcome
 
+### Skills
+
+- Use skills before any task pro actively
+- Skills are good before any task to understand the flow
+
 ### Python Standards and Tooling
 
 - **Documentation:** @~/.claude/docs/index.md (Python, Docker, tooling)
