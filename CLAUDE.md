@@ -34,8 +34,9 @@ The `obsidian` MCP server syncs auto-memory with an Obsidian vault:
 
 ### Skills
 
-- Use skills before any task pro actively
-- Skills are good before any task to understand the flow
+- Before starting a task, check whether there's a relevant `skill` available.
+- Read the `skill` first to understand the intended workflow and best practices.
+- Follow that workflow instead of jumping straight into the task.
 
 ### Python Standards and Tooling
 
