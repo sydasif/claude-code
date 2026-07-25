@@ -1,6 +1,7 @@
 ---
 name: obsidian-lint
 description: Audit an Obsidian vault (a folder of markdown notes linked with [[wikilinks]]) for consistency problems — contradicting notes, claims that newer notes have superseded, orphan pages with no incoming links, and topics that get referenced but never got their own note. Use this whenever the user mentions their Obsidian vault, a "second brain" / PKM / Zettelkasten setup, wikilinks, backlinks, or asks to lint, audit, clean up, or find problems in a folder of interlinked markdown notes. Produces a single read-only report — never deletes or edits vault content.
+user-invocable: true
 ---
 
 # Obsidian Vault Lint

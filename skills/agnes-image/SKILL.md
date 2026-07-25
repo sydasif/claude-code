@@ -1,6 +1,7 @@
 ---
 name: agnes-image
 description: Use when the user wants to generate, edit, or composite images via the Agnes Image API. Covers text-to-image, image-to-image, multi-image composition, style transfer, background replacement. Requires AGNES_API_KEY.
+user-invocable: true
 ---
 
 # Agnes Image API

@@ -81,13 +81,14 @@ Define the exact `input` and expected `output` before delegating to a subagent
 
 ## Code Quality Workflow
 
-Run in this order: `cleanup-code` → `refactor-code` → `review-code`
+Run in this order: `cleanup-code` → `refactor-code` → `review-code` → `test-code`
 
-| Agent           | Purpose                                                |
-| --------------- | ------------------------------------------------------ |
-| `cleanup-code`  | YAGNI/DRY/KISS cleanup, prune first                    |
-| `refactor-code` | Modernize Python after cleanup                         |
-| `review-code`   | Final gate: security audit, correctness, completeness  |
+| Skill           | Purpose                                               |
+| --------------- | ----------------------------------------------------- |
+| `cleanup-code`  | YAGNI/DRY/KISS cleanup, prune first                   |
+| `refactor-code` | Modernize Python after cleanup                        |
+| `review-code`   | Final gate: security audit, correctness, completeness |
+| `test-code`     | End-to-end QA validation as a real user/operator      |
 
 ### Git Style
 

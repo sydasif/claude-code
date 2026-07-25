@@ -1,6 +1,7 @@
 ---
 name: test-code
 description: Use when the user wants end-to-end QA validation of a project as a real user/operator would experience it, not just syntax checks or running the existing test suite.
+user-invocable: true
 ---
 
 # QA Testing
@@ -40,14 +41,7 @@ Read `references/bug-hunting.md` for the full checklist. For every bug: reproduc
 
 ## Phase 5 - Final Report
 
-Always end with a structured report:
-
-- Application tested (type + network automation layer if applied)
-- Test environment used
-- Test cases executed
-- Bugs found and fixes applied
-- Remaining risks / open questions
-- Final recommendation (ready to ship / needs more work / blocked on X)
+Always produce a structured report. Read `references/report-template.md` for the template.
 
 ## Scope Note
 

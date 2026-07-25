@@ -1,6 +1,7 @@
 ---
 name: blog-seo
 description: A quality loop for finished articles. Watches a /finished folder, scores each article 0-100 against SEO, AEO, and tone rules, then rewrites the weakest sections and re-scores until the article reaches 85. Rules live in a separate rules.md so the owner can adjust weights and thresholds without touching the loop. Trigger on "seo aeo loop", "quality loop", "score my finished articles", "run the article loop", "/blog-seo".
+user-invocable: true
 ---
 
 # SEO/AEO Loop

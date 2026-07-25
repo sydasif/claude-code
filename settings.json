@@ -14,7 +14,7 @@
       "Bash(rm -rf /)"
     ]
   },
-  "model": "sonnet",
+  "model": "sonnet[1m]",
   "hooks": {
     "PostToolUse": [
       {
@@ -75,5 +75,6 @@
   },
   "effortLevel": "high",
   "autoUpdatesChannel": "stable",
+  "skipWorkflowUsageWarning": true,
   "theme": "dark"
 }

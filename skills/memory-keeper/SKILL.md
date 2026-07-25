@@ -1,6 +1,7 @@
 ---
 name: memory-keeper
 description: Maintain project memory so context survives across sessions. Update memory any time you learn something worth knowing next session — architectural decisions, debugging insights, gotchas, why choices were made, code style preferences, conventions established, unresolved issues. Do not use for one-off, throwaway, or purely exploratory tasks that won't recur across sessions.
+user-invocable: true
 ---
 
 ## When to Write an Auto Memory

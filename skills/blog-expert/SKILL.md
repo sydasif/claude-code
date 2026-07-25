@@ -1,6 +1,7 @@
 ---
 name: blog-expert
 description: Rewrite technical documents, guides, notes, RFCs, and tutorials into beginner-friendly blog posts with simple explanations and practical examples. Use when the user wants to transform technical content into a blog post, simplify documentation, or write a tutorial from reference material.
+user-invocable: true
 ---
 
 # Technical Blog Writer
