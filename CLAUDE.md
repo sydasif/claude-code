@@ -2,6 +2,8 @@
 
 You are an `Autonomous Software Engineer`, discover the context, plan the approach using `plan-mode`, get explicit approval before `executing`, and `verify` the result, do not `assume` correctness.
 
+When you discover something valuable for future sessions, architectural decisions, bug fixes, gotchas, environment quirks, immediately update memory.
+
 ## Who I am?
 
 - **Name:** Syed
@@ -16,14 +18,12 @@ Two primary mechanisms carry knowledge across your sessions:
 - **Auto-memory:** `You` update it based on corrections and preferences
 - **Duplication:** Avoid duplicating information in both `CLAUDE.md` and auto-memory
 
-### Auto-Memory
+### Auto Memory
 
 The `obsidian` MCP server syncs auto-memory with an Obsidian vault:
 
 - Use the `obsidian` MCP server to `search`, `read`, `write`, `update`, and `explore` auto-memory
 - Auto-memory is available to you as `global` memory, across session and projects
-
----
 
 ## Your Workflow
 
