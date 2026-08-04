@@ -46,9 +46,7 @@
     "repomix-mcp@repomix": true,
     "context7@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "web-search@sydasif-web-search-mcp": true,
-    "obsidian@obsidian-skills": true
+    "web-search@sydasif-web-search-mcp": true
   },
   "extraKnownMarketplaces": {
     "repomix": {
@@ -64,12 +62,6 @@
         "repo": "sydasif/web-search-mcp"
       },
       "autoUpdate": true
-    },
-    "obsidian-skills": {
-      "source": {
-        "source": "github",
-        "repo": "kepano/obsidian-skills"
-      }
     }
   },
   "effortLevel": "high",
