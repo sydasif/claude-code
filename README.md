@@ -66,17 +66,78 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 
 ## Key Files
 
-| Path                      | Purpose                                                                            |
-| ------------------------- | ---------------------------------------------------------------------------------- |
-| `CLAUDE.md`               | Base instructions – security-first, hooks & safety, skills, agents, stop triggers |
-| `settings.json`           | Hooks, permissions, plugins, status line — config only, no env block               |
-| `~/.claude/.env`          | **User-local**, `chmod 600` — all `ANTHROPIC_*` env and other secrets; not tracked |
-| `hooks/*.js`              | Pre/Post tool hooks – block dangerous commands, protect secrets, format code       |
-| `skills/*/SKILL.md`       | Reusable capabilities (cleanup, refactor, review, blog writing, humanizing)        |
-| `agents/*.md`             | Specialized sub‑agents with tool restrictions                                      |
-| `docs/index.md`           | Modular Python standards — style, typing, security, performance, frameworks        |
-| `docs/python/testing.md`  | Testing standards, coverage thresholds, commands                                   |
-| `templates/ci-python.yml` | GitHub Actions workflow template                                                   |
+| Path | Purpose |
+| ---- | ------- |
+| `CLAUDE.md` | Base instructions – security-first, hooks & safety, skills, agents, stop triggers |
+| `settings.json` | Hooks, permissions, plugins, status line — config only, no env block |
+| `~/.claude/.env` | **User-local**, `chmod 600` — all `ANTHROPIC_*` env and other secrets; not tracked |
+| `hooks/*.js` | Pre/Post tool hooks – block dangerous commands, protect secrets, format code |
+| `skills/*/SKILL.md` | Reusable capabilities (cleanup, refactor, review, test, blog, agnes, obsidian, tidiness) |
+| `agents/*.md` | Specialized sub‑agents with tool restrictions (cleanup-code, refactor-code, review-code) |
+| `docs/index.md` | Modular Python standards — style, typing, security, performance, frameworks |
+| `docs/python/testing.md` | Testing standards, coverage thresholds, commands |
+| `templates/ci-python.yml` | GitHub Actions workflow template |
+
+---
+
+## Skills
+
+### Core Pipeline Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `cleanup-code` | YAGNI/DRY/KISS pruning — remove dead code, simplify over-abstraction |
+| `refactor-code` | Modernize Python — type hints, dataclasses, pathlib, f-strings, logging.exception |
+| `review-code` | Final-gate adversarial review — security, contracts, correctness |
+| `test-code` | End-to-end QA validation as a real user/operator |
+
+### Specialized Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `blog-expert` | Technical blog post authoring |
+| `blog-seo` | SEO-optimized content creation |
+| `agnes-image` | AI image generation workflows |
+| `agnes-video` | AI video generation workflows |
+| `obsidian-lint` | Obsidian vault linting and validation |
+| `codebase-tidiness` | Repository organization and cleanup |
+
+---
+
+## Commands (Slash Commands)
+
+| Command | Description |
+|---------|-------------|
+| `/codebase-pipeline` | Run full optimization + testing pipeline (cleanup → refactor → review) |
+| `/generate-readme` | Generate detailed README.md from codebase |
+| `/genrate-graph` | Generate self-contained HTML codebase graph with interactive diagram |
+| `/analyze-library` | Analyze a library for integration |
+| `/review-best-practices` | Review code against best practices |
+| `/review-structure` | Review project structure |
+| `/suggest-tests` | Suggest test cases for code |
+
+---
+
+## Python Documentation
+
+```
+docs/
+├── index.md              # This index
+├── python/
+│   ├── style-core.md     # uv, ruff, mypy, workflow, naming, imports, modern Python
+│   ├── typing.md         # mypy --strict, protocols, generics, TypedDict
+│   ├── docstrings.md     # Google-style docstrings, Args:, Returns:, Raises:
+│   ├── error-handling.md # specific exceptions, raise from, context managers, logging
+│   ├── security.md       # secrets, eval(), SQL injection, subprocess, password hashing
+│   ├── testing.md        # AAA pattern, coverage, pytest
+│   ├── performance.md    # generators, itertools, lru_cache, set, heapq, str.join
+│   ├── async.md          # async/await, gather, TaskGroup, timeout, async with
+│   ├── frameworks.md     # FastAPI, Django, Flask specifics
+│   └── version.md        # minimum versions, feature tables, EOL policy
+└── tooling/
+    ├── package-management.md  # uv workflows, project vs script flow, CI/CD
+    └── docker-management.md   # Containerizing Python apps with uv
+```
 
 ---
 
@@ -91,4 +152,4 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 
 ## License
 
-MIT – use freely, adapt to your team’s needs.
+MIT – use freely, adapt to your team's needs.
