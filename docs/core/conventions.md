@@ -4,7 +4,7 @@ Python conventions for modern (3.11+) projects. Apply to every `.py`, `pyproject
 
 **Tradeoff**: bias toward strict-but-modern defaults. For one-off scripts or legacy codebases (3.8-, untyped, old Django), use judgment.
 
-> **Before/after code lives in one place.** Every code example below has its implementation in [Conventions — Examples](./conventions-examples.md). Edit examples there, not here. For the tooling workflow, naming tables, import organization, project layout, CI/CD, and dependency management, see [Python Core Style & Toolchain](../style-toolchain.md).
+> **Before/after code lives in one place.** Every code example below has its implementation in [Conventions — Examples](./conventions-examples.md). Edit examples there, not here. For the tooling workflow, naming tables, import organization, project layout, CI/CD, and dependency management, see [Python Core Style & Toolchain](./style-toolchain.md).
 
 ## Type discipline
 
@@ -55,7 +55,7 @@ Python conventions for modern (3.11+) projects. Apply to every `.py`, `pyproject
 - **`safety`** for dependency vulnerability scanning
 - **`uv-secure`** for project dependency security scanning
 
-> The canonical run-commands for all of the above live in [style-toolchain.md → Standard Workflow](../style-toolchain.md#standard-workflow).
+> The canonical run-commands for all of the above live in [style-toolchain.md → Standard Workflow](./style-toolchain.md#standard-workflow).
 
 ## Anti-patterns
 

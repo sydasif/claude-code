@@ -1,6 +1,6 @@
 # Async Patterns
 
-> Owns async I/O patterns. The base rules (`async` end-to-end with `httpx`, `TaskGroup`) are introduced in [Conventions → Async](./core/conventions.md#async) with before/after in [examples §7–8](./core/conventions-examples.md#7-asyncawait-end-to-end).
+> Owns async I/O patterns. The base rules (`async` end-to-end with `httpx`, `TaskGroup`) are introduced in [Conventions → Async](../core/conventions.md#async) with before/after in [examples §7–8](../core/conventions-examples.md#7-asyncawait-end-to-end).
 
 Use `async`/`await` for I/O-bound concurrency. For CPU-bound work use
 `multiprocessing` or `concurrent.futures.ProcessPoolExecutor` — async

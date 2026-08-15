@@ -20,8 +20,8 @@ editing any file so you don't re-duplicate.
 | Async patterns | [concurrency/async.md](concurrency/async.md) | `TaskGroup`, `gather`, anti-patterns |
 | Performance | [concurrency/performance.md](concurrency/performance.md) | generators, `itertools`, caches |
 | Frameworks | [frameworks/frameworks.md](frameworks/frameworks.md) | FastAPI, Pydantic, SQLAlchemy, Django, Flask |
-| `uv` command reference | [../tooling/package-management.md](../tooling/package-management.md) | install, versions, CI recipes |
-| Docker + `uv` | [../tooling/docker-management.md](../tooling/docker-management.md) | multistage Dockerfiles |
+| `uv` command reference | [tooling/package-management.md](tooling/package-management.md) | install, versions, CI recipes |
+| Docker + `uv` | [tooling/docker-management.md](tooling/docker-management.md) | multistage Dockerfiles |
 
 ## Canonical configuration
 

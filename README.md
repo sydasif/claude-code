@@ -82,22 +82,22 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 
 | Path | Section | Purpose |
 | ---- | ------- | ------- |
-| `docs/python/core/conventions.md` | Core | Rules + pyproject template; the hub for all standards |
-| `docs/python/core/conventions-examples.md` | Core | Before/after code for each convention |
-| `docs/python/core/style-toolchain.md` | Core | uv, ruff, mypy, naming, imports, modern Python |
-| `docs/python/core/typing.md` | Core | mypy --strict, protocols, generics, TypedDict, Self, @override |
-| `docs/python/core/docstrings.md` | Core | Google-style docstrings (Args/Returns/Raises) |
-| `docs/python/core/version.md` | Core | Version policy + feature table (3.10–3.13) |
-| `docs/python/safety/error-handling.md` | Safety | Specific exceptions, raise…from, logging |
-| `docs/python/safety/security.md` | Safety | Secrets, eval/exec, SQL, subprocess, password hashing |
-| `docs/python/safety/testing.md` | Safety | AAA pattern, coverage thresholds, pytest |
-| `docs/python/concurrency/performance.md` | Concurrency | Generators, itertools, lru_cache, set/heapq |
-| `docs/python/concurrency/async.md` | Concurrency | async/await, gather, TaskGroup, timeout |
-| `docs/python/frameworks/frameworks.md` | Frameworks | FastAPI, Django, Flask specifics |
+| `docs/core/conventions.md` | Core | Rules + pyproject template; the hub for all standards |
+| `docs/core/conventions-examples.md` | Core | Before/after code for each convention |
+| `docs/core/style-toolchain.md` | Core | uv, ruff, mypy, naming, imports, modern Python |
+| `docs/core/typing.md` | Core | mypy --strict, protocols, generics, TypedDict, Self, @override |
+| `docs/core/docstrings.md` | Core | Google-style docstrings (Args/Returns/Raises) |
+| `docs/core/version.md` | Core | Version policy + feature table (3.10–3.13) |
+| `docs/safety/error-handling.md` | Safety | Specific exceptions, raise…from, logging |
+| `docs/safety/security.md` | Safety | Secrets, eval/exec, SQL, subprocess, password hashing |
+| `docs/safety/testing.md` | Safety | AAA pattern, coverage thresholds, pytest |
+| `docs/concurrency/performance.md` | Concurrency | Generators, itertools, lru_cache, set/heapq |
+| `docs/concurrency/async.md` | Concurrency | async/await, gather, TaskGroup, timeout |
+| `docs/frameworks/frameworks.md` | Frameworks | FastAPI, Django, Flask specifics |
 | `docs/tooling/package-management.md` | Tooling | uv workflows, project/script flow, CI/CD |
 | `docs/tooling/docker-management.md` | Tooling | Containerizing Python apps with uv |
 
-`python/core/conventions.md` is the hub; the Section column groups the rest (Core / Safety / Concurrency / Frameworks / Tooling).
+`core/conventions.md` is the hub; the Section column groups the rest (Core / Safety / Concurrency / Frameworks / Tooling).
 
 ---
 
@@ -141,7 +141,7 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 
 ## Python Documentation
 
-Every standards file is listed in the table under "Key Files" above (Section column groups them: Core / Safety / Concurrency / Frameworks / Tooling). `python/core/conventions.md` is the hub.
+Every standards file is listed in the table under "Key Files" above (Section column groups them: Core / Safety / Concurrency / Frameworks / Tooling). `core/conventions.md` is the hub.
 
 ---
 

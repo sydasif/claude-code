@@ -1,6 +1,6 @@
 # uv Field Manual (Code‑Gen Ready, Bootstrap‑free)
 
-> Owns the `uv` command reference. The canonical project bootstrap and `pyproject.toml` live in [Conventions → Canonical tool configuration](../python/core/conventions.md#canonical-tool-configuration); the `uv run …` lint/test workflow in [style-toolchain.md → Standard Workflow](../python/core/style-toolchain.md#standard-workflow).
+> Owns the `uv` command reference. The canonical project bootstrap and `pyproject.toml` live in [Conventions → Canonical tool configuration](../core/conventions.md#canonical-tool-configuration); the `uv run …` lint/test workflow in [style-toolchain.md → Standard Workflow](../core/style-toolchain.md#standard-workflow).
 
 _Assumption: `uv` is already installed and available on `PATH`._
 
