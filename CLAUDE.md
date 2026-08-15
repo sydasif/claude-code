@@ -33,7 +33,7 @@ Two primary mechanisms carry knowledge across your sessions:
 
 ### Python Standards and Tooling
 
-- **Documentation:** @~/.claude/docs/index.md (Python, Docker, tooling)
+- **Documentation:** @~/.claude/docs/index.md (Python, tooling, frameworks, conventions)
 
 ### Subagent Scoping
 

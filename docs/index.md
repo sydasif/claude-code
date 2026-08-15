@@ -28,3 +28,7 @@ Modular Python standards. Load individual files or this index for the full struc
 
 - [Framework Specifics](./python/frameworks.md) – FastAPI, Django, Flask
 - [Python Version Policy](./python/version.md) – minimum versions, feature tables, EOL policy
+
+## Conventions
+
+- [Python Conventions](./python/conventions.md) – naming, typing, docstrings, imports, logging, testing, async
