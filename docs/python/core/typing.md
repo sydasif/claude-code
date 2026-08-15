@@ -1,5 +1,7 @@
 # Python Type Hints
 
+> Owns strict typing rules. The base expectation (hints required, `from __future__ import annotations`) is in [Conventions → Type discipline](./conventions.md#type-discipline); the version features that enable them in [version.md](./version.md).
+
 ## Strict Type Hint Rules
 
 **Forbidden:** Missing type hints, `Any` (unless justified), bare `list`/`dict`, mixing `Union[A, B]` and `A | B`.

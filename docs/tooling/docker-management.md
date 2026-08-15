@@ -1,5 +1,9 @@
 # Multistage Dockerfile with UV for Python
 
+> Owns Docker + `uv` patterns. CI/CD integration and pre-commit live in [style-toolchain.md → CI/CD](../python/core/style-toolchain.md#cicd-integration); the `uv` command reference in [package-management.md](./package-management.md).
+
+
+
 ## Basic Structure
 
 ```dockerfile

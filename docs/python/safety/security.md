@@ -1,5 +1,11 @@
 # Python Security Rules
 
+Owns security-specific rules and their unique code (secrets, password hashing, SQL).
+General coding rules and the `subprocess` no-shell pattern are kept in
+[Conventions — Examples §5](../core/conventions-examples.md#5-subprocessrun-over-ossystem);
+the canonical toolchain lists `bandit`/`safety`/`uv-secure` in
+[Conventions → Tooling defaults](../core/conventions.md#tooling-defaults).
+
 **Forbidden:**
 
 - Hardcoded secrets
@@ -63,26 +69,8 @@ cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
 
 ### `subprocess` — no shell, list args
 
-**Before** (shell injection + quoting bugs):
-
-```python
-os.system(f"git log -1 {file_path}")
-subprocess.run(f"ls {dir}", shell=True)
-```
-
-**After:**
-
-```python
-import subprocess
-
-result = subprocess.run(
-    ["git", "log", "-1", file_path],
-    capture_output=True,
-    text=True,
-    check=True,
-)
-listing = subprocess.run(["ls", dir], shell=False, capture_output=True, check=True)
-```
+The no-shell, list-args pattern (and why) is in
+[Conventions — Examples §5](../core/conventions-examples.md#5-subprocessrun-over-ossystem).
 
 ### Password hashing — bcrypt/argon2, never plaintext
 
@@ -105,3 +93,6 @@ def store_user(password: str) -> None:
 def verify_user(password: str, hashed: bytes) -> bool:
     return bcrypt.checkpw(password.encode(), hashed)
 ```
+
+Security tests (SQL-injection prevention, auth boundaries) belong in
+[testing.md → Security Testing](../safety/testing.md#security-testing).

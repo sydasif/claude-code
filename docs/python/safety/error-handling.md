@@ -1,5 +1,10 @@
 # Explicit Error Handling
 
+Owns error-handling rules and the patterns unique to this topic (`raise ... from`,
+`with` for resources). The no-bare-except and no-`print`/lazy-logging rules are kept in
+[Conventions — Examples](../core/conventions-examples.md) (§11 and §9–10) so code isn't
+duplicated.
+
 **Forbidden:** Bare `except:`, `except Exception:` without re‑raise or logging, `pass` in except without comment.
 
 **Required:** Catch specific exceptions, `try/finally` or `with` for resources, `raise ... from original_exc`, log with context.
@@ -10,44 +15,16 @@ Use `logging` module. `logger = logging.getLogger(__name__)`. Use `logger.info()
 
 Use `%`-style positional args in logging calls (`logger.info("User %s logged in", username)`) for lazy formatting. Do not use f‑strings in logging.
 
+See [Conventions — Examples §9–10](../core/conventions-examples.md#9-lazy-logging) for the before/after.
+
 ---
 
 ## Examples
 
 ### Catch specific exceptions
 
-**Before:**
-
-```python
-try:
-    risky()
-except:  # catches KeyboardInterrupt, SystemExit — bad
-    log("Failed")
-```
-
-**After:**
-
-```python
-import logging
-
-logger = logging.getLogger(__name__)
-
-try:
-    risky()
-except Exception as e:
-    logger.exception("Failed: %s", e)
-```
-
-For targeted recovery, catch the exact type:
-
-```python
-try:
-    risky()
-except ValueError as e:
-    handle_value_error(e)
-except OSError as e:
-    handle_io_error(e)
-```
+The no-bare-except before/after is in
+[Conventions — Examples §11](../core/conventions-examples.md#11-no-bare-except).
 
 ### Preserve cause with `raise ... from`
 
@@ -87,30 +64,3 @@ finally:
 with open(path) as f:
     data = f.read()
 ```
-
-### Logging, not `print`
-
-**Before** (library code printing to stdout):
-
-```python
-def import_data(file_path):
-    print(f"Loading {file_path}...")
-    data = parse(file_path)
-    print(f"Loaded {len(data)} records")
-    return data
-```
-
-**After:**
-
-```python
-import logging
-
-logger = logging.getLogger(__name__)
-
-def import_data(file_path: Path) -> list[Record]:
-    logger.info("Loading %s", file_path)
-    data = parse(file_path)
-    logger.info("Loaded %d records", len(data))
-    return data
-```
-

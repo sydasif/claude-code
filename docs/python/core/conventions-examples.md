@@ -1,6 +1,6 @@
 # Python Conventions — Before/After Examples
 
-Companion to [Conventions](./conventions.md). Real before/after rewrites for each rule.
+Companion to [Conventions](./conventions.md). The **sole** home for before/after code. Each section below has a stable anchor (`#1`, `#2`, …) that `conventions.md` links to. Edit code here, not in the rule files.
 
 ---
 
@@ -10,6 +10,7 @@ Before/after for each convention with real Python code.
 
 ---
 
+<a id="1-type-discipline"></a>
 ## 1. Type discipline
 
 **Before**:
@@ -40,6 +41,7 @@ def get_user(id: int) -> User | None:
 
 ---
 
+<a id="2-pydantic-v2-for-io"></a>
 ## 2. Pydantic v2 for I/O
 
 **Before**:
@@ -67,6 +69,7 @@ def create_order(data: CreateOrderRequest) -> Order:
 
 ---
 
+<a id="3-pathlib-over-ospath"></a>
 ## 3. pathlib over os.path
 
 **Before**:
@@ -95,6 +98,7 @@ if config_file.exists():
 
 ---
 
+<a id="4-dataclasses-for-data-containers"></a>
 ## 4. dataclasses for data containers
 
 **Before**:
@@ -130,6 +134,7 @@ class User:
 
 ---
 
+<a id="5-subprocessrun-over-ossystem"></a>
 ## 5. subprocess.run over os.system
 
 **Before**:
@@ -154,10 +159,11 @@ result = subprocess.run(
 print(result.stdout)
 ```
 
-Note: list of args (not shell string). Avoids shell injection.
+Note: list of args (not shell string). Avoids shell injection. See also [security.md — subprocess](../safety/security.md#subprocess--no-shell-list-args).
 
 ---
 
+<a id="6-match-for-tagged-union-dispatch"></a>
 ## 6. match for tagged-union dispatch
 
 **Before**:
@@ -189,6 +195,7 @@ def process(event: Event) -> Result:
 
 ---
 
+<a id="7-asyncawait-end-to-end"></a>
 ## 7. async/await end-to-end
 
 **Before** (mixed):
@@ -214,6 +221,7 @@ async def fetch_data() -> dict:
 
 ---
 
+<a id="8-taskgroup-for-structured-concurrency"></a>
 ## 8. TaskGroup for structured concurrency
 
 **Before**:
@@ -236,8 +244,11 @@ async def fetch_all(urls: list[str]) -> list[dict]:
 # TaskGroup cancels siblings on first failure; cleaner shutdown
 ```
 
+See also [async patterns — TaskGroup](../concurrency/async.md#asynciotaskgroup-311--structured-concurrency).
+
 ---
 
+<a id="9-lazy-logging"></a>
 ## 9. Lazy logging
 
 **Before**:
@@ -256,6 +267,7 @@ logger.debug("Processing user %s with %d items", user_id, len(items))
 
 ---
 
+<a id="10-no-print-in-libraries"></a>
 ## 10. No print() in libraries
 
 **Before** (in library code):
@@ -285,6 +297,7 @@ CLI scripts can still use print(); library code shouldn't.
 
 ---
 
+<a id="11-no-bare-except"></a>
 ## 11. No bare except
 
 **Before**:
@@ -317,8 +330,11 @@ except IOError as e:
     handle_io_error(e)
 ```
 
+See also [error-handling.md](../safety/error-handling.md).
+
 ---
 
+<a id="12-no-mutable-default-arguments"></a>
 ## 12. No mutable default arguments
 
 **Before**:
@@ -342,6 +358,7 @@ def add_item(item: Item, items: list[Item] | None = None) -> list[Item]:
 
 ---
 
+<a id="13-literal-over-enum"></a>
 ## 13. Literal over enum for string-literal sets
 
 **Before**:
@@ -373,6 +390,7 @@ Lighter, no runtime cost, type-checker still catches typos.
 
 ---
 
+<a id="14-stringly-typed-return--typed-return"></a>
 ## 14. Stringly-typed return → typed return
 
 **Before**:
@@ -405,47 +423,14 @@ def parse_command(s: str) -> CommandKind:
 
 ---
 
-## 15. ruff configuration
+<a id="15-canonical-tool-configuration"></a>
+## 15. Canonical ruff configuration & project bootstrap
 
-Standard `pyproject.toml`:
+The single source of truth for `pyproject.toml` and the ruff config is
+**[Conventions → Canonical tool configuration](./conventions.md#canonical-tool-configuration)**.
 
-```toml
-[tool.ruff]
-target-version = "py311"
-line-length = 100
-
-[tool.ruff.lint]
-select = [
-    "E",   # pycodestyle errors
-    "F",   # pyflakes
-    "I",   # isort (import sorting)
-    "N",   # pep8-naming
-    "W",   # pycodestyle warnings
-    "UP",  # pyupgrade (auto-modernize)
-    "B",   # bugbear (likely bugs)
-    "C4",  # comprehensions (better list/dict/set comps)
-    "SIM", # simplify (anti-pattern detection)
-    "RET", # return-statement issues
-]
-ignore = [
-    "E501",  # line length — let ruff format handle it
-]
-
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-```
-
-Run: `ruff check . --fix && ruff format .`
-
-## Standard project bootstrap
+Edit it there — do not maintain a copy here. Run:
 
 ```bash
-uv init my-project
-cd my-project
-uv add ruff mypy pytest pydantic httpx structlog
-uv add --dev pytest-cov pytest-asyncio
-echo 'from __future__ import annotations' > src/my_project/__init__.py
+ruff check . --fix && ruff format .
 ```
-
-Then write code that adheres to this CLAUDE.md.

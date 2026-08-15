@@ -1,5 +1,7 @@
 # Google‑Style Docstrings (PEP 257)
 
+> Owns the docstring standard within the Python standards set. Topic index: [INDEX.md](./INDEX.md).
+
 All public modules, classes, and functions must have Google‑style docstrings.
 
 **Forbidden**: Missing docstrings on public entities; Sphinx/reST or NumPy style.

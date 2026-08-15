@@ -1,5 +1,7 @@
 # Python Testing Standards
 
+> Owns testing standards. `pytest` is the chosen runner per [Conventions → Tooling defaults](./core/conventions.md#tooling-defaults); the run commands in [style-toolchain.md → Standard Workflow](./core/style-toolchain.md#standard-workflow).
+
 Use pytest. AAA pattern. Tests fully independent. No shared mutable state.
 Coverage targets: business logic ≥95%, APIs ≥90%, models ≥85%.
 All existing tests must pass before you make any changes.

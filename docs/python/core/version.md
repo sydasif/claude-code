@@ -1,5 +1,7 @@
 # Python Version Policy
 
+> Version policy backing [Conventions](./conventions.md). The canonical ruff config's `target-version` is `py312` (see [Conventions → Canonical tool configuration](./conventions.md#canonical-tool-configuration)).
+
 - **Minimum**: Python 3.11+ (`requires-python = ">=3.11"`)
 - **Target**: Python 3.12+ for new projects
 - **CI matrix**: Test against >=3.11, <=3.13

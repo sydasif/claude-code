@@ -1,5 +1,7 @@
 # Framework-Specific Guidelines
 
+> Owns framework patterns (FastAPI / Pydantic / SQLAlchemy / Django / Flask). Pydantic-v2 at API boundaries is required by [Conventions → Type discipline](./core/conventions.md#type-discipline).
+
 ## FastAPI / Pydantic v2
 
 ### Project structure

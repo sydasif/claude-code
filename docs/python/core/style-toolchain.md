@@ -1,5 +1,16 @@
 # Python Core Style & Toolchain
 
+Owns the **day-to-day tooling workflow**: required toolchain, `uv run …` commands,
+security-scan gates, naming conventions, import organization, project layout, CI/CD,
+dependency management, and pre-commit.
+
+> **Rule source of truth:** the coding rules themselves (stdlib preferences, async,
+> logging, anti-patterns) live in [Conventions](./conventions.md); every before/after
+> code block in [Conventions — Examples](./conventions-examples.md). The **single
+> canonical `[tool.ruff]` config** is in
+> [Conventions → Canonical tool configuration](./conventions.md#canonical-tool-configuration).
+> Do not redefine it here.
+
 ## Required Toolchain
 
 | Tool        | Purpose                               |
@@ -70,8 +81,7 @@ from app.models import User
 
 Within each group, alphabetize. ruff's `I` rule enforces this.
 
-`__init__.py` re-exports should be used sparingly — explicit imports are
-usually clearer:
+`__init__.py` re-export example (used sparingly — explicit imports are usually clearer):
 
 ```python
 # app/__init__.py
@@ -90,41 +100,6 @@ def _internal_helper(): ...  # private; not in __all__
 ```
 
 `__all__` documents intent and helps `ruff` enforce unused-export rules.
-
-## Modern Python Basics — Why
-
-| Construct                       | Replaces                      | Why                                          |
-| ------------------------------- | ----------------------------- | -------------------------------------------- |
-| f-strings                       | `%` / `.format()`             | Faster, more readable, no quoting issues     |
-| `pathlib.Path`                  | `os.path`                     | Object-oriented, cross-platform, chainable   |
-| `@dataclass`                    | manual `__init__`/`__repr__`  | Less boilerplate, type-checked fields        |
-| `@dataclass(frozen=True)`       | mutable value-object classes  | Hashable, immutable                          |
-| `match`/`case`                  | long `if/elif` chains         | Destructuring, exhaustiveness checks (3.10+) |
-| Walrus `:=`                     | assign-then-test              | Single expression, fewer temp variables      |
-| Context managers (`with` block) | `try`/`finally` for resources | Reusable, composable, error-safe             |
-
-## `pathlib` over `os.path`
-
-```python
-from pathlib import Path
-
-# Build
-config_path = Path(base) / "config" / "settings.toml"
-
-# Read
-text = config_path.read_text(encoding="utf-8")
-data = config_path.read_bytes()
-
-# Write
-config_path.write_text(text, encoding="utf-8")
-
-# Glob
-for py_file in Path("src").rglob("*.py"):
-    print(py_file)
-
-# Stat
-size = config_path.stat().st_size
-```
 
 ## Project layout
 
@@ -148,23 +123,32 @@ project/
 The `src/` layout (rather than flat) prevents accidental imports of in-tree
 code without `uv sync` — a common debugging time-sink.
 
-## Linting Configuration
+## Dependency Management
 
-Inline in `pyproject.toml`:
+Use `uv`. No direct `pip install`. Use `pyproject.toml` and `uv.lock`. Update via `uv lock --upgrade`. Remove unused dependencies.
 
-```toml
-[tool.ruff]
-line-length = 100
-target-version = "py312"
+## CI/CD Integration
 
-[tool.ruff.lint]
-select = ["E", "F", "I", "B", "UP", "ASYNC", "RUF"]
+Canonical templates in `~/.claude/templates/`:
 
-[tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101"]  # asserts are fine in tests
+- `ci-python.yml` — copy to `.github/workflows/ci.yml`
+- `pyproject.toml` — copy to project root
+- `pre-commit-config.yaml` — copy to project root as `.pre-commit-config.yaml`
+- `Dockerfile.python` — rename to `Dockerfile` and adapt ENTRYPOINT
+
+### Pre-commit
+
+Install hooks once per clone:
+
+```bash
+uv run pre-commit install
 ```
 
-Run with: `uv run ruff check --fix .` and `uv run ruff format .`.
+Run hooks on all files:
+
+```bash
+uv run pre-commit run --all-files
+```
 
 ---
 
@@ -220,29 +204,6 @@ from pydantic import BaseModel
 from app.models import User
 ```
 
-### Frozen dataclass vs manual value object
-
-**Before** (hand-rolled, mutable, easy to corrupt):
-
-```python
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-```
-
-**After** (immutable, hashable, less boilerplate):
-
-```python
-from dataclasses import dataclass
-
-
-@dataclass(frozen=True)
-class Point:
-    x: int
-    y: int
-```
-
 ### Walrus `:=` — assign and test in one expression
 
 **Before:**
@@ -259,31 +220,4 @@ while line:
 ```python
 while (line := f.readline()):
     process(line)
-```
-
-## Dependency Management
-
-Use `uv`. No direct `pip install`. Use `pyproject.toml` and `uv.lock`. Update via `uv lock --upgrade`. Remove unused dependencies.
-
-## CI/CD Integration
-
-Canonical templates in `~/.claude/templates/`:
-
-- `ci-python.yml` — copy to `.github/workflows/ci.yml`
-- `pyproject.toml` — copy to project root
-- `pre-commit-config.yaml` — copy to project root as `.pre-commit-config.yaml`
-- `Dockerfile.python` — rename to `Dockerfile` and adapt ENTRYPOINT
-
-### Pre-commit
-
-Install hooks once per clone:
-
-```bash
-uv run pre-commit install
-```
-
-Run hooks on all files:
-
-```bash
-uv run pre-commit run --all-files
 ```
