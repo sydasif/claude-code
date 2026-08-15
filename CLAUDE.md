@@ -33,16 +33,7 @@ Two primary mechanisms carry knowledge across your sessions:
 
 ### Python Standards and Tooling
 
-**Documentation:** Modular Python standards under `~/.claude/docs/`
-
-- Key entry points:
-  - `core/conventions.md`
-  - `core/conventions-examples.md`
-  - `core/style-toolchain.md`
-  - `safety/`
-  - `concurrency/`
-  - `frameworks/`
-  - `tooling/`
+**Documentation:** Modular Python standards under @~/.clude/docs/INDEX.md
 
 ### Subagent Scoping
 
