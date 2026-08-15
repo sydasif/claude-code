@@ -11,7 +11,7 @@ model: haiku
 
 # Docs
 
-@~/.claude/docs/python/core/conventions.md
+@~/.claude/docs/core/conventions.md
 
 ## What I do
 
