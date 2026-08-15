@@ -9,7 +9,7 @@ model: sonnet
 
 # Docs
 
-@~/.claude/docs/index.md
+@~/.claude/docs/python/core/conventions.md
 
 ## What I do
 

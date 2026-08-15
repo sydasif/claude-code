@@ -74,9 +74,30 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 | `hooks/*.js` | Pre/Post tool hooks – block dangerous commands, protect secrets, format code |
 | `skills/*/SKILL.md` | Reusable capabilities (cleanup, refactor, review, test, blog, agnes, obsidian, tidiness) |
 | `agents/*.md` | Specialized sub‑agents with tool restrictions (cleanup-code, refactor-code, review-code) |
-| `docs/index.md` | Modular Python standards — style, typing, security, performance, frameworks |
-| `docs/python/safety/testing.md` | Testing standards, coverage thresholds, commands |
 | `templates/ci-python.yml` | GitHub Actions workflow template |
+
+---
+
+## Python Documentation
+
+| Path | Section | Purpose |
+| ---- | ------- | ------- |
+| `docs/python/core/conventions.md` | Core | Rules + pyproject template; the hub for all standards |
+| `docs/python/core/conventions-examples.md` | Core | Before/after code for each convention |
+| `docs/python/core/style-toolchain.md` | Core | uv, ruff, mypy, naming, imports, modern Python |
+| `docs/python/core/typing.md` | Core | mypy --strict, protocols, generics, TypedDict, Self, @override |
+| `docs/python/core/docstrings.md` | Core | Google-style docstrings (Args/Returns/Raises) |
+| `docs/python/core/version.md` | Core | Version policy + feature table (3.10–3.13) |
+| `docs/python/safety/error-handling.md` | Safety | Specific exceptions, raise…from, logging |
+| `docs/python/safety/security.md` | Safety | Secrets, eval/exec, SQL, subprocess, password hashing |
+| `docs/python/safety/testing.md` | Safety | AAA pattern, coverage thresholds, pytest |
+| `docs/python/concurrency/performance.md` | Concurrency | Generators, itertools, lru_cache, set/heapq |
+| `docs/python/concurrency/async.md` | Concurrency | async/await, gather, TaskGroup, timeout |
+| `docs/python/frameworks/frameworks.md` | Frameworks | FastAPI, Django, Flask specifics |
+| `docs/tooling/package-management.md` | Tooling | uv workflows, project/script flow, CI/CD |
+| `docs/tooling/docker-management.md` | Tooling | Containerizing Python apps with uv |
+
+`python/core/conventions.md` is the hub; the Section column groups the rest (Core / Safety / Concurrency / Frameworks / Tooling).
 
 ---
 
@@ -120,30 +141,7 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 
 ## Python Documentation
 
-```
-docs/
-├── index.md                      # This index (cross-links everything below)
-├── python/
-│   ├── core/                     # foundational rules + style
-│   │   ├── conventions.md        # naming, typing, docstrings, imports, logging, testing, async
-│   │   ├── conventions-examples.md  # before/after code for each convention
-│   │   ├── style-toolchain.md   # uv, ruff, mypy, workflow, naming, imports, modern Python
-│   │   ├── typing.md            # mypy --strict, protocols, generics, TypedDict
-│   │   ├── docstrings.md        # Google-style docstrings, Args:, Returns:, Raises:
-│   │   └── version.md           # minimum versions, feature tables, EOL policy
-│   ├── safety/                  # correctness & security
-│   │   ├── error-handling.md    # specific exceptions, raise from, context managers, logging
-│   │   ├── security.md          # secrets, eval(), SQL injection, subprocess, password hashing
-│   │   └── testing.md           # AAA pattern, coverage, pytest
-│   ├── concurrency/             # performance + async
-│   │   ├── performance.md       # generators, itertools, lru_cache, set, heapq, str.join
-│   │   └── async.md             # async/await, gather, TaskGroup, timeout, async with
-│   └── frameworks/              # framework specifics
-│       └── frameworks.md        # FastAPI, Django, Flask specifics
-└── tooling/                     # unchanged
-    ├── package-management.md    # uv workflows, project vs script flow, CI/CD
-    └── docker-management.md     # Containerizing Python apps with uv
-```
+Every standards file is listed in the table under "Key Files" above (Section column groups them: Core / Safety / Concurrency / Frameworks / Tooling). `python/core/conventions.md` is the hub.
 
 ---
 
