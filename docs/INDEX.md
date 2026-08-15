@@ -28,15 +28,3 @@ editing any file so you don't re-duplicate.
 The single `[tool.ruff]` config and `pyproject.toml` live in
 [core/conventions.md → Canonical tool configuration](core/conventions.md#canonical-tool-configuration).
 No other file may define `[tool.ruff]`.
-
-## How to edit without re-duping
-
-- **Adding a rule?** Put the rule in `conventions.md`, the code in
-  `conventions-examples.md` (with a stable `#N` anchor), and link from the rule.
-- **Adding a framework/tool-specific snippet?** Put it in its owner file; if the
-  same pattern also appears as a general convention, link to `conventions-examples.md`
-  instead of pasting.
-- **Touching ruff/mypy/pytest config?** Edit only `conventions.md`.
-- **After any change,** run the dedupe check: a given code snippet should appear
-  **once** (in `conventions-examples.md`), and there must be exactly **one**
-  `[tool.ruff]` block across the whole set.
