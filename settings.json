@@ -12,7 +12,8 @@
       "Read(./.git/**)",
       "Bash(rm -rf ~)",
       "Bash(rm -rf /)"
-    ]
+    ],
+    "defaultMode": "plan"
   },
   "hooks": {
     "PostToolUse": [
@@ -65,7 +66,9 @@
     }
   },
   "effortLevel": "high",
-  "autoUpdatesChannel": "latest",
+  "askUserQuestionTimeout": "60s",
+  "autoUpdatesChannel": "stable",
+  "minimumVersion": "2.1.229",
   "skipWorkflowUsageWarning": true,
   "theme": "dark"
 }
