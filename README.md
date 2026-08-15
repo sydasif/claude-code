@@ -75,7 +75,7 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 | `skills/*/SKILL.md` | Reusable capabilities (cleanup, refactor, review, test, blog, agnes, obsidian, tidiness) |
 | `agents/*.md` | Specialized sub‑agents with tool restrictions (cleanup-code, refactor-code, review-code) |
 | `docs/index.md` | Modular Python standards — style, typing, security, performance, frameworks |
-| `docs/python/testing.md` | Testing standards, coverage thresholds, commands |
+| `docs/python/safety/testing.md` | Testing standards, coverage thresholds, commands |
 | `templates/ci-python.yml` | GitHub Actions workflow template |
 
 ---
@@ -122,21 +122,27 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 
 ```
 docs/
-├── index.md              # This index
+├── index.md                      # This index (cross-links everything below)
 ├── python/
-│   ├── style-core.md     # uv, ruff, mypy, workflow, naming, imports, modern Python
-│   ├── typing.md         # mypy --strict, protocols, generics, TypedDict
-│   ├── docstrings.md     # Google-style docstrings, Args:, Returns:, Raises:
-│   ├── error-handling.md # specific exceptions, raise from, context managers, logging
-│   ├── security.md       # secrets, eval(), SQL injection, subprocess, password hashing
-│   ├── testing.md        # AAA pattern, coverage, pytest
-│   ├── performance.md    # generators, itertools, lru_cache, set, heapq, str.join
-│   ├── async.md          # async/await, gather, TaskGroup, timeout, async with
-│   ├── frameworks.md     # FastAPI, Django, Flask specifics
-│   └── version.md        # minimum versions, feature tables, EOL policy
-└── tooling/
-    ├── package-management.md  # uv workflows, project vs script flow, CI/CD
-    └── docker-management.md   # Containerizing Python apps with uv
+│   ├── core/                     # foundational rules + style
+│   │   ├── conventions.md        # naming, typing, docstrings, imports, logging, testing, async
+│   │   ├── conventions-examples.md  # before/after code for each convention
+│   │   ├── style-toolchain.md   # uv, ruff, mypy, workflow, naming, imports, modern Python
+│   │   ├── typing.md            # mypy --strict, protocols, generics, TypedDict
+│   │   ├── docstrings.md        # Google-style docstrings, Args:, Returns:, Raises:
+│   │   └── version.md           # minimum versions, feature tables, EOL policy
+│   ├── safety/                  # correctness & security
+│   │   ├── error-handling.md    # specific exceptions, raise from, context managers, logging
+│   │   ├── security.md          # secrets, eval(), SQL injection, subprocess, password hashing
+│   │   └── testing.md           # AAA pattern, coverage, pytest
+│   ├── concurrency/             # performance + async
+│   │   ├── performance.md       # generators, itertools, lru_cache, set, heapq, str.join
+│   │   └── async.md             # async/await, gather, TaskGroup, timeout, async with
+│   └── frameworks/              # framework specifics
+│       └── frameworks.md        # FastAPI, Django, Flask specifics
+└── tooling/                     # unchanged
+    ├── package-management.md    # uv workflows, project vs script flow, CI/CD
+    └── docker-management.md     # Containerizing Python apps with uv
 ```
 
 ---

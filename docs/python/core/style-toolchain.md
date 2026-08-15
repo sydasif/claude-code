@@ -166,6 +166,101 @@ select = ["E", "F", "I", "B", "UP", "ASYNC", "RUF"]
 
 Run with: `uv run ruff check --fix .` and `uv run ruff format .`.
 
+---
+
+## Examples
+
+### Naming (PEP 8)
+
+**Before:**
+
+```python
+class userAccount:          # should be PascalCase
+    MAX_RETRIES = 3
+    def GetName(self):      # methods are snake_case
+        ...
+def calc_total(List):       # variables/args are snake_case
+    ...
+```
+
+**After:**
+
+```python
+class UserAccount:
+    MAX_RETRIES = 3
+
+    def get_name(self) -> str:
+        ...
+
+def calc_total(items: list[Item]) -> int:
+    ...
+```
+
+### Import grouping
+
+**Before** (stdlib/third-party/local interleaved, wrong order):
+
+```python
+from app.models import User
+import httpx
+import os
+from pydantic import BaseModel
+import sys
+```
+
+**After** (std → third-party → local, alphabetized within groups):
+
+```python
+import os
+import sys
+
+import httpx
+from pydantic import BaseModel
+
+from app.models import User
+```
+
+### Frozen dataclass vs manual value object
+
+**Before** (hand-rolled, mutable, easy to corrupt):
+
+```python
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+```
+
+**After** (immutable, hashable, less boilerplate):
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class Point:
+    x: int
+    y: int
+```
+
+### Walrus `:=` — assign and test in one expression
+
+**Before:**
+
+```python
+line = f.readline()
+while line:
+    process(line)
+    line = f.readline()
+```
+
+**After:**
+
+```python
+while (line := f.readline()):
+    process(line)
+```
+
 ## Dependency Management
 
 Use `uv`. No direct `pip install`. Use `pyproject.toml` and `uv.lock`. Update via `uv lock --upgrade`. Remove unused dependencies.

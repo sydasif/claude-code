@@ -90,6 +90,73 @@ def test_division_by_zero():
         Calculator().divide(5, 0)
 ```
 
+---
+
+## Examples — positive, negative, edge
+
+### AAA explained (Arrange → Act → Assert)
+
+**Before** (mixed steps, unclear what is being tested):
+
+```python
+def test_discount():
+    c = Cart()
+    c.add(Item(price=100))
+    c.add_coupon("SAVE10")
+    assert c.total() == 90
+```
+
+**After** (each phase is explicit):
+
+```python
+def test_discount_applies_ten_percent():
+    # Arrange
+    cart = Cart()
+    cart.add(Item(price=100))
+    cart.add_coupon("SAVE10")
+
+    # Act
+    total = cart.total()
+
+    # Assert
+    assert total == 90
+```
+
+### Negative test — bad input raises
+
+```python
+def test_add_rejects_negative_quantity():
+    cart = Cart()
+    with pytest.raises(ValueError, match="quantity must be >= 0"):
+        cart.add(Item(price=10), quantity=-1)
+```
+
+### Edge case — empty input
+
+```python
+def test_total_of_empty_cart_is_zero():
+    assert Cart().total() == 0
+```
+
+### Mirrored file + fixture reuse
+
+```python
+# tests/test_cart.py  (mirrors src/cart.py)
+import pytest
+
+from app.cart import Cart, Item
+
+
+@pytest.fixture
+def cart() -> Cart:
+    return Cart()
+
+
+def test_add_increases_line_count(cart: Cart) -> None:
+    cart.add(Item(price=5))
+    assert len(cart.lines) == 1
+```
+
 ## Security Testing
 
 - Test SQL injection prevention (parameterized queries)

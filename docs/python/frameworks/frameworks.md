@@ -14,7 +14,7 @@ app/
   deps.py           # shared Depends() callables
 ```
 
-### Lifespan (3.11+)
+### Lifespan context manager (FastAPI feature; uses 3.11+ `asyncio.TaskGroup`‑style setup)
 
 ```python
 from contextlib import asynccontextmanager

@@ -9,26 +9,24 @@ Modular Python standards. Load individual files or this index for the full struc
 
 ## Core
 
-- [Core Style & Toolchain](./python/style-core.md) – `uv`, `ruff`, `mypy`, workflow, naming, imports, modern Python basics
-- [Type Hints](./python/typing.md) – `mypy --strict`, protocols, generics, `TypedDict`, type checker selection
-- [Docstrings](./python/docstrings.md) – Google‑style docstrings, `Args:`, `Returns:`, `Raises:`
+- [Conventions](./python/core/conventions.md) – naming, typing, docstrings, imports, logging, testing, async
+- [Conventions — Examples](./python/core/conventions-examples.md) – before/after code for each convention
+- [Core Style & Toolchain](./python/core/style-toolchain.md) – `uv`, `ruff`, `mypy`, workflow, naming, imports, modern Python basics
+- [Type Hints](./python/core/typing.md) – `mypy --strict`, protocols, generics, `TypedDict`, type checker selection
+- [Docstrings](./python/core/docstrings.md) – Google‑style docstrings, `Args:`, `Returns:`, `Raises:`
+- [Python Version Policy](./python/core/version.md) – minimum versions, feature tables, EOL policy
 
 ## Safety & Correctness
 
-- [Error Handling](./python/error-handling.md) – specific exceptions, `raise from`, context managers, logging
-- [Security](./python/security.md) – secrets, `eval()`, SQL injection, `subprocess`, password hashing
-- [Testing](./python/testing.md) – (separate file) AAA pattern, coverage, pytest
+- [Error Handling](./python/safety/error-handling.md) – specific exceptions, `raise from`, context managers, logging
+- [Security](./python/safety/security.md) – secrets, `eval()`, SQL injection, `subprocess`, password hashing
+- [Testing](./python/safety/testing.md) – AAA pattern, coverage, pytest
 
 ## Performance & Concurrency
 
-- [Performance](./python/performance.md) – generators, `itertools`, `functools.lru_cache`, `set`, `heapq`, `str.join`
-- [Async](./python/async.md) – `async`/`await`, `gather`, `TaskGroup`, `timeout`, `async with`
+- [Performance](./python/concurrency/performance.md) – generators, `itertools`, `functools.lru_cache`, `set`, `heapq`, `str.join`
+- [Async](./python/concurrency/async.md) – `async`/`await`, `gather`, `TaskGroup`, `timeout`, `async with`
 
-## Frameworks & Versioning
+## Frameworks
 
-- [Framework Specifics](./python/frameworks.md) – FastAPI, Django, Flask
-- [Python Version Policy](./python/version.md) – minimum versions, feature tables, EOL policy
-
-## Conventions
-
-- [Python Conventions](./python/conventions.md) – naming, typing, docstrings, imports, logging, testing, async
+- [Framework Specifics](./python/frameworks/frameworks.md) – FastAPI, Django, Flask
