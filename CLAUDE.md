@@ -33,7 +33,7 @@ Two primary mechanisms carry knowledge across your sessions:
 
 ### Python Standards and Tooling
 
-**Documentation:** Modular Python standards under @~/.clude/docs/INDEX.md
+**Documentation:** Modular Python standards: @~/.claude/docs/index.md
 
 ### Subagent Scoping
 

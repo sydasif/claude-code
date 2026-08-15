@@ -1,6 +1,6 @@
 # Python Performance Patterns
 
-> Owns performance micro-patterns. Standalone within the Python standards set; topic index: [INDEX.md](../INDEX.md).
+> Owns performance micro-patterns. Standalone within the Python standards set; topic index: [index.md](../index.md).
 
 Performance is rarely the bottleneck. Profile first with `cProfile` or `py-spy`.
 These patterns cover the 80% case where the right stdlib function or data
