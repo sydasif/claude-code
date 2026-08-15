@@ -159,7 +159,7 @@ result = subprocess.run(
 print(result.stdout)
 ```
 
-Note: list of args (not shell string). Avoids shell injection. See also [security.md — subprocess](../safety/security.md#subprocess--no-shell-list-args).
+Note: list of args (not shell string). Avoids shell injection. See also [security.md — subprocess](../safety/security.md#subprocess-no-shell-list-args).
 
 ---
 
@@ -244,7 +244,7 @@ async def fetch_all(urls: list[str]) -> list[dict]:
 # TaskGroup cancels siblings on first failure; cleaner shutdown
 ```
 
-See also [async patterns — TaskGroup](../concurrency/async.md#asynciotaskgroup-311--structured-concurrency).
+See also [async patterns — TaskGroup](../concurrency/async.md#asynciotaskgroup-311-structured-concurrency).
 
 ---
 
