@@ -13,7 +13,7 @@
       "Bash(rm -rf ~)",
       "Bash(rm -rf /)"
     ],
-    "defaultMode": "plan"
+    "defaultMode": "default"
   },
   "hooks": {
     "PostToolUse": [
@@ -70,5 +70,6 @@
   "autoUpdatesChannel": "stable",
   "minimumVersion": "2.1.229",
   "skipWorkflowUsageWarning": true,
-  "theme": "dark"
+  "theme": "dark",
+  "model": "sonnet[1m]"
 }
