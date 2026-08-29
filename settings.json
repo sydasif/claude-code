@@ -15,7 +15,6 @@
     ],
     "defaultMode": "default"
   },
-  "model": "sonnet[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -32,7 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Native WebSearch disabled — use mcp__Web-Research__* tools: search_web, fetch_page, search_reddit, search_linkedin, search_hackernews, search_arxiv, search_wikipedia, search_github, get_github_issue, search_x, health_check'}}))\""
+            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Native WebSearch disabled — use mcp tools: search_web, fetch_page, search_x, etc.'}}))\""
           }
         ]
       }
