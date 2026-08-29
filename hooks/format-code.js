@@ -24,15 +24,14 @@ const LOG_DIR = path.join(process.env.HOME, '.claude', 'hooks-logs');
 
 const PRETTIER_EXTS = new Set(['.js', '.ts', '.json', '.md', '.html']);
 
+// Formatters: Python uses ruff (via uv), others use prettier with --yes for non-interactive mode
 const FORMATTERS = {
-  '.py': (fp) => [
-    ['uv', 'run', 'ruff', 'check', '--fix', '--exit-zero', '--quiet', fp],
-    ['uv', 'run', 'ruff', 'format', '--quiet', fp],
-  ],
+  '.py': (fp) => [['uv', 'run', 'ruff', 'format', '--quiet', fp]],
 };
 
 for (const ext of PRETTIER_EXTS) {
-  FORMATTERS[ext] = (fp) => [['npx', '--no-install', 'prettier', '--write', fp]];
+  // Use --yes flag to auto-confirm prompts in non-interactive mode
+  FORMATTERS[ext] = (fp) => [['npx', '--no-install', 'prettier', '--yes', '--write', fp]];
 }
 
 function log(data) {
@@ -42,6 +41,8 @@ function log(data) {
     fs.appendFileSync(file, JSON.stringify({ ts: new Date().toISOString(), hook: 'format-code', ...data }) + '\n');
   } catch { }
 }
+
+
 
 function getFormatter(filePath) {
   const ext = path.extname(filePath).toLowerCase();

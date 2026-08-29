@@ -15,7 +15,28 @@
     ],
     "defaultMode": "default"
   },
+  "model": "sonnet[1m]",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /home/zulu/.claude/hooks/pre-edit-analysis.js"
+          }
+        ]
+      },
+      {
+        "matcher": "WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Native WebSearch disabled — use mcp__Web-Research__* tools: search_web, fetch_page, search_reddit, search_linkedin, search_hackernews, search_arxiv, search_wikipedia, search_github, get_github_issue, search_x, health_check'}}))\""
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Write|Edit",
@@ -23,17 +44,10 @@
           {
             "type": "command",
             "command": "node /home/zulu/.claude/hooks/format-code.js"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "WebSearch",
-        "hooks": [
+          },
           {
             "type": "command",
-            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use plugin:web-search:web-search'}}))\""
+            "command": "node /home/zulu/.claude/hooks/post-edit-validation.js"
           }
         ]
       }
@@ -70,6 +84,5 @@
   "autoUpdatesChannel": "stable",
   "minimumVersion": "2.1.229",
   "skipWorkflowUsageWarning": true,
-  "theme": "dark",
-  "model": "sonnet[1m]"
+  "theme": "dark"
 }
