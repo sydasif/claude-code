@@ -77,7 +77,7 @@ function analyzePythonFile(filepath) {
   return results;
 }
 
-function main() {
+async function main() {
   let input = '';
   for await (const chunk of process.stdin) input += chunk;
 

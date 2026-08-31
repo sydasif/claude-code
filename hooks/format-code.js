@@ -30,8 +30,8 @@ const FORMATTERS = {
 };
 
 for (const ext of PRETTIER_EXTS) {
-  // Use --yes flag to auto-confirm prompts in non-interactive mode
-  FORMATTERS[ext] = (fp) => [['npx', '--no-install', 'prettier', '--yes', '--write', fp]];
+  // npx --yes auto-installs prettier on first use (cached afterwards); needed for non-interactive runs
+  FORMATTERS[ext] = (fp) => [['npx', '--yes', 'prettier', '--write', fp]];
 }
 
 function log(data) {

@@ -56,7 +56,7 @@ function runRuffCheck(filepath) {
 // Run a quick syntax check on Python files
 function syntaxCheck(filepath) {
   try {
-    const result = spawnSync('python3', ['-c', f'import py_compile; py_compile.compile("{filepath}", doraise=True)'], {
+    const result = spawnSync('python3', ['-c', 'import sys, py_compile; py_compile.compile(sys.argv[1], doraise=True)', filepath], {
       cwd: path.dirname(filepath),
       stdio: 'pipe',
       timeout: 30000
@@ -71,7 +71,7 @@ function syntaxCheck(filepath) {
   }
 }
 
-function main() {
+async function main() {
   let input = '';
   for await (const chunk of process.stdin) input += chunk;
 
