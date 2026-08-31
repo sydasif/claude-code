@@ -33,7 +33,7 @@ function log(data) {
 // Run ruff check on a Python file
 function runRuffCheck(filepath) {
   try {
-    const result = spawnSync('uv', ['run', 'ruff', 'check', '--fix', '--exit-zero', '--quiet', filepath], {
+    const result = spawnSync('uv', ['run', 'ruff', 'check', '--fix', '--quiet', filepath], {
       cwd: path.dirname(filepath),
       stdio: 'pipe',
       timeout: 60000
@@ -41,13 +41,14 @@ function runRuffCheck(filepath) {
     
     const stderr = result.stderr?.toString().trim();
     const stdout = result.stdout?.toString().trim();
+    const output = stderr || stdout || '';
+    const messages = output.split('\n').filter(m => m.length > 0);
     
     if (result.status === 0) {
-      return { status: 'pass', messages: [], output: stdout || '' };
+      return { status: 'pass', messages: [], output };
     }
     
-    const messages = (stderr || stdout || '').split('\n').filter(m => m.length > 0);
-    return { status: 'fail', messages, output: stderr || stdout || `ruff check exited with code ${result.status}` };
+    return { status: 'fail', messages, output: output || `ruff check exited with code ${result.status}` };
   } catch (e) {
     return { status: 'error', messages: [e.message], output: e.message };
   }
@@ -112,6 +113,8 @@ async function main() {
       for (const msg of ruffResult.messages) {
         log({ level: 'WARNING', type: 'lint', message: msg, file: filePath, session_id });
       }
+    } else if (ruffResult.status === 'error') {
+      log({ level: 'ERROR', type: 'lint', message: ruffResult.output, file: filePath, session_id });
     } else if (ruffResult.status === 'pass') {
       log({ level: 'INFO', type: 'lint', message: 'No lint issues found', file: filePath, session_id });
     }

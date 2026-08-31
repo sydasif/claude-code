@@ -39,16 +39,9 @@ if command -v jq >/dev/null 2>&1; then
     model=$(echo "$input" | jq -r '.model.display_name')
     pwd_path=$(echo "$input" | jq -r '.workspace.current_dir')
 elif command -v python3 >/dev/null 2>&1; then
-    read -r dir model pwd_path <<< "$(echo "$input" | python3 -c "
-import json, sys
-d = json.load(sys.stdin)
-w = d.get('workspace', {})
-m = d.get('model', {})
-cd = w.get('current_dir', '?')
-print(cd.rstrip('/').split('/')[-1] if cd != '?' else '?')
-print(m.get('display_name', '?'))
-print(cd)
-")"
+    dir=$(echo "$input" | python3 -c "import json, sys; d = json.load(sys.stdin); cd = d.get('workspace', {}).get('current_dir', '?'); print(cd.rstrip('/').split('/')[-1] if cd != '?' else '?')")
+    model=$(echo "$input" | python3 -c "import json, sys; d = json.load(sys.stdin); print(d.get('model', {}).get('display_name', '?'))")
+    pwd_path=$(echo "$input" | python3 -c "import json, sys; d = json.load(sys.stdin); print(d.get('workspace', {}).get('current_dir', '?'))")
 else
     dir="?"
     model="?"

@@ -107,10 +107,9 @@ Put **all** environment variables in `~/.claude/.env` — secrets and non-secret
 
 | Skill | Purpose |
 |-------|---------|
-| `cleanup-code` | YAGNI/DRY/KISS pruning — remove dead code, simplify over-abstraction |
+| `cleanup-code` | YAGNI/DRY/KISS cleanup, prune first |
 | `refactor-code` | Modernize Python — type hints, dataclasses, pathlib, f-strings, logging.exception |
 | `review-code` | Final-gate adversarial review — security, contracts, correctness |
-| `test-code` | End-to-end QA validation as a real user/operator |
 
 ### Specialized Skills
 

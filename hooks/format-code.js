@@ -22,7 +22,7 @@ const { spawnSync } = require('child_process');
 
 const LOG_DIR = path.join(process.env.HOME, '.claude', 'hooks-logs');
 
-const PRETTIER_EXTS = new Set(['.js', '.ts', '.json', '.md', '.html']);
+const PRETTIER_EXTS = new Set(['.js', '.ts', '.json', '.md', '.html', '.yaml', '.yml']);
 
 // Formatters: Python uses ruff (via uv), others use prettier with --yes for non-interactive mode
 const FORMATTERS = {
@@ -69,7 +69,7 @@ function formatFile(filePath, cwd, sessionId) {
 
   for (const args of getCommands(absPath)) {
     try {
-      const result = spawnSync(args[0], args.slice(1), { cwd: dir, stdio: 'pipe' });
+      const result = spawnSync(args[0], args.slice(1), { cwd: dir, stdio: 'pipe', timeout: 60000 });
       if (result.status !== 0) {
         const msg = result.stderr?.toString().trim() || `Process exited with code ${result.status}`;
         log({ level: 'ERROR', formatter: formatterName, file: absPath, error: msg, session_id: sessionId });

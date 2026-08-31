@@ -42,6 +42,7 @@ function log(data) {
 function analyzePythonFile(filepath) {
   const results = [];
   try {
+    if (!fs.existsSync(filepath)) return results;
     const content = fs.readFileSync(filepath, 'utf8');
     // Very basic analysis - check for common patterns
     // In a real implementation, this would use the cleanup-code skill
