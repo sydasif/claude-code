@@ -11,11 +11,11 @@ SearXNG is a privacy-respecting metasearch engine that you can run locally. It a
 
 | Task | Command | Category |
 |------|---------|----------|
-| General web search | `curl "http://localhost:8888/search?q=<query>&format=json"` | `general` |
-| Search Cargo/crates.io | `curl "http://localhost:8888/search?q=<crate>&format=json&categories=cargo"` | `cargo` |
-| Search npm packages | `curl "http://localhost:8888/search?q=<pkg>&format=json&categories=packages"` | `packages` |
-| Search code repositories | `curl "http://localhost:8888/search?q=<query>&format=json&categories=repos"` | `repos` |
-| Search IT resources | `curl "http://localhost:8888/search?q=<query>&format=json&categories=it"` | `it` |
+| General web search | `curl "http://localhost:8080/search?q=<query>&format=json"` | `general` |
+| Search Cargo/crates.io | `curl "http://localhost:8080/search?q=<crate>&format=json&categories=cargo"` | `cargo` |
+| Search npm packages | `curl "http://localhost:8080/search?q=<pkg>&format=json&categories=packages"` | `packages` |
+| Search code repositories | `curl "http://localhost:8080/search?q=<query>&format=json&categories=repos"` | `repos` |
+| Search IT resources | `curl "http://localhost:8080/search?q=<query>&format=json&categories=it"` | `it` |
 | Limit results | Add `&limit=N` to URL | - |
 | Multiple categories | `&categories=cat1,cat2` | - |
 
@@ -23,7 +23,7 @@ SearXNG is a privacy-respecting metasearch engine that you can run locally. It a
 
 Run to see all categories:
 ```bash
-curl -s "http://localhost:8888/config" | jq '.categories'
+curl -s "http://localhost:8080/config" | jq '.categories'
 ```
 
 Notable categories:
@@ -70,13 +70,13 @@ Notable categories:
 
 **Cargo/Rust crates:**
 ```bash
-curl -s "http://localhost:8888/search?q=tokio&format=json&categories=cargo" | \
+curl -s "http://localhost:8080/search?q=tokio&format=json&categories=cargo" | \
   jq '.results[] | {title, url, content}'
 ```
 
 **npm packages:**
 ```bash
-curl -s "http://localhost:8888/search?q=express&format=json&categories=packages" | \
+curl -s "http://localhost:8080/search?q=express&format=json&categories=packages" | \
   jq '.results[] | select(.engines[] == "npm") | {title, url, content}'
 ```
 
@@ -90,13 +90,13 @@ curl -s "http://localhost:8888/search?q=express&format=json&categories=packages"
 
 **IT/Tech search:**
 ```bash
-curl -s "http://localhost:8888/search?q=rust+async&format=json&categories=it" | \
+curl -s "http://localhost:8080/search?q=rust+async&format=json&categories=it" | \
   jq '.results[0:5] | .[] | {title, url, engines}'
 ```
 
 **GitHub repositories:**
 ```bash
-curl -s "http://localhost:8888/search?q=machine+learning&format=json&categories=repos" | \
+curl -s "http://localhost:8080/search?q=machine+learning&format=json&categories=repos" | \
   jq '.results[] | select(.engines[] == "github") | {title, url}'
 ```
 
@@ -104,19 +104,19 @@ curl -s "http://localhost:8888/search?q=machine+learning&format=json&categories=
 
 **Get top 3 results:**
 ```bash
-curl -s "http://localhost:8888/search?q=rust+ownership&format=json" | \
+curl -s "http://localhost:8080/search?q=rust+ownership&format=json" | \
   jq '.results[0:3] | .[] | {title, url, content}'
 ```
 
 **Check which engines returned results:**
 ```bash
-curl -s "http://localhost:8888/search?q=python&format=json" | \
+curl -s "http://localhost:8080/search?q=python&format=json" | \
   jq '.results[0].engines'
 ```
 
 **Get answer boxes/infoboxes:**
 ```bash
-curl -s "http://localhost:8888/search?q=rust+language&format=json" | \
+curl -s "http://localhost:8080/search?q=rust+language&format=json" | \
   jq '.infoboxes, .answers'
 ```
 
@@ -156,7 +156,7 @@ def searx [
   --category (-c): string = "general",
   --limit (-l): int = 10
 ] {
-  http get $"http://localhost:8888/search?q=($query | url encode)&format=json&categories=($category)"
+  http get $"http://localhost:8080/search?q=($query | url encode)&format=json&categories=($category)"
   | get results
   | first $limit
   | select title url content engines
@@ -173,17 +173,17 @@ searx "flask tutorial" --category general
 
 **Check SearXNG config:**
 ```bash
-curl -s "http://localhost:8888/config" | jq '.engines[] | select(.name == "pypi")'
+curl -s "http://localhost:8080/config" | jq '.engines[] | select(.name == "pypi")'
 ```
 
 **Check for engine errors:**
 ```bash
-curl -s "http://localhost:8888/search?q=test&format=json" | jq '.unresponsive_engines'
+curl -s "http://localhost:8080/search?q=test&format=json" | jq '.unresponsive_engines'
 ```
 
 **Test specific engine:**
 ```bash
-curl -s "http://localhost:8888/search?q=flask&format=json&engines=pypi" | jq .
+curl -s "http://localhost:8080/search?q=flask&format=json&engines=pypi" | jq .
 ```
 
 ## Known Issues
@@ -235,13 +235,13 @@ EOF
 
 # Start with podman
 podman run --rm -d --name searxng \
-  -p 8888:8080 \
+  -p 8080:8080 \
   -v /tmp/searxng-config:/etc/searxng:Z \
   docker.io/searxng/searxng:latest
 
 # Or with docker
 docker run --rm -d --name searxng \
-  -p 8888:8080 \
+  -p 8080:8080 \
   -v /tmp/searxng-config:/etc/searxng \
   docker.io/searxng/searxng:latest
 ```
