@@ -11,6 +11,8 @@ statsig/
 telemetry/
 todos/
 hooks-logs/
+jobs/
+daemon*
 
 # Skill artifacts
 skills/last30days

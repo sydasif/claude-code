@@ -1,90 +1,86 @@
 {
-  "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "env": {
-    "ANTHROPIC_BASE_URL": "http://localhost:4000",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "haiku",
-    "CLAUDE_CODE_SUBAGENT_MODEL_FORCE": "1"
-  },
-  "permissions": {
-    "allow": [],
-    "deny": [
-      "Read(./.env)",
-      "Read(./secrets/**)",
-      "Read(./package-lock.json)",
-      "Read(./.git/**)",
-      "Bash(rm -rf ~)",
-      "Bash(rm -rf /)"
-    ],
-    "defaultMode": "default"
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node /home/zulu/.claude/hooks/pre-edit-analysis.js"
-          }
-        ]
-      },
-      {
-        "matcher": "WebSearch",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use plugin:web-search:Web-Research'}}))\""
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node /home/zulu/.claude/hooks/format-code.js"
-          },
-          {
-            "type": "command",
-            "command": "node /home/zulu/.claude/hooks/post-edit-validation.js"
-          }
-        ]
-      }
-    ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "/bin/bash ~/.claude/hooks/statusline.sh"
-  },
-  "enabledPlugins": {
-    "repomix-mcp@repomix": true,
-    "context7@claude-plugins-official": true,
-    "pyright-lsp@claude-plugins-official": true,
-    "web-search@sydasif-web-search-mcp": true
-  },
-  "extraKnownMarketplaces": {
-    "repomix": {
-      "source": {
-        "source": "github",
-        "repo": "yamadashy/repomix"
-      },
-      "autoUpdate": true
+    "$schema": "https://json.schemastore.org/claude-code-settings.json",
+    "env": {
+        "ANTHROPIC_BASE_URL": "http://localhost:4000"
     },
-    "sydasif-web-search-mcp": {
-      "source": {
-        "source": "github",
-        "repo": "sydasif/web-search-mcp"
-      },
-      "autoUpdate": true
-    }
-  },
-  "effortLevel": "high",
-  "askUserQuestionTimeout": "60s",
-  "autoUpdatesChannel": "stable",
-  "minimumVersion": "2.1.229",
-  "skipWorkflowUsageWarning": true,
-  "theme": "dark",
-  "model": "sonnet[1m]"
+    "permissions": {
+        "allow": [],
+        "deny": [
+            "Read(./.env)",
+            "Read(./secrets/**)",
+            "Read(./package-lock.json)",
+            "Read(./.git/**)",
+            "Bash(rm -rf ~)",
+            "Bash(rm -rf /)"
+        ],
+        "defaultMode": "default"
+    },
+    "hooks": {
+        "PreToolUse": [
+            {
+                "matcher": "Write|Edit",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "node /home/zulu/.claude/hooks/pre-edit-analysis.js"
+                    }
+                ]
+            },
+            {
+                "matcher": "WebSearch",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use plugin:web-search:Web-Research'}}))\""
+                    }
+                ]
+            }
+        ],
+        "PostToolUse": [
+            {
+                "matcher": "Write|Edit",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "node /home/zulu/.claude/hooks/format-code.js"
+                    },
+                    {
+                        "type": "command",
+                        "command": "node /home/zulu/.claude/hooks/post-edit-validation.js"
+                    }
+                ]
+            }
+        ]
+    },
+    "statusLine": {
+        "type": "command",
+        "command": "/bin/bash ~/.claude/hooks/statusline.sh"
+    },
+    "enabledPlugins": {
+        "repomix-mcp@repomix": true,
+        "context7@claude-plugins-official": true,
+        "pyright-lsp@claude-plugins-official": true,
+        "web-search@sydasif-web-search-mcp": true
+    },
+    "extraKnownMarketplaces": {
+        "repomix": {
+            "source": {
+                "source": "github",
+                "repo": "yamadashy/repomix"
+            },
+            "autoUpdate": true
+        },
+        "sydasif-web-search-mcp": {
+            "source": {
+                "source": "github",
+                "repo": "sydasif/web-search-mcp"
+            },
+            "autoUpdate": true
+        }
+    },
+    "effortLevel": "high",
+    "askUserQuestionTimeout": "60s",
+    "autoUpdatesChannel": "stable",
+    "skipWorkflowUsageWarning": true,
+    "theme": "dark"
 }
