@@ -1,0 +1,43 @@
+# Two VLAN-aware switches, four hosts, trunk between the switches
+provider: clab
+nodes: [ h1, h2, h3, h4, s1, s2 ]
+
+groups:
+  hosts:
+    members: [ h1, h2, h3, h4 ]
+    device: linux
+  switches:
+    members: [ s1, s2 ]
+    module: [ vlan ]
+    device: eos
+
+vlans:
+  red:
+  blue:
+
+links:
+- h1:
+  s1:
+    vlan.access: red
+- h3:
+  s1:
+    vlan.access: blue
+- s1:
+  s2:
+  vlan.trunk: [ red, blue ]
+- h2:
+  s2:
+    vlan.access: red
+- h4:
+  s2:
+    vlan.access: blue
+
+validate:
+  ping_red:
+    description: h1 pings h2 (same VLAN)
+    wait: 40
+    nodes: [ h1 ]
+    devices: [ linux ]
+    exec: ping -c 3 -W 1 h2
+    valid: |
+      "64 bytes" in stdout

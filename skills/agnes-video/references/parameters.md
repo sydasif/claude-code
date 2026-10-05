@@ -1,4 +1,25 @@
-# Agnes Video - Duration, Resolution & Recommended Parameters
+# Agnes Video - Duration, Resolution, Pricing & Recommended Parameters
+
+## Pricing
+
+All prices in USD. **agnes-video-2.5-flash is currently free** under promotion.
+
+| Resolution | Unit price |
+| ---------- | ---------- |
+| 720P       | $0.025/sec |
+| 1080P / 1K | $0.040/sec |
+| 2K         | $0.055/sec |
+
+**Billing formula:**
+
+```text
+Total cost = (output seconds + input video seconds) × resolution unit price
+           + max(0, input images - 5) × $0.005/image
+```
+
+- Total billable duration includes both output and input video durations
+- First 5 input images are free; each image from the 6th onward costs $0.005
+- `agnes-video-2.5-flash` uses the same formula but is currently $0 for all items
 
 ## Duration formula
 
@@ -17,7 +38,7 @@ seconds = num_frames / frame_rate
 
 ## Resolution tiers
 
-The API normalizes to the closest supported tier: `480p`, `720p`, `1080p`.
+The API normalizes to the closest supported tier: `480p`, `720p`, `1080p`, `2K`.
 
 | Aspect Ratio | Recommended Use Case                           |
 | ------------ | ---------------------------------------------- |

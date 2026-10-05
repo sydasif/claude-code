@@ -1,0 +1,10 @@
+# Three routers in a triangle running OSPF in area 1
+# OSPF area is a NODE/GLOBAL attribute here; interfaces inherit it.
+provider: clab
+defaults.device: frr
+module: [ ospf ]
+ospf.area: 1
+
+nodes: [ r1, r2, r3 ]
+
+links: [ r1-r2, r2-r3, r3-r1 ]

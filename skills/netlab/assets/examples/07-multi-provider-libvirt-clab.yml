@@ -1,0 +1,19 @@
+# Mixed providers: libvirt VMs for the routers, clab containers for the hosts.
+# libvirt is the PRIMARY provider; clab can only be a secondary one.
+# Start and stop with `netlab up` / `netlab down` (never vagrant/containerlab directly).
+# `provider:` also works on a group, e.g. groups: { hosts: { members: [ h1, h2 ], device: linux, provider: clab } }
+provider: libvirt
+defaults.device: frr
+module: [ ospf ]
+
+nodes:
+  r1:
+  r2:
+  h1:
+    device: linux
+    provider: clab      # per-node provider = secondary provider
+  h2:
+    device: linux
+    provider: clab
+
+links: [ h1-r1, r1-r2, r2-h2 ]

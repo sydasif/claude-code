@@ -1,0 +1,43 @@
+# Static prefixes, custom pool, group config template embedded with the files plugin,
+# and link impairment (tc)
+provider: clab
+defaults.device: frr
+module: [ ospf ]
+plugin: [ files ]
+
+addressing:
+  core:
+    ipv4: 10.10.0.0/16
+    prefix: 30
+
+groups:
+  routers:
+    members: [ r1, r2, r3 ]
+    config: [ banner ]
+
+configlets:
+  banner:
+    frr: |
+      hostname {{ inventory_hostname }}
+
+nodes:
+  r1:
+  r2:
+  r3:
+  h1:
+    device: linux
+
+links:
+- r1:
+  r2:
+  pool: core
+- r2:
+    ipv4: 172.16.5.2/24
+  r3:
+    ipv4: 172.16.5.3/24
+  prefix: 172.16.5.0/24
+- r3:
+  h1:
+- r1:
+  r3:
+  tc.delay: 20ms

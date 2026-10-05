@@ -1,0 +1,31 @@
+# Two ASes: AS 65000 (r1, r2 with IBGP over OSPF) peering with AS 65100 (x1) via EBGP
+provider: clab
+defaults.device: eos
+
+nodes:
+  r1:
+    module: [ ospf, bgp ]
+    bgp.as: 65000
+  r2:
+    module: [ ospf, bgp ]
+    bgp.as: 65000
+  x1:
+    module: [ bgp ]
+    bgp.as: 65100
+
+links:
+- r1-r2
+- r2-x1
+
+validate:
+  session:
+    description: EBGP session between r2 and x1 is established
+    wait: 30
+    nodes: [ x1 ]
+    show:
+      eos: ip bgp summary | json
+    valid:
+      eos: |
+        {% for n in bgp.neighbors if n.name == 'r2' %}
+        vrfs.default.peers["{{ n.ipv4 }}"].peerState == "Established"
+        {% endfor %}

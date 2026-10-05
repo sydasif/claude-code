@@ -2,6 +2,20 @@
 
 All examples use `https://apihub.agnes-ai.com/v1/images/generations` with `Authorization: Bearer $AGNES_API_KEY`.
 
+## Text-to-image with 2.5 Flash (default)
+
+```bash
+curl https://apihub.agnes-ai.com/v1/images/generations \
+  -H "Authorization: Bearer $AGNES_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "agnes-image-2.5-flash",
+    "prompt": "A clean product photo of a glass cube on a white studio background, soft shadows, high detail",
+    "size": "1024x768",
+    "extra_body": { "response_format": "url" }
+  }'
+```
+
 ## Text-to-image (URL output)
 
 ```bash
