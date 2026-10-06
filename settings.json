@@ -31,7 +31,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Use plugin:web-search:Web-Research'}}))\""
+                        "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Native Search is blocked. Use plugin:web-search:OmniSearch'}}))\""
                     }
                 ]
             }
@@ -74,13 +74,13 @@
             "source": {
                 "source": "github",
                 "repo": "sydasif/web-search-mcp"
-            },
-            "autoUpdate": true
+            }
         }
     },
     "effortLevel": "high",
     "askUserQuestionTimeout": "60s",
     "autoUpdatesChannel": "stable",
     "skipWorkflowUsageWarning": true,
-    "theme": "dark"
+    "theme": "dark",
+    "model": "sonnet"
 }
