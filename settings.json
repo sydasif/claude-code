@@ -1,86 +1,94 @@
 {
-    "$schema": "https://json.schemastore.org/claude-code-settings.json",
-    "env": {
-        "ANTHROPIC_BASE_URL": "http://localhost:4000"
-    },
-    "permissions": {
-        "allow": [],
-        "deny": [
-            "Read(./.env)",
-            "Read(./secrets/**)",
-            "Read(./package-lock.json)",
-            "Read(./.git/**)",
-            "Bash(rm -rf ~)",
-            "Bash(rm -rf /)"
-        ],
-        "defaultMode": "default"
-    },
-    "hooks": {
-        "PreToolUse": [
-            {
-                "matcher": "Write|Edit",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "node /home/zulu/.claude/hooks/pre-edit-analysis.js"
-                    }
-                ]
-            },
-            {
-                "matcher": "WebSearch",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Native Search is blocked. Use plugin:web-search:OmniSearch'}}))\""
-                    }
-                ]
-            }
-        ],
-        "PostToolUse": [
-            {
-                "matcher": "Write|Edit",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "node /home/zulu/.claude/hooks/format-code.js"
-                    },
-                    {
-                        "type": "command",
-                        "command": "node /home/zulu/.claude/hooks/post-edit-validation.js"
-                    }
-                ]
-            }
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://localhost:4000"
+  },
+  "permissions": {
+    "allow": [],
+    "deny": [
+      "Read(./.env)",
+      "Read(./secrets/**)",
+      "Read(./package-lock.json)",
+      "Read(./.git/**)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf /)"
+    ],
+    "defaultMode": "default"
+  },
+  "model": "sonnet",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /home/zulu/.claude/hooks/pre-edit-analysis.js"
+          }
         ]
+      },
+      {
+        "matcher": "WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Native Search is blocked. Use plugin:web-search:OmniSearch'}}))\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /home/zulu/.claude/hooks/format-code.js"
+          },
+          {
+            "type": "command",
+            "command": "node /home/zulu/.claude/hooks/post-edit-validation.js"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/bin/bash ~/.claude/hooks/statusline.sh"
+  },
+  "enabledPlugins": {
+    "repomix-mcp@repomix": true,
+    "context7@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "web-search@sydasif-web-search-mcp": true,
+    "watch@claude-video": true,
+    "playwright@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "repomix": {
+      "source": {
+        "source": "github",
+        "repo": "yamadashy/repomix"
+      },
+      "autoUpdate": true
     },
-    "statusLine": {
-        "type": "command",
-        "command": "/bin/bash ~/.claude/hooks/statusline.sh"
+    "sydasif-web-search-mcp": {
+      "source": {
+        "source": "github",
+        "repo": "sydasif/web-search-mcp"
+      }
     },
-    "enabledPlugins": {
-        "repomix-mcp@repomix": true,
-        "context7@claude-plugins-official": true,
-        "pyright-lsp@claude-plugins-official": true,
-        "web-search@sydasif-web-search-mcp": true
-    },
-    "extraKnownMarketplaces": {
-        "repomix": {
-            "source": {
-                "source": "github",
-                "repo": "yamadashy/repomix"
-            },
-            "autoUpdate": true
-        },
-        "sydasif-web-search-mcp": {
-            "source": {
-                "source": "github",
-                "repo": "sydasif/web-search-mcp"
-            }
-        }
-    },
-    "effortLevel": "high",
-    "askUserQuestionTimeout": "60s",
-    "autoUpdatesChannel": "stable",
-    "skipWorkflowUsageWarning": true,
-    "theme": "dark",
-    "model": "sonnet"
+    "claude-video": {
+      "source": {
+        "source": "github",
+        "repo": "bradautomates/claude-video"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "askUserQuestionTimeout": "60s",
+  "autoUpdatesChannel": "stable",
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark"
 }
