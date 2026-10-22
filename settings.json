@@ -4,7 +4,9 @@
         "ANTHROPIC_BASE_URL": "http://localhost:4000"
     },
     "permissions": {
-        "allow": [],
+        "allow": [
+            "mcp__web_search__OmniSearch"
+        ],
         "deny": [
             "Read(./.env)",
             "Read(./secrets/**)",
@@ -15,7 +17,7 @@
         ],
         "defaultMode": "default"
     },
-    "model": "sonnet",
+    "model": "haiku",
     "hooks": {
         "PreToolUse": [
             {
