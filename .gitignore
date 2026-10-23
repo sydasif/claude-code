@@ -13,6 +13,7 @@ todos/
 hooks-logs/
 jobs/
 daemon*
+state/
 
 # Skill artifacts
 skills/last30days
