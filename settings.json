@@ -1,102 +1,142 @@
 {
-    "$schema": "https://json.schemastore.org/claude-code-settings.json",
-    "env": {
-        "ANTHROPIC_BASE_URL": "http://localhost:4000",
-        "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-5-5",
-        "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-5",
-        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-5-5",
-        "CLAUDE_CODE_SUBAGENT_MODEL": "haiku",
-        "CLAUDE_CODE_SUBAGENT_MODEL_FORCE": "1",
-        "MCP_TIMEOUT": "120000"
-    },
-    "permissions": {
-        "allow": [
-            "mcp__web_search__OmniSearch"
-        ],
-        "deny": [
-            "Read(./.env)",
-            "Read(./secrets/**)",
-            "Read(./package-lock.json)",
-            "Read(./.git/**)",
-            "Bash(rm -rf ~)",
-            "Bash(rm -rf /)"
-        ],
-        "defaultMode": "default"
-    },
-    "model": "opusplan",
-    "hooks": {
-        "PreToolUse": [
-            {
-                "matcher": "Write|Edit",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "node /home/zulu/.claude/hooks/pre-edit-analysis.js"
-                    }
-                ]
-            },
-            {
-                "matcher": "WebSearch",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Native Search is blocked. Use plugin:web-search:OmniSearch'}}))\""
-                    }
-                ]
-            }
-        ],
-        "PostToolUse": [
-            {
-                "matcher": "Write|Edit",
-                "hooks": [
-                    {
-                        "type": "command",
-                        "command": "node /home/zulu/.claude/hooks/format-code.js"
-                    },
-                    {
-                        "type": "command",
-                        "command": "node /home/zulu/.claude/hooks/post-edit-validation.js"
-                    }
-                ]
-            }
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://localhost:4000",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-5-5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-5",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-5-5",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "haiku",
+    "CLAUDE_CODE_SUBAGENT_MODEL_FORCE": "1",
+    "MCP_TIMEOUT": "120000"
+  },
+  "permissions": {
+    "allow": [
+      "mcp__web_search__OmniSearch"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./secrets/**)",
+      "Read(./package-lock.json)",
+      "Read(./.git/**)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf /)"
+    ],
+    "defaultMode": "default"
+  },
+  "modelPicker": {
+    "options": [
+      {
+        "model": "claude-opus-5-5",
+        "label": "Opus 5.5 (Nemotron 3 Ultra)",
+        "description": "Most capable - via NVIDIA NIM"
+      },
+      {
+        "model": "claude-sonnet-5",
+        "label": "Sonnet 5 (Nemotron 3.5 Super VL)",
+        "description": "Balanced - via NVIDIA NIM"
+      },
+      {
+        "model": "claude-haiku-5-5",
+        "label": "Haiku 5.5 (Nemotron 3.5 Lightning)",
+        "description": "Fast - via NVIDIA NIM"
+      },
+      {
+        "model": "gemini-3.5-flash-lite",
+        "label": "Gemini 3.5 Flash Lite",
+        "description": "Google via gateway"
+      },
+      {
+        "model": "sensenova-6.8-flash-lite",
+        "label": "SenseNova 6.8 Flash Lite",
+        "description": "SenseNova via gateway"
+      },
+      {
+        "model": "qwen3.8-27b",
+        "label": "Qwen 3.8 27B",
+        "description": "Alibaba via AMD gateway"
+      },
+      {
+        "model": "agnes-2.5-flash",
+        "label": "Agnes 2.5 Flash",
+        "description": "Agnes AI via gateway"
+      }
+    ],
+    "replaceBuiltInOptions": true
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /home/zulu/.claude/hooks/pre-edit-analysis.js"
+          }
         ]
+      },
+      {
+        "matcher": "WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"console.log(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:'⛔ Native Search is blocked. Use plugin:web-search:OmniSearch'}}))\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /home/zulu/.claude/hooks/format-code.js"
+          },
+          {
+            "type": "command",
+            "command": "node /home/zulu/.claude/hooks/post-edit-validation.js"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/bin/bash ~/.claude/hooks/statusline.sh"
+  },
+  "enabledPlugins": {
+    "repomix-mcp@repomix": true,
+    "context7@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "web-search@sydasif-web-search-mcp": true,
+    "watch@claude-video": true,
+    "playwright@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "repomix": {
+      "source": {
+        "source": "github",
+        "repo": "yamadashy/repomix"
+      },
+      "autoUpdate": true
     },
-    "statusLine": {
-        "type": "command",
-        "command": "/bin/bash ~/.claude/hooks/statusline.sh"
+    "sydasif-web-search-mcp": {
+      "source": {
+        "source": "github",
+        "repo": "sydasif/web-search-mcp"
+      }
     },
-    "enabledPlugins": {
-        "repomix-mcp@repomix": true,
-        "context7@claude-plugins-official": true,
-        "pyright-lsp@claude-plugins-official": true,
-        "web-search@sydasif-web-search-mcp": true,
-        "watch@claude-video": true,
-        "playwright@claude-plugins-official": true
-    },
-    "extraKnownMarketplaces": {
-        "repomix": {
-            "source": {
-                "source": "github",
-                "repo": "yamadashy/repomix"
-            },
-            "autoUpdate": true
-        },
-        "sydasif-web-search-mcp": {
-            "source": {
-                "source": "github",
-                "repo": "sydasif/web-search-mcp"
-            }
-        },
-        "claude-video": {
-            "source": {
-                "source": "github",
-                "repo": "bradautomates/claude-video"
-            }
-        }
-    },
-    "effortLevel": "high",
-    "askUserQuestionTimeout": "60s",
-    "autoUpdatesChannel": "stable",
-    "skipWorkflowUsageWarning": true,
-    "theme": "dark"
+    "claude-video": {
+      "source": {
+        "source": "github",
+        "repo": "bradautomates/claude-video"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "askUserQuestionTimeout": "60s",
+  "autoUpdatesChannel": "stable",
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "model": "qwen3.8-27b"
 }
