@@ -134,9 +134,20 @@
     }
   },
   "effortLevel": "high",
+  "modelSettings": {
+    "claude-haiku-5-5": {
+      "effortLevel": "medium"
+    },
+    "claude-sonnet-5": {
+      "effortLevel": "high"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "askUserQuestionTimeout": "60s",
+  "autoCompactWindow": 200000,
   "autoUpdatesChannel": "stable",
   "skipWorkflowUsageWarning": true,
-  "theme": "dark",
-  "model": "qwen3.8-27b"
+  "theme": "dark"
 }
