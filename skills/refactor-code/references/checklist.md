@@ -17,7 +17,8 @@ Items marked **[behavior change]** alter runtime behavior or file formats. Apply
 
 ## Section 3: Structural Improvements
 
-- [ ] Replace simple attribute-only classes with `@dataclass`
+- [ ] Replace simple attribute-only classes with `@dataclass` (prefer `frozen=True` for values passed between pure functions)
+- [ ] Replace classes that only group static methods, or that have one method besides `__init__`, with plain module-level functions (functions-first preference)
 - [ ] Remove boilerplate methods (`__init__`, `__repr__`, `__eq__`) where dataclass covers them
 - [ ] Add `__slots__` (or `@dataclass(slots=True)` on 3.10+) to hot-path dataclasses where memory efficiency matters
 - [ ] Move complex lambda functions to named functions

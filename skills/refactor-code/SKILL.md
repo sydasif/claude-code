@@ -20,6 +20,7 @@ Modernizing first keeps Pass B diffs small and readable, because the structural 
 - **Pragmatism over purity.** Skip a change if the code is already short and clear, the change is gated on a newer Python than the project supports, the file is generated or one-off, or the new abstraction is heavier than what it replaces.
 - **One pattern at a time, tests after each.** A failing test then points at exactly one change.
 - **Stay in the user's style.** Match their naming, typing conventions, and test framework (pytest by default).
+- **Functions first, classes only when necessary.** Default to module-level functions plus plain data (dicts, tuples, `TypedDict`, or dataclasses used as simple records). Do not introduce a class to group functions, and when you meet a class that adds nothing, simplify it to functions. Keep or introduce a class only when it earns its place (see "When a class is justified" below).
 
 ## Process
 
@@ -104,9 +105,18 @@ def process_new_user(user_id):            # orchestration
 
 For a longer multi-step example (order submission with invoice and PDF) and matching tests, read `references/pure-functions-example.md`.
 
+**When a class is justified:**
+
+- It holds real state with invariants that must stay consistent across calls.
+- It owns a resource lifecycle (connection, session, file handle) and works as a context manager.
+- A framework or library requires it (Django/SQLAlchemy models, Pydantic, `Protocol`/ABC plugin interfaces, Nornir/NAPALM driver subclasses).
+- It is a dataclass used purely as an immutable or simple record. Prefer `@dataclass(frozen=True)` for values passed between pure functions.
+
+Even then, keep the class thin: put the logic in pure functions that take the data as arguments, and let methods delegate to them. Classes that are only a namespace for static methods, or have a single method besides `__init__`, become plain functions (use `functools.partial` or a closure if configuration must be bound).
+
 **Guardrails for Pass B:**
 
-- **Aim for the core ~80% of logic, not 100%.** Do not force tiny wrappers, class hierarchies, or functional-programming idioms. If a function is already small and has one clear job, leave it alone.
+- **Aim for the core ~80% of logic, not 100%.** Do not force tiny wrappers, class hierarchies, or exotic functional-programming idioms (no monads or heavy `functools` chains; plain functions and data are enough). If a function is already small and has one clear job, leave it alone.
 - **Watch for hidden impurity:** `datetime.now()`, `random`, `os.environ`, mutable default arguments, in-place mutation of arguments, logging inside logic. Pass clocks, random sources, and config in as parameters (e.g. `now`) so the function stays pure.
 - **Logging and error handling live at the edges.** This is where the two passes meet: when Pass A replaces `print` with `logging`, put the `logger.*` calls in orchestration or effect code, not inside pure functions. Pure functions may raise on invalid input and return data; the caller logs, retries, falls back, and handles I/O errors. Use `%`-style arguments in `logger.*` calls (lazy formatting), not f-strings.
 - **Don't test the pure core through mocks.** If a test has to patch a pure function, the layers are probably tangled.
