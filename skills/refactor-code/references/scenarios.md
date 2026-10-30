@@ -1,4 +1,4 @@
-# Common Refactoring Scenarios
+# Common Refactoring Scenarios (Pass A)
 
 ## Scenario 1: Migrate to f-strings
 
@@ -80,7 +80,7 @@ match platform:
         raise ValueError(f"Unknown platform: {platform}")
 ```
 
-## Scenario 5: Replace print with logging
+## Scenario 5: Replace print with logging (behavior change - confirm first)
 
 ```python
 # Before
@@ -96,3 +96,5 @@ logger.error("Timeout on %s", host)
 ```
 
 > **Why `%`-style args in logging, not f-strings?** The logging module uses lazy formatting - the string is only interpolated if the log level is actually active. With f-strings, the interpolation happens unconditionally at the call site, even if the message is never emitted. Use `%`-style positional args (`"msg %s", value`) in all `logger.*` calls.
+
+> **Where do the calls go?** In orchestration or effect code, not inside pure functions (see Pass B in SKILL.md). A pure function returns data or raises; its caller logs.

@@ -1,4 +1,6 @@
-# Modernization Checklist
+# Modernization Checklist (Pass A)
+
+Items marked **[behavior change]** alter runtime behavior or file formats. Apply only when the user wants them, otherwise list them as suggestions.
 
 ## Section 1: Type System
 
@@ -8,23 +10,23 @@
 
 ## Section 2: Syntax Modernization
 
-- [ ] Replace `%` and `.format()` string formatting with f-strings
+- [ ] Replace `%` and `.format()` string formatting with f-strings (but not inside `logger.*` calls - see Section 3)
 - [ ] Replace `os.path.*` path operations with `pathlib`
-- [ ] Replace `configparser` with `tomllib` (3.11+) or `tomli` where appropriate
+- [ ] Replace `configparser` with `tomllib` (3.11+) or `tomli` **[behavior change: changes the config file format; only on request]**
 - [ ] Replace long `if/elif` chains over a single variable with `match` statements (Python 3.10+ only)
 
 ## Section 3: Structural Improvements
 
 - [ ] Replace simple attribute-only classes with `@dataclass`
 - [ ] Remove boilerplate methods (`__init__`, `__repr__`, `__eq__`) where dataclass covers them
-- [ ] Add `__slots__` to hot-path dataclasses where memory efficiency matters
+- [ ] Add `__slots__` (or `@dataclass(slots=True)` on 3.10+) to hot-path dataclasses where memory efficiency matters
 - [ ] Move complex lambda functions to named functions
 - [ ] Use appropriate iteration patterns: `enumerate`, list/dict/set comprehensions, `zip`
 - [ ] Use context managers for all file, socket, and connection resources
-- [ ] Replace bare `except:` or `except Exception:` without re-raise with specific exception types
-- [ ] Replace diagnostic `print` statements with `logging` calls at appropriate levels
+- [ ] Replace bare `except:` or `except Exception:` without re-raise with specific exception types **[behavior change: can let previously swallowed errors propagate]**
+- [ ] Replace diagnostic `print` statements with `logging` calls at appropriate levels **[behavior change: output moves from stdout to the logging config; leave CLI user-facing output as `print`]**. Place the calls in orchestration or effect code, not in pure functions.
 
-## Async (if applicable)
+## Section 4: Async (if applicable)
 
 - [ ] Use consistent `asyncio` patterns - no sync blocking calls (e.g., `time.sleep`, `open()`) inside async functions
 - [ ] Use `async with` and `async for` where available on async-capable resources
@@ -32,7 +34,17 @@
 - [ ] Use `asyncio.gather()` for concurrent independent tasks instead of sequential `await` calls
 - [ ] Replace `asyncio.sleep(0)` busy-loops with proper event-driven patterns
 
-## Imports
+## Section 5: Imports
 
 - [ ] Organize imports in standard groups: stdlib -> third-party -> local
 - [ ] Remove unused imports
+
+## Section 6: Purity smells (hand off to Pass B)
+
+Spot these while inventorying; fix them in Pass B, not here.
+
+- [ ] Functions that both decide and do I/O (DB/HTTP/SMTP/file/device calls next to validation, calculations, formatting)
+- [ ] `datetime.now()`, `random`, `os.environ` read inside logic
+- [ ] Mutable default arguments; in-place mutation of arguments
+- [ ] Logging inside business-rule functions
+- [ ] Tests that need heavy mocking to exercise simple logic
