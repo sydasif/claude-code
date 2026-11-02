@@ -8,9 +8,7 @@
     "MCP_TIMEOUT": "120000"
   },
   "permissions": {
-    "allow": [
-      "mcp__web_search__*"
-    ],
+    "allow": ["mcp__web_search__*"],
     "deny": [
       "Read(./.env)",
       "Read(./secrets/**)",
@@ -21,7 +19,7 @@
     ],
     "defaultMode": "default"
   },
-  "model": "mistral-ministral-14b",
+  "model": "claude-haiku-5-5",
   "modelPicker": {
     "options": [
       {
@@ -41,8 +39,8 @@
         "label": "Qwen 3.8 27B"
       },
       {
-        "model": "mistral-ministral-14b",
-        "label": "Mistral Ministral 14B"
+        "model": "sensenova-6.8-flash-lite",
+        "label": "SenseNova 6.8 Flash Lite"
       }
     ],
     "replaceBuiltInOptions": true
