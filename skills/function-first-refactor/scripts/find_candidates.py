@@ -12,6 +12,7 @@ are skipped - effects belong in the imperative shell, so ranking them is noise.
 Usage:
     python3 find_candidates.py <path> [--top N] [--min-score S]
 """
+
 import argparse
 import ast
 import sys
@@ -20,20 +21,59 @@ from pathlib import Path
 
 IO_BUILTINS = {"open", "print", "input"}
 IO_PREFIXES = (
-    "requests.", "httpx.", "urllib.", "smtplib.", "subprocess.", "shutil.",
-    "socket.", "paramiko.", "netmiko.", "napalm.", "os.system", "os.remove",
-    "os.makedirs", "db.", "cursor.", "conn.", "session.", "smtp.", "client.",
+    "requests.",
+    "httpx.",
+    "urllib.",
+    "smtplib.",
+    "subprocess.",
+    "shutil.",
+    "socket.",
+    "paramiko.",
+    "netmiko.",
+    "napalm.",
+    "os.system",
+    "os.remove",
+    "os.makedirs",
+    "db.",
+    "cursor.",
+    "conn.",
+    "session.",
+    "smtp.",
+    "client.",
 )
 IO_METHODS = {
-    "send", "sendall", "sendmail", "send_command", "send_config_set", "commit",
-    "execute", "executemany", "write_text", "read_text", "write_bytes",
-    "read_bytes", "post", "put", "patch", "urlopen", "connect", "recv",
+    "send",
+    "sendall",
+    "sendmail",
+    "send_command",
+    "send_config_set",
+    "commit",
+    "execute",
+    "executemany",
+    "write_text",
+    "read_text",
+    "write_bytes",
+    "read_bytes",
+    "post",
+    "put",
+    "patch",
+    "urlopen",
+    "connect",
+    "recv",
 }
 IMPURE = {
-    "datetime.now", "datetime.datetime.now", "datetime.utcnow",
-    "datetime.datetime.utcnow", "date.today", "time.time",
-    "random.random", "random.choice", "random.randint", "uuid.uuid4",
-    "os.getenv", "os.environ.get",
+    "datetime.now",
+    "datetime.datetime.now",
+    "datetime.utcnow",
+    "datetime.datetime.utcnow",
+    "date.today",
+    "time.time",
+    "random.random",
+    "random.choice",
+    "random.randint",
+    "uuid.uuid4",
+    "os.getenv",
+    "os.environ.get",
 }
 ENTRY_POINT_NAMES = {"main", "cli", "entrypoint"}
 BRANCHES = (ast.If, ast.For, ast.While, ast.Match, ast.IfExp, ast.BoolOp)
@@ -54,14 +94,20 @@ def static_kind(name: str) -> str:
     """Effect kind for a call known by name alone, empty when unknown."""
     if name in IMPURE:
         return "impure"
-    if name in IO_BUILTINS or name.startswith(IO_PREFIXES) or name.rsplit(".", 1)[-1] in IO_METHODS:
+    if (
+        name in IO_BUILTINS
+        or name.startswith(IO_PREFIXES)
+        or name.rsplit(".", 1)[-1] in IO_METHODS
+    ):
         return "io"
     if name.startswith(("logger.", "logging.", "log.")):
         return "log"
     return ""
 
 
-def function_defs(tree: ast.Module) -> dict[str, ast.FunctionDef | ast.AsyncFunctionDef]:
+def function_defs(
+    tree: ast.Module,
+) -> dict[str, ast.FunctionDef | ast.AsyncFunctionDef]:
     return {
         node.name: node
         for node in tree.body
@@ -152,10 +198,15 @@ def analyze(
 
 def scan(
     path: Path,
-) -> Iterator[tuple[Path, ast.FunctionDef | ast.AsyncFunctionDef, dict[str, int | bool]]]:
+) -> Iterator[
+    tuple[Path, ast.FunctionDef | ast.AsyncFunctionDef, dict[str, int | bool]]
+]:
     files = [path] if path.is_file() else sorted(path.rglob("*.py"))
     for f in files:
-        if any(p in f.parts for p in (".venv", "venv", "node_modules", ".git", "__pycache__")):
+        if any(
+            p in f.parts
+            for p in (".venv", "venv", "node_modules", ".git", "__pycache__")
+        ):
             continue
         try:
             tree = ast.parse(f.read_text(encoding="utf-8"))
@@ -165,7 +216,10 @@ def scan(
         effects = local_effects(tree)
         shell = entry_points(tree)
         for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name not in shell:
+            if (
+                isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                and node.name not in shell
+            ):
                 yield f, node, analyze(node, effects)
 
 
@@ -181,11 +235,15 @@ def main() -> None:
     if not rows:
         print("No mixed logic/I-O candidates found.")
         return
-    print(f"{'score':>5}  {'io':>2} {'imp':>3} {'log':>3} {'br':>3} {'lines':>5}  location")
+    print(
+        f"{'score':>5}  {'io':>2} {'imp':>3} {'log':>3} {'br':>3} {'lines':>5}  location"
+    )
     for f, node, m in rows[: args.top]:
         flag = " mutable-default" if m["mutable_default"] else ""
-        print(f"{m['score']:>5}  {m['io']:>2} {m['impure']:>3} {m['log']:>3} "
-              f"{m['branches']:>3} {m['length']:>5}  {f}:{node.lineno} {node.name}(){flag}")
+        print(
+            f"{m['score']:>5}  {m['io']:>2} {m['impure']:>3} {m['log']:>3} "
+            f"{m['branches']:>3} {m['length']:>5}  {f}:{node.lineno} {node.name}(){flag}"
+        )
     print(f"\n{len(rows)} candidate(s); showing top {min(args.top, len(rows))}.")
 
 
