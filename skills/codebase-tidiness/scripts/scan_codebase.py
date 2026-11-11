@@ -22,7 +22,21 @@ import re
 import shutil
 import subprocess
 import sys
+from collections.abc import Callable
 from pathlib import Path
+
+# One compiled pattern per tool, in the tool's own output format.
+VULTURE_LINE = re.compile(
+    r"^(?P<file>.+?):(?P<line>\d+):\s*(?P<message>.+?)\s*"
+    r"\((?P<confidence>\d+)%\s*(?:confidence)?\)$"
+)
+RUFF_LINE = re.compile(
+    r"^(?P<file>.+?):(?P<line>\d+):(?P<col>\d+):\s*(?P<code>\S+)\s+(?P<message>.+)$"
+)
+DOCSIG_LINE = re.compile(r"^(?P<file>.+?):(?P<line>\d+):\s*(?P<message>.+)$")
+DOCVET_LINE = re.compile(
+    r"^(?P<file>.+?):(?P<line>\d+):\s*(?P<rule>\S+)\s+(?P<severity>\S+)\s+(?P<message>.+)$"
+)
 
 
 def _run_cmd(cmd: list[str], tool: str, timeout: int = 120) -> tuple[str, str]:
@@ -42,54 +56,46 @@ def _not_installed(tool: str) -> list[dict]:
     return [{"error": True, "tool": tool, "detail": f"{tool} not installed"}]
 
 
-def run_vulture(target: str, min_confidence: int = 80) -> list[dict]:
-    """Run vulture and parse output into structured findings."""
-    if not shutil.which("vulture"):
-        return _not_installed("vulture")
-    stdout, stderr = _run_cmd(["vulture", target, f"--min-confidence={min_confidence}"], "vulture")
-    if stderr and not stdout:
-        return _not_installed("vulture")
+def _scan_tool(tool: str, argv: list[str], parse: Callable[[str], list[dict]]) -> list[dict]:
+    """Run one checker and parse its stdout into findings.
 
+    Single home for the present -> run -> error -> parse sequence the four
+    ``run_*`` functions share; ``parse`` owns each tool's output shape.
+    """
+    if not shutil.which(tool):
+        return _not_installed(tool)
+    stdout, stderr = _run_cmd(argv, tool)
+    if stderr and not stdout:
+        return _not_installed(tool)
+    return parse(stdout)
+
+
+def parse_vulture(stdout: str) -> list[dict]:
+    """Parse ``file:line: message (90% confidence)`` lines."""
     findings = []
-    # Vulture: file:line: confidence: message (90% confidence)
-    pattern = re.compile(
-        r"^(?P<file>.+?):(?P<line>\d+):\s*(?P<message>.+?)\s*\((?P<confidence>\d+)%\)$"
-    )
     for line in stdout.splitlines():
-        m = pattern.match(line)
-        if m:
-            msg = m.group("message")
-            name = msg.split()[-1] if " " in msg else msg
-            findings.append(
-                {
-                    "file": m.group("file"),
-                    "line": int(m.group("line")),
-                    "type": "dead_code",
-                    "name": name,
-                    "confidence": int(m.group("confidence")),
-                    "message": msg,
-                }
-            )
+        m = VULTURE_LINE.match(line)
+        if not m:
+            continue
+        message = m.group("message")
+        findings.append(
+            {
+                "file": m.group("file"),
+                "line": int(m.group("line")),
+                "type": "dead_code",
+                "name": message.split()[-1] if " " in message else message,
+                "confidence": int(m.group("confidence")),
+                "message": message,
+            }
+        )
     return findings
 
 
-def run_ruff(target: str, select: str) -> list[dict]:
-    """Run ruff with a --select flag and parse concise output."""
-    if not shutil.which("ruff"):
-        return _not_installed("ruff")
-    stdout, stderr = _run_cmd(
-        ["ruff", "check", f"--select={select}", "--output-format=concise", target], "ruff"
-    )
-    if stderr and not stdout:
-        return _not_installed("ruff")
-
+def parse_ruff(stdout: str) -> list[dict]:
+    """Parse ``file:line:col: CODE message`` lines."""
     findings = []
-    # Ruff concise: file:line:col: code message
-    pattern = re.compile(
-        r"^(?P<file>.+?):(?P<line>\d+):(?P<col>\d+):\s*(?P<code>\S+)\s+(?P<message>.+)$"
-    )
     for line in stdout.splitlines():
-        m = pattern.match(line)
+        m = RUFF_LINE.match(line)
         if m:
             findings.append(
                 {
@@ -102,24 +108,11 @@ def run_ruff(target: str, select: str) -> list[dict]:
     return findings
 
 
-def run_docsig(target: str) -> list[dict]:
-    """Run docsig to check signature params match docstrings."""
-    if not shutil.which("docsig"):
-        return _not_installed("docsig")
-    stdout, stderr = _run_cmd(
-        # --check-class --check-dunders --check-protected covers all scopes
-        ["docsig", "--check-class", "--check-dunders", "--check-protected", target],
-        "docsig",
-    )
-    if stderr and not stdout:
-        return _not_installed("docsig")
-
+def parse_docsig(stdout: str) -> list[dict]:
+    """Parse ``file:line: message`` lines."""
     findings = []
-    # docsig: file:line:in function message
-    # e.g. src/utils.py:14:in function parse_timestamp: Extra parameter(s) in docstring: ts
-    pattern = re.compile(r"^(?P<file>.+?):(?P<line>\d+):\s*(?P<message>.+)$")
     for line in stdout.splitlines():
-        m = pattern.match(line)
+        m = DOCSIG_LINE.match(line)
         if m:
             findings.append(
                 {
@@ -132,21 +125,11 @@ def run_docsig(target: str) -> list[dict]:
     return findings
 
 
-def run_docvet(target: str) -> list[dict]:
-    """Run docvet freshness check (diff mode by default — fast, CI-friendly)."""
-    if not shutil.which("docvet"):
-        return _not_installed("docvet")
-    stdout, stderr = _run_cmd(["docvet", "check", "--freshness", target], "docvet")
-    if stderr and not stdout:
-        return _not_installed("docvet")
-
+def parse_docvet(stdout: str) -> list[dict]:
+    """Parse ``file:line: RULE SEVERITY message`` lines."""
     findings = []
-    # docvet: file:line: RULE SEVERITY message
-    pattern = re.compile(
-        r"^(?P<file>.+?):(?P<line>\d+):\s*(?P<rule>\S+)\s+(?P<severity>\S+)\s+(?P<message>.+)$"
-    )
     for line in stdout.splitlines():
-        m = pattern.match(line)
+        m = DOCVET_LINE.match(line)
         if m:
             findings.append(
                 {
@@ -158,6 +141,39 @@ def run_docvet(target: str) -> list[dict]:
                 }
             )
     return findings
+
+
+def run_vulture(target: str, min_confidence: int = 80) -> list[dict]:
+    """Run vulture and parse output into structured findings."""
+    return _scan_tool(
+        "vulture",
+        ["vulture", target, f"--min-confidence={min_confidence}"],
+        parse_vulture,
+    )
+
+
+def run_ruff(target: str, select: str) -> list[dict]:
+    """Run ruff with a --select flag and parse concise output."""
+    return _scan_tool(
+        "ruff",
+        ["ruff", "check", f"--select={select}", "--output-format=concise", target],
+        parse_ruff,
+    )
+
+
+def run_docsig(target: str) -> list[dict]:
+    """Run docsig to check signature params match docstrings."""
+    # Full-scope flags: class, dunder and protected members.
+    return _scan_tool(
+        "docsig",
+        ["docsig", "--check-class", "--check-dunders", "--check-protected", target],
+        parse_docsig,
+    )
+
+
+def run_docvet(target: str) -> list[dict]:
+    """Run docvet freshness check (diff mode by default — fast, CI-friendly)."""
+    return _scan_tool("docvet", ["docvet", "check", "--freshness", target], parse_docvet)
 
 
 def main():

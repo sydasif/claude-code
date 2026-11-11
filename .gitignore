@@ -58,6 +58,7 @@ audit.log
 certs/
 *.db*
 *.db
+.pytest_cache/
 
 # Community skills
 skills/stop-slop/
