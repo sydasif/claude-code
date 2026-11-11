@@ -14,7 +14,7 @@ user-invocable: true
 
 - What task was completed? (cleanup, refactor, feature, fix)
 - Which files changed? Run `git diff --name-only HEAD` or ask for the diff.
-- Review residual risk notes from prior `cleanup-code` or `refactor-code` passes.
+- Review residual risk notes from prior `cleanup-code` or `modernize-python` passes.
 - Flag changes outside stated scope.
 
 ### 2. Structural Verification

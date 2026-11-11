@@ -22,7 +22,7 @@
 - No TODO/FIXME comments without a tracking reference.
 - Inline comments reflect current behavior.
 - Docstrings reflect updated public APIs.
-- Cross-pass references (`cleanup-code` agent, `refactor-code` notes) are resolved or deferred.
+- Cross-pass references (`cleanup-code` agent, `modernize-python` / `function-first-refactor` notes) are resolved or deferred.
 
 ## Section 3: Security & Risks
 

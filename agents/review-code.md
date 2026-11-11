@@ -9,7 +9,7 @@ model: haiku
 
 # Docs
 
-@~/.claude/docs/core/conventions.md
+@~/.claude/skills/python-standards/references/core/conventions.md
 
 ## What I do
 
@@ -20,7 +20,7 @@ reference, description, severity, and recommended action.
 
 ## When to invoke me
 
-- After any `cleanup-code` agent or `refactor-code` skill pass
+- After any `cleanup-code` agent or `modernize-python` skill pass
 - Before submitting a PR
 - When a task is marked "done" and needs a final check
 

@@ -33,7 +33,7 @@ Two primary mechanisms carry knowledge across your sessions:
 
 ### Python Standards and Tooling
 
-**Documentation:** Modular Python standards: @~/.claude/docs/index.md
+**Documentation:** Modular Python standards: @~/.claude/skills/python-standards/references/index.md
 
 ### Subagent Scoping
 
@@ -80,13 +80,15 @@ Define the exact `input` and expected `output` before delegating to a subagent
 
 ## Code Quality Workflow
 
-Run in this order: `cleanup-code` → `refactor-code` → `review-code`
+Run in this order: `cleanup-code` → `modernize-python` → `review-code`
 
-| Skill           | Purpose                                               |
-| --------------- | ----------------------------------------------------- |
-| `cleanup-code`  | YAGNI/DRY/KISS cleanup, prune first                   |
-| `refactor-code` | Modernize Python after cleanup                        |
-| `review-code`   | Final gate: security audit, correctness, completeness |
+| Skill              | Purpose                                                  |
+| ------------------ | -------------------------------------------------------- |
+| `cleanup-code`     | YAGNI/DRY/KISS cleanup, prune first                      |
+| `modernize-python` | Modernize Python after cleanup                           |
+| `review-code`      | Final gate: security audit, correctness, completeness    |
+
+`function-first-refactor` is a separate structural pass (pure logic vs. side effects). Run it after `modernize-python` when the cleaned-up code mixes business logic with I/O.
 
 ### Git Style
 

@@ -49,7 +49,7 @@ Items flagged in prior passes that remain open. If none, write "None."
 
 - Task type: refactor
 - Files changed: 4 (auth.py, utils.py, tests/test_auth.py, README.md)
-- Prior pass residual risks reviewed: yes (2 items from refactor-code pass, both resolved)
+- Prior pass residual risks reviewed: yes (2 items from modernize-python pass, both resolved)
 
 ### Checklist Results
 

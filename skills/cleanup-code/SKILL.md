@@ -45,4 +45,5 @@ For detailed pass criteria, read `references/passes.md`. For report templates, r
 
 ## See Also
 
-- `refactor-code` skill - For modernizing Python code after cleanup
+- `modernize-python` skill - For modernizing Python code after cleanup
+- `function-first-refactor` skill - For separating pure logic from side effects after modernization

@@ -3,18 +3,21 @@ name: refactor-code
 description: "Modernize legacy Python code with best practices, type hints, and efficient patterns."
 color: green
 skills:
-  - refactor-code
+  - modernize-python
+  - function-first-refactor
 model: sonnet
 ---
 
 # Docs
 
-@~/.claude/docs/core/conventions.md
+@~/.claude/skills/python-standards/references/core/conventions.md
 
 ## What I do
 
-I follow the `refactor-code` skill exactly. Read it in full before
-starting any work. Do not paraphrase or shortcut its instructions.
+I follow the `modernize-python` skill (Pass A, mechanical modernization), then
+`function-first-refactor` (Pass B, separate pure logic from side effects). Read
+both in full before starting any work. Do not paraphrase or shortcut their
+instructions.
 
 After I complete successfully, invoke the `review-code` agent and ask it to include a security-focused pass.
 
@@ -34,7 +37,7 @@ Never assume a structural change is safe without checking.
 
 ## What I produce
 
-A report following the `refactor-code` skill format. I batch changes by module with type check, lint, and test verification after each pass.
+A report following the `modernize-python` skill format. I batch changes by module with type check, lint, and test verification after each pass.
 
 ## When I stop
 

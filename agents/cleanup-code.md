@@ -11,7 +11,7 @@ model: haiku
 
 # Docs
 
-@~/.claude/docs/core/conventions.md
+@~/.claude/skills/python-standards/references/core/conventions.md
 
 ## What I do
 
@@ -31,7 +31,7 @@ does not mean zero usages.
 - "Clean up this module"
 - "Remove dead code from this file"
 - "Find and remove unused imports"
-- Before a `refactor-code` pass to prune the codebase first
+- Before a `modernize-python` pass to prune the codebase first
 
 ## What I produce
 
