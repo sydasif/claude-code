@@ -434,3 +434,32 @@ Edit it there — do not maintain a copy here. Run:
 ```bash
 ruff check . --fix && ruff format .
 ```
+
+---
+
+<a id="16-functions-over-classes"></a>
+## 16. Functions over classes
+
+**Before**:
+
+```python
+class PriceCalculator:
+    def __init__(self, tax_rate):
+        self.tax_rate = tax_rate
+
+    def total(self, subtotal):
+        return subtotal * (1 + self.tax_rate)
+
+total = PriceCalculator(0.2).total(100)
+```
+
+**After**:
+
+```python
+def total_with_tax(subtotal: float, tax_rate: float) -> float:
+    return subtotal * (1 + tax_rate)
+
+total = total_with_tax(100, 0.2)
+```
+
+Keep a class when it holds real state or is required by a framework — not as a namespace for one method.

@@ -1,4 +1,4 @@
-# Extended Example: Order Submission (Pass B)
+# Extended Example: Order Submission
 
 ## Before: tightly coupled
 

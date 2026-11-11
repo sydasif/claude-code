@@ -1,4 +1,4 @@
-# Common Refactoring Scenarios (Pass A)
+# Common Refactoring Scenarios
 
 ## Scenario 1: Migrate to f-strings
 
@@ -97,4 +97,4 @@ logger.error("Timeout on %s", host)
 
 > **Why `%`-style args in logging, not f-strings?** The logging module uses lazy formatting - the string is only interpolated if the log level is actually active. With f-strings, the interpolation happens unconditionally at the call site, even if the message is never emitted. Use `%`-style positional args (`"msg %s", value`) in all `logger.*` calls.
 
-> **Where do the calls go?** In orchestration or effect code, not inside pure functions (see Pass B in SKILL.md). A pure function returns data or raises; its caller logs.
+> **Where do the calls go?** In orchestration or effect code, not inside pure functions (see the function-first-refactor skill). A pure function returns data or raises; its caller logs.

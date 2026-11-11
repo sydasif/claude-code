@@ -1,4 +1,4 @@
-# Modernization Checklist (Pass A)
+# Modernization Checklist
 
 Items marked **[behavior change]** alter runtime behavior or file formats. Apply only when the user wants them, otherwise list them as suggestions.
 
@@ -18,7 +18,7 @@ Items marked **[behavior change]** alter runtime behavior or file formats. Apply
 ## Section 3: Structural Improvements
 
 - [ ] Replace simple attribute-only classes with `@dataclass` (prefer `frozen=True` for values passed between pure functions)
-- [ ] Replace classes that only group static methods, or that have one method besides `__init__`, with plain module-level functions (functions-first preference)
+- [ ] Replace classes that only group static methods, or that have one method besides `__init__`, with plain module-level functions — **only on request**: this is the `function-first-refactor` preference, not a mechanical modernization. List it as a suggestion unless the user asked for that pass.
 - [ ] Remove boilerplate methods (`__init__`, `__repr__`, `__eq__`) where dataclass covers them
 - [ ] Add `__slots__` (or `@dataclass(slots=True)` on 3.10+) to hot-path dataclasses where memory efficiency matters
 - [ ] Move complex lambda functions to named functions
@@ -40,9 +40,9 @@ Items marked **[behavior change]** alter runtime behavior or file formats. Apply
 - [ ] Organize imports in standard groups: stdlib -> third-party -> local
 - [ ] Remove unused imports
 
-## Section 6: Purity smells (hand off to Pass B)
+## Section 6: Purity smells (hand off to function-first-refactor)
 
-Spot these while inventorying; fix them in Pass B, not here.
+Spot these while inventorying; list them in the report, do not fix them here.
 
 - [ ] Functions that both decide and do I/O (DB/HTTP/SMTP/file/device calls next to validation, calculations, formatting)
 - [ ] `datetime.now()`, `random`, `os.environ` read inside logic

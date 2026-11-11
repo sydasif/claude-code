@@ -129,12 +129,12 @@ Use `uv`. No direct `pip install`. Use `pyproject.toml` and `uv.lock`. Update vi
 
 ## CI/CD Integration
 
-Canonical templates in `~/.claude/templates/`:
+Canonical sources, one copy each — do not create a second version:
 
-- `ci-python.yml` — copy to `.github/workflows/ci.yml`
-- `pyproject.toml` — copy to project root
-- `pre-commit-config.yaml` — copy to project root as `.pre-commit-config.yaml`
-- `Dockerfile.python` — rename to `Dockerfile` and adapt ENTRYPOINT
+- `pyproject.toml` / `[tool.ruff]` — [Canonical tool configuration](conventions.md#canonical-tool-configuration); copy to the project root
+- CI workflow — [GitHub Actions recipe](../tooling/package-management.md#31-github-actions); copy to `.github/workflows/test.yml`
+- `Dockerfile` — [multistage Dockerfile with uv](../tooling/docker-management.md); adapt `ENTRYPOINT`
+- `pre-commit` — no template file; install with `uv run pre-commit install` (below)
 
 ### Pre-commit
 

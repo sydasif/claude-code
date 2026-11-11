@@ -40,6 +40,8 @@ def first(items: list[int]) -> int | None:  # PEP 604 union
 
 ### 3.11 — `Self` and `asyncio.TaskGroup`
 
+`Self` is for the rare case where a class is justified (see [Function-first design](./conventions.md#function-first-design)); `TaskGroup` is the part you will use most.
+
 ```python
 from typing import Self
 

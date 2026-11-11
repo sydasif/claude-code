@@ -8,7 +8,7 @@ editing any file so you don't re-duplicate.
 
 | Topic | Owner | Notes |
 | --- | --- | --- |
-| Coding conventions (rules) | [core/conventions.md](core/conventions.md) | Canonical rules + ruff config + bootstrap |
+| Coding conventions (rules) | [core/conventions.md](core/conventions.md) | Canonical rules, ruff config, bootstrap; function-first is marked there as a preference |
 | Before/after code library | [core/conventions-examples.md](core/conventions-examples.md) | **Sole** home for all code examples |
 | Tooling workflow, naming, imports, layout, CI/CD | [core/style-toolchain.md](core/style-toolchain.md) | `uv run …` commands, pre-commit |
 | Python version policy | [core/version.md](core/version.md) | floor 3.11, target 3.12 |

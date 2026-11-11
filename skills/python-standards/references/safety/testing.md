@@ -41,7 +41,7 @@ These are targets, not hard gates. When below thresholds, note the gap.
 - Place tests in `tests/` directory
 - Mirror source structure: `src/module.py` → `tests/test_module.py`
 - Use descriptive names: `test_calculate_total_with_discount()`
-- Group related tests in classes: `class TestCalculator:`
+- Write tests as plain functions; group related ones by shared name prefix (`test_calculator_add_*`) or by file, and share setup via fixtures — avoid `Test*` classes
 
 ## Test Patterns
 
@@ -49,7 +49,7 @@ These are targets, not hard gates. When below thresholds, note the gap.
 
 ```python
 def test_addition():
-    assert Calculator.add(2, 3) == 5
+    assert add(2, 3) == 5
 ```
 
 ### Parametrized Test
@@ -60,7 +60,7 @@ def test_addition():
     (-1, 1, 0),
 ])
 def test_addition_parametrized(a, b, expected):
-    assert Calculator.add(a, b) == expected
+    assert add(a, b) == expected
 ```
 
 ### Property-Based Test
@@ -70,18 +70,18 @@ from hypothesis import given, strategies as st
 
 @given(st.integers(), st.integers())
 def test_addition_commutative(a, b):
-    assert Calculator.add(a, b) == Calculator.add(b, a)
+    assert add(a, b) == add(b, a)
 ```
 
 ### Test with Fixture
 
 ```python
 @pytest.fixture
-def calculator():
-    return Calculator()
+def sample_orders() -> list[dict[str, float]]:
+    return [{"price": 10.0}, {"price": 5.5}]
 
-def test_calculator_initial_state(calculator):
-    assert calculator.memory == 0
+def test_total_of_orders(sample_orders):
+    assert total(sample_orders) == 15.5
 ```
 
 ### Error Condition Testing
@@ -89,7 +89,7 @@ def test_calculator_initial_state(calculator):
 ```python
 def test_division_by_zero():
     with pytest.raises(ZeroDivisionError):
-        Calculator().divide(5, 0)
+        divide(5, 0)
 ```
 
 ---

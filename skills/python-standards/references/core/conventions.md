@@ -6,6 +6,15 @@ Python conventions for modern (3.11+) projects. Apply to every `.py`, `pyproject
 
 > **Before/after code lives in one place.** Every code example below has its implementation in [Conventions — Examples](./conventions-examples.md). Edit examples there, not here. For the tooling workflow, naming tables, import organization, project layout, CI/CD, and dependency management, see [Python Core Style & Toolchain](./style-toolchain.md).
 
+## Function-first design
+
+> **Preference, not a house rule.** This is the default posture of the `function-first-refactor` skill, applied when you want logic testable without mocks. It is not a blanket requirement on every Python project — flag it as a suggestion, not a violation.
+
+- **Plain functions and modules by default.** Reach for a class only when it earns its place: it owns mutable state with an invariant, a framework requires it (Pydantic, SQLAlchemy, Django), it implements a `Protocol`/ABC, or it is a pure data container (`dataclass`)
+- Keep logic in small, typed, pure functions that take inputs and return outputs; push I/O to the edges and pass dependencies in as arguments
+- No classes that only group static methods or hold a single method — use a module and a function → [examples §16](./conventions-examples.md#16-functions-over-classes)
+- Tests are plain `test_*` functions with fixtures, not `Test*` classes (see [testing.md](../safety/testing.md))
+
 ## Type discipline
 
 - **Type hints required** on every function signature, public attribute, and return value (see [typing.md](./typing.md))
